@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26906.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHotel360.PublicWeb", "SmartHotel360.PublicWeb\SmartHotel360.PublicWeb.csproj", "{03946D5C-C042-40E1-A344-8DBC0FF6403B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03946D5C-C042-40E1-A344-8DBC0FF6403B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03946D5C-C042-40E1-A344-8DBC0FF6403B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03946D5C-C042-40E1-A344-8DBC0FF6403B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03946D5C-C042-40E1-A344-8DBC0FF6403B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23C4A13D-E82E-48D6-8294-EE92628BE637}
+	EndGlobalSection
+EndGlobal
