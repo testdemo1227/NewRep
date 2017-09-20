@@ -18,6 +18,7 @@ module.exports = (env) => {
         entry: {
             vendor: [
                 'bootstrap',
+                'normalize.css',
                 'bootstrap/dist/css/bootstrap.css',
                 'domain-task',
                 'event-source-polyfill',

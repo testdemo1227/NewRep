@@ -1,7 +1,11 @@
 {
   "name": "SmartHotel360.PublicWeb",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "webpack --config webpack.config.vendor.js",
+    "postdev": "webpack"
+  },
   "dependencies": {
     "@types/history": "4.6.0",
     "@types/react": "15.0.35",
@@ -27,6 +31,9 @@
     "jquery": "3.2.1",
     "json-loader": "0.5.4",
     "node-noop": "1.0.0",
+    "node-sass": "4.5.3",
+    "normalize.css": "7.0.0",
+    "sass-loader": "6.0.6",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "react-hot-loader": "3.0.0-beta.7",
