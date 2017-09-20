@@ -1,0 +1,6 @@
+@import 'mixins/icomoon';
+$icons: (
+    sh-play: 'e900'
+);
+
+@include icomoon-generate($icons);
