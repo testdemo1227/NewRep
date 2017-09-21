@@ -1,0 +1,16 @@
+@import '../base/variables';
+
+.sh-navMenu {
+    background: transparent;
+    width: 100%;
+
+    @media (min-width: 768px) {
+        display: flex;
+    }
+
+    &-brand {
+        @media (min-width: 768px) {
+            flex: 1;
+        }
+    }
+}
