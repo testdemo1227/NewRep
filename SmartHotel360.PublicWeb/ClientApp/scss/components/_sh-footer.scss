@@ -42,6 +42,21 @@
     &-link {
         color: $color-foreground-brighter;
 
+        &:active {
+            color: $color-brand-bright;
+            text-decoration: none;
+        }
+
+        &:visited {
+            color: $color-foreground-brighter;
+            text-decoration: none;
+        }
+
+        &:focus {
+            color: $color-brand-bright;
+            text-decoration: none;
+        }
+
         &:hover {
             color: $color-brand-bright;
             text-decoration: none;
