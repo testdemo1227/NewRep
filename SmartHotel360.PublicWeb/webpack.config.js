@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const merge = require('webpack-merge');
+const sassLintPlugin = require('sasslint-webpack-plugin');
 
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
@@ -62,6 +63,11 @@ module.exports = (env) => {
                 manifest: require('./ClientApp/dist/vendor-manifest.json'),
                 sourceType: 'commonjs2',
                 name: './vendor'
+            }),
+            new sassLintPlugin({
+                configFile: '.sass-lint.yml',
+                glob: 'ClientApp/**/*.s?(a|c)ss',
+                failOnError: false
             })
         ],
         output: {
