@@ -4,7 +4,9 @@ import { NavLink, Link } from 'react-router-dom';
 export class Footer extends React.Component<{}, {}> {
     public render() {
         return <div className='sh-footer-content'>
-            <div className='sh-footer-section'>Logo</div>
+            <div className='sh-footer-section'>
+                <img className="sh-footer-logo" src='/assets/images/logo.svg' />
+            </div>
             <div>
                 <div className='sh-footer-section'>
                     <ul className='sh-footer-list'>
