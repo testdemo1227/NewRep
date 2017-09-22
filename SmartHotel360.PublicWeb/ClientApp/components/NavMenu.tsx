@@ -9,8 +9,8 @@ export class NavMenu extends React.Component<any, {}> {
         return location.pathname === '/';
     }
     public render() {
-        return <div className='main-nav'>
-            <div className={`sh-navMenu ${this.isHome() ? 'sh-navMenu--home' : ''}`}>
+        return <div className={`sh-navMenu ${this.isHome() ? 'sh-navMenu--home' : ''}`}>
+            <div className={`sh-navMenu-wrapper`}>
                 <div className='navbar-header sh-navMenu-header'>
                     <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
                         <span className='sr-only'>Toggle navigation</span>
