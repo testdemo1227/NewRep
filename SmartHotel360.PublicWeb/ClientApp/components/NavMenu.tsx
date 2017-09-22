@@ -1,12 +1,17 @@
 import * as React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, RouteComponentProps } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { ApplicationState } from '../store';
 
-export class NavMenu extends React.Component<{}, {}> {
-   
+export class NavMenu extends React.Component<any, {}> {
+    private isHome(): boolean {
+        const location = this.props.location;
+        return location.pathname === '/';
+    }
     public render() {
         return <div className='main-nav'>
-            <div className='sh-navMenu'>
-                <div className='navbar-header sh-navMenu-brand'>
+            <div className={`sh-navMenu ${this.isHome() ? 'sh-navMenu--home' : ''}`}>
+                <div className='navbar-header sh-navMenu-header'>
                     <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
                         <span className='sr-only'>Toggle navigation</span>
                         <span className='icon-bar'></span>
@@ -16,7 +21,7 @@ export class NavMenu extends React.Component<{}, {}> {
                     <Link className='navbar-brand' to={'/'}>SmartHotel360.PublicWeb</Link>
                 </div>
                 <div className='navbar-collapse collapse'>
-                    <ul className='nav navbar-nav'>
+                    <ul className='nav navbar-nav sh-navMenu-nav'>
                         <li>
                             <NavLink exact to={'/'} activeClassName='active'>
                                 The smart experience
@@ -29,7 +34,7 @@ export class NavMenu extends React.Component<{}, {}> {
                         </li>
                         <li>
                             <NavLink to={'/fetchdata'} activeClassName='active'>
-                               Conference rooms
+                                Conference rooms
                             </NavLink>
                         </li>
                         <li>

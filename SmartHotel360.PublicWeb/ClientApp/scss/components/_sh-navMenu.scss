@@ -1,16 +1,38 @@
 @import '../base/variables';
 
 .sh-navMenu {
-    background: transparent;
+    background: $color-brand-dark;
     width: 100%;
 
     @media (min-width: 768px) {
         display: flex;
     }
 
-    &-brand {
+    &--home {
+        background: transparent;
+    }
+
+    &-header {
         @media (min-width: 768px) {
             flex: 1;
+        }
+    }
+
+    &-nav {
+        li {
+            a {
+                color: $color-brand-brighter;
+                line-height: 3rem;
+
+                &.active {
+                    border-bottom: 3px solid $color-brand-brighter;
+                }
+
+                &:hover, 
+                &:focus {
+                    background: transparent;
+                }
+            }
         }
     }
 }
