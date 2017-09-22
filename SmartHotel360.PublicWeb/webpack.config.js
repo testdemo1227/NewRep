@@ -18,6 +18,7 @@ module.exports = (env) => {
         },
         module: {
             rules: [
+                { test: /\.tsx?$/, enforce: 'pre', loader: 'tslint-loader', options: { configFile: '.ts-lint.json' } },
                 { test: /\.tsx?$/, include: /ClientApp/, use: 'awesome-typescript-loader?silent=true' },
                 { test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' }
             ]
@@ -48,9 +49,9 @@ module.exports = (env) => {
                 moduleFilenameTemplate: path.relative(clientBundleOutputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk
             })
         ] : [
-            // Plugins that apply in production builds only
-            new webpack.optimize.UglifyJsPlugin()
-        ])
+                // Plugins that apply in production builds only
+                new webpack.optimize.UglifyJsPlugin()
+            ])
     });
 
     // Configuration for server-side (prerendering) bundle suitable for running in Node
