@@ -1,5 +1,8 @@
 @import '../base/variables';
 
 .sh-footer {
-    background-color: $color-background-darker;
+    align-self: flex-end;
+    background-color: $color-background-dark;
+    color: $color-foreground-brighter;
+    width: 100%;
 }

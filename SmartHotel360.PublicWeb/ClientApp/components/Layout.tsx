@@ -4,14 +4,14 @@ import { Footer } from './Footer';
 
 export class Layout extends React.Component<{}, {}> {
     public render() {
-        return <div>
+        return <div className='sh-site'>
             <header>
                 <NavMenu />
             </header>
-            <section>
+            <section className='sh-content'>
                 { this.props.children }
             </section>
-            <footer className="sh-footer">
+            <footer className='sh-footer'>
                 <Footer />
             </footer>
         </div>;
