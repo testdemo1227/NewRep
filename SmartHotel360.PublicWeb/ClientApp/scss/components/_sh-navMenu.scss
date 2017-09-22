@@ -24,6 +24,12 @@
         }
     }
 
+    &-toogle {
+        .icon-bar {
+            background: $color-foreground-brighter;
+        }
+    }
+
     &-nav {
         li {
             a {
