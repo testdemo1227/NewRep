@@ -11,9 +11,7 @@ export class Layout extends React.Component<{}, {}> {
             <section className='sh-content'>
                 { this.props.children }
             </section>
-            <footer className='sh-footer'>
-                <Footer />
-            </footer>
+            <Footer />
         </div>;
     }
 }
