@@ -17,7 +17,9 @@
 
     &-buttons {
         display: flex;
+        list-style: none;
         margin-top: 2.75rem;
+        padding: 0;
     }
 
     &-button {
@@ -59,8 +61,8 @@
     }
 
     &-title {
-        font-size: $font-size-xxxl;
         color: $color-foreground-bright;
+        font-size: $font-size-xxxl;
         font-weight: $font-weight-medium;
 
         @media screen and (min-width: $media-screen-m) {
