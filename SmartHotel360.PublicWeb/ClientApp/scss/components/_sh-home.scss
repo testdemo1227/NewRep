@@ -1,9 +1,5 @@
 ﻿@import '../base/variables';
 
-.sh-home {
-
-}
-
 .sh-hero {
     background-image: url('/assets/images/hero_image@2x.jpg');
     background-size: cover;
@@ -13,10 +9,10 @@
     &-download {
         border: 1px solid $color-foreground-bright;
         color: $color-foreground-bright;
+        margin-top: 2.75rem;
         padding: 1.5rem;
         text-align: center;
         text-transform: uppercase;
-        margin-top: 2.75rem;
     }
 
     &-title {
