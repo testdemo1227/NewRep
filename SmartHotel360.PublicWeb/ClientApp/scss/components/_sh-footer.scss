@@ -7,18 +7,36 @@
     font-size: $font-size-xs;
     line-height: 2rem;
     padding-bottom: 3.5rem;
-    padding-top: 2.5rem;
+    padding-top: 1rem;
     width: 100%;
+
+    @media screen and (min-width: $media-screen-m) {
+        padding-top: 2.5rem;
+    }
 
     &-content {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+
+        @media screen and (min-width: $media-screen-m) {
+            flex-direction: row;
+        }
     }
 
     &-section {
-        $margin: 4rem;
-        margin-left: $margin;
-        margin-right: $margin;
+        $margin: 2rem;
+        margin-bottom: $margin;
+        margin-top: $margin;
+        text-align: center;
+
+        @media screen and (min-width: $media-screen-m) {
+            $margin: 4rem;
+            margin-bottom: 0;
+            margin-left: $margin;
+            margin-right: $margin;
+            margin-top: 0;
+            text-align: left;
+        }
     }
 
     &-logo {
@@ -35,14 +53,26 @@
 
     &-social {
         display: flex;
+        justify-content: center;
         list-style: none;
         padding-left: 0;
+
+        @media screen and (min-width: $media-screen-m) {
+            justify-content: flex-start;
+        }
     }
 
     &-icon {
+        $margin: 1.25rem;
         height: auto;
-        margin-right: 2.5rem;
+        margin-left: $margin;
+        margin-right: $margin;
         width: 1.5rem;
+
+        @media screen and (min-width: $media-screen-m) {
+            margin-left: 0;
+            margin-right: 2.5rem;
+        }
     }
 
     &-link {
