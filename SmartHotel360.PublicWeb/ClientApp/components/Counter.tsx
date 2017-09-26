@@ -12,7 +12,6 @@ type CounterProps =
 
 class Counter extends React.Component<CounterProps, {}> {
     public render() {
-        console.log('counter', this.props)
         return <div>
             <h1>Counter</h1>
 
