@@ -2,9 +2,9 @@
 
 .sh-nav_menu {
     background-color: $color-brand-dark;
+    height: 5rem;
     position: relative;
     width: 100%;
-    height: 5rem;
 
     &.is-home {
         background-color: transparent;

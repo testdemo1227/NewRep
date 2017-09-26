@@ -21,6 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\images\facebook.svg" />
+    <None Include="wwwroot\assets\images\instagram.svg" />
+    <None Include="wwwroot\assets\images\twitter.svg" />
     <None Include=".ts-lint.json" />
   </ItemGroup>
 
