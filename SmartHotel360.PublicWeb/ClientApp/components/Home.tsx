@@ -10,10 +10,6 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
                     <div className='sh-hero-download'>
                         <span>Download the app</span>
                     </div>
-                    <div></div>
-                    <div>
-                          
-                    </div>
                 </div>
             </div>
         </div>;
