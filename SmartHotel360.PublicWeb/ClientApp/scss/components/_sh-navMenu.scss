@@ -6,9 +6,15 @@
     position: relative;
     width: 100%;
 
+    &-logo {
+        height: auto;
+        margin-left: 4rem;
+        width: 18rem;
+    }
+
     &.is-home {
         background-color: transparent;
-        position: fixed;
+        position: absolute;
         top: 0;
         z-index: 1000;
     }

@@ -10,7 +10,9 @@ export class NavMenu extends React.Component<any, {}> {
     }
     public render() {
         return <div className={`sh-nav_menu ${this.isHome() ? 'is-home' : ''}`}>
-            <Link className='navbar-brand' to={'/'}>SmartHotel360.PublicWeb</Link>
+            <Link to={'/'}>
+                <img className='sh-nav_menu-logo' src='/assets/images/logo.svg' />
+            </Link>
         </div>;
     }
 }

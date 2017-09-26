@@ -1,0 +1,38 @@
+﻿@import '../base/variables';
+
+.sh-hero {
+    background-image: url('/assets/images/hero_image@2x.jpg');
+    background-size: cover;
+    height: 43rem;
+    width: 100%;
+
+    &-download {
+        border: 1px solid $color-foreground-bright;
+        color: $color-foreground-bright;
+        margin-top: 2.75rem;
+        padding: 1.5rem;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    &-title {
+        color: $color-foreground-bright;
+        font-size: $font-size-xxxxl;
+        font-weight: $font-weight-medium;
+    }
+
+    &-wrapper {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 auto;
+        padding: 14rem 0;
+        text-align: center;
+        width: 50vw;
+
+        @media screen and (min-width: $media-screen-m) {
+            width: 70vw;
+        }
+    }
+}
