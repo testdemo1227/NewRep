@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
 import configureStore from './configureStore';
-import { ApplicationState }  from './store';
+import { ApplicationState } from './store';
 import * as RoutesModule from './routes';
 let routes = RoutesModule.routes;
 
@@ -25,7 +25,7 @@ function renderApp() {
     ReactDOM.render(
         <AppContainer>
             <Provider store={ store }>
-                <ConnectedRouter history={ history } children={ routes } />
+                <ConnectedRouter history={history} children={ routes } />
             </Provider>
         </AppContainer>,
         document.getElementById('react-app')

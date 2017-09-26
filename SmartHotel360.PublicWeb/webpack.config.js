@@ -69,7 +69,8 @@ module.exports = (env) => {
                 configFile: '.sass-lint.yml',
                 glob: 'ClientApp/**/*.s?(a|c)ss',
                 failOnError: false
-            })
+            }),
+            new webpack.ProvidePlugin({ window: 'global' }),
         ],
         output: {
             libraryTarget: 'commonjs',
