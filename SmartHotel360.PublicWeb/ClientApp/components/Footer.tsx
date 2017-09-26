@@ -14,24 +14,6 @@ export class Footer extends React.Component<{}, {}> {
                     <div className='sh-footer-section'>
                         <ul className='sh-footer-list'>
                             <li>
-                                <a className='sh-footer-link' href='#'>The smart experience</a>
-                            </li>
-                            <li>
-                                <a className='sh-footer-link' href='#'>Cities</a>
-                            </li>
-                            <li>
-                                <a className='sh-footer-link' href='#'>Rooms</a>
-                            </li>
-                            <li>
-                                <a className='sh-footer-link' href='#'>Conference rooms</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div>
-                    <div className='sh-footer-section'>
-                        <ul className='sh-footer-list'>
-                            <li>
                                 <a className='sh-footer-link' href='#'>Terms & Conditions</a>
                             </li>
                             <li>
