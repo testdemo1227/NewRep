@@ -7,18 +7,19 @@
     font-size: $font-size-xs;
     line-height: 2rem;
     padding-bottom: 3.5rem;
-    padding-top: 2.5rem;
+    padding-top: 1rem;
     width: 100%;
 
     &-content {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
     }
 
     &-section {
-        $margin: 4rem;
-        margin-left: $margin;
-        margin-right: $margin;
+        $margin: 2rem;
+        margin-bottom: $margin;
+        margin-top: $margin;
+        text-align: center;
     }
 
     &-logo {
@@ -35,13 +36,16 @@
 
     &-social {
         display: flex;
+        justify-content: center;
         list-style: none;
         padding-left: 0;
     }
 
     &-icon {
+        $margin: 1.25rem;
         height: auto;
-        margin-right: 2.5rem;
+        margin-left: $margin;
+        margin-right: $margin;
         width: 1.5rem;
     }
 
@@ -66,6 +70,34 @@
         &:hover {
             color: $color-brand-bright;
             text-decoration: none;
+        }
+    }
+}
+
+@media only screen and (min-width : $media-screen-m) {
+    .sh-footer {
+        padding-top: 2.5rem;
+
+        &-content {
+            flex-direction: row;
+        }
+
+        &-section {
+            $margin: 4rem;
+            margin-bottom: 0;
+            margin-left: $margin;
+            margin-right: $margin;
+            margin-top: 0;
+            text-align: left;
+        }
+
+        &-social {
+            justify-content: flex-start;
+        }
+
+        &-icon {
+            margin-left: 0;
+            margin-right: 2.5rem;
         }
     }
 }
