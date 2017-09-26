@@ -7,21 +7,32 @@
     width: 100%;
 
     &-logo {
+        $distance-left: 2rem;
+        $distance-top: 2rem;
+
         height: auto;
-        margin-left: 4rem;
+        margin-left: $distance-left;
         margin-top: .5rem;
         width: 12rem;
 
-        &.is-home {
-            width: 18rem;
+        @media screen and (min-width: $media-screen-m) {
+            margin-left: 4rem;
+        }
 
-            @media screen and (max-width: $media-screen-s) {
-                margin-top: 2rem;
-                width: 11rem;
+        &.is-home {
+            margin-left: $distance-left;
+            margin-top: 1.5rem;
+            width: 11rem;
+
+            @media screen and (min-width: $media-screen-m) {
+                margin-left: 4rem;
+                margin-top: $distance-top;
+                width: 18rem;
             }
 
             @media screen and (max-width: $media-screen-m) and (min-width: $media-screen-s) {
-                margin-top: 2rem;
+                margin-left: $distance-left;
+                margin-top: $distance-top;
                 width: 16rem;
             }
         }

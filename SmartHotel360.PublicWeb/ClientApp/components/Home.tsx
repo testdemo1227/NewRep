@@ -10,17 +10,17 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
                     <div className='sh-hero-download'>
                         <span>Download the app</span>
                     </div>
-                    <div className='sh-hero-buttons_container'>
-                        <div className='sh-hero-button'>
+                    <ul className='sh-hero-buttons'>
+                        <li className='sh-hero-button'>
                             <div className='sh-hero-download_app sh-hero-download_app--win'></div>
-                        </div>
-                        <div className='sh-hero-button'>
+                        </li>
+                        <li className='sh-hero-button'>
                             <div className='sh-hero-download_app sh-hero-download_app--apple'></div>
-                        </div>
-                        <div className='sh-hero-button'>
+                        </li>
+                        <li className='sh-hero-button'>
                             <div className='sh-hero-download_app sh-hero-download_app--google'></div>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>;
