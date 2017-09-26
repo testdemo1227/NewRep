@@ -4,10 +4,7 @@ import { Footer } from './Footer';
 
 export class Layout extends React.Component<{}, {}> {
     public render() {
-        return <div>
-            <header>
-                <NavMenu />
-            </header>
+        return <div className='container-fluid'>
             <section>
                 { this.props.children }
             </section>
