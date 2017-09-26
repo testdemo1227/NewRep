@@ -9,7 +9,22 @@
     &-logo {
         height: auto;
         margin-left: 4rem;
-        width: 18rem;
+        margin-top: .5rem;
+        width: 12rem;
+
+        &.is-home {
+            width: 18rem;
+
+            @media screen and (max-width: $media-screen-s) {
+                margin-top: 2rem;
+                width: 11rem;
+            }
+
+            @media screen and (max-width: $media-screen-m) and (min-width: $media-screen-s) {
+                margin-top: 2rem;
+                width: 16rem;
+            }
+        }
     }
 
     &.is-home {
