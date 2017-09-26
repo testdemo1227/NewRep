@@ -11,7 +11,7 @@ export class NavMenu extends React.Component<any, {}> {
     public render() {
         return <div className={`sh-nav_menu ${this.isHome() ? 'is-home' : ''}`}>
             <Link to={'/'}>
-                <img className='sh-nav_menu-logo' src='/assets/images/logo.svg' />
+                <img className={`sh-nav_menu-logo ${this.isHome() ? 'is-home' : ''}`} src='/assets/images/logo.svg' />
             </Link>
         </div>;
     }

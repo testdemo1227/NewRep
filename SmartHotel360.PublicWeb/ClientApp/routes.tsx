@@ -7,7 +7,7 @@ import FetchData from './components/FetchData';
 import Counter from './components/Counter';
 
 export const routes = <Layout>
-    <div className='row'>
+    <div>
         <Route component={NavMenu} />
     </div>
     <Route exact path='/' component={Home} />

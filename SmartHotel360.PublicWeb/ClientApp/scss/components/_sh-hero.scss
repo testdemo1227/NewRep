@@ -15,23 +15,78 @@
         text-transform: uppercase;
     }
 
+    &-buttons {
+        display: flex;
+        margin-top: 2.75rem;
+    }
+
+    &-button {
+        border: 1px solid $color-foreground-bright;
+        cursor: pointer;
+        margin-left: .5rem;
+        margin-right: .5rem;
+        padding: 1rem;
+
+        &:hover {
+            background-color: rgba($color-foreground-bright, .5);
+            transition: background-color $animation-speed-default ease;
+        }
+    }
+
+    &-download_app {
+        background-position-x: center;
+        background-position-y: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 2rem;
+        width: 6rem;
+
+        @media screen and (min-width: $media-screen-m) {
+            width: 9rem;
+        }
+
+        &--win {
+            background-image: url('/assets/images/windows.png');
+        }
+
+        &--apple {
+            background-image: url('/assets/images/app_store.png');
+        }
+
+        &--google {
+            background-image: url('/assets/images/google_play.png');
+        }
+    }
+
     &-title {
+        font-size: $font-size-xxxl;
         color: $color-foreground-bright;
-        font-size: $font-size-xxxxl;
         font-weight: $font-weight-medium;
+
+        @media screen and (min-width: $media-screen-m) {
+            font-size: $font-size-xxxxl;
+        }
     }
 
     &-wrapper {
+        $distance: 14rem;
+
         align-items: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin: 0 auto;
-        padding: 14rem 0;
+        padding: 10rem 0;
         text-align: center;
-        width: 50vw;
+        width: 80vw;
 
-        @media screen and (min-width: $media-screen-m) {
+        @media screen and (min-width: $media-screen-l) {
+            padding: $distance 0;
+            width: 60vw;
+        }
+
+        @media screen and (max-width: $media-screen-l) and (min-width: $media-screen-s) {
+            padding: $distance 0;
             width: 70vw;
         }
     }
