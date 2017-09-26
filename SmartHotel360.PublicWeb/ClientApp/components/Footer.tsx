@@ -7,7 +7,7 @@ export class Footer extends React.Component<{}, {}> {
             <div className='sh-footer-content'>
                 <div>
                     <div className='sh-footer-section'>
-                        <img className="sh-footer-logo" src='/assets/images/logo.svg' />
+                        <img className='sh-footer-logo' src='/assets/images/logo.svg' />
                     </div>
                 </div>
                 <div>
@@ -34,17 +34,17 @@ export class Footer extends React.Component<{}, {}> {
                         <ul className='sh-footer-social'>
                             <li>
                                 <a href='#'>
-                                    <img className="sh-footer-icon" src='/assets/images/instagram.svg' />
+                                    <img className='sh-footer-icon' src='/assets/images/instagram.svg' />
                                 </a>
                             </li>
                             <li>
                                 <a href='#'>
-                                    <img className="sh-footer-icon" src='/assets/images/facebook.svg' />
+                                    <img className='sh-footer-icon' src='/assets/images/facebook.svg' />
                                 </a>
                             </li>
                             <li>
                                 <a href='#'>
-                                    <img className="sh-footer-icon" src='/assets/images/twitter.svg' />
+                                    <img className='sh-footer-icon' src='/assets/images/twitter.svg' />
                                 </a>
                             </li>
                         </ul>
