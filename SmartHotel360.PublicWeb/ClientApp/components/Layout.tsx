@@ -5,12 +5,10 @@ import { Footer } from './Footer';
 export class Layout extends React.Component<{}, {}> {
     public render() {
         return <div className='sh-site'>
-            <section>
+            <section className='sh-content'>
                 { this.props.children }
             </section>
-            <footer>
-                <Footer />
-            </footer>
+            <Footer />
         </div>;
     }
 }

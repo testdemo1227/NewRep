@@ -16,7 +16,9 @@
 // DON'T DO THAT .sh-component-child-child2 - div.sh-component-child > div.sh-component-child-child2
 // BETTER THAT .sh-component-child .sh-component-child2 - div.sh-component-child > div.sh-component-child2
 // .sh-component--modifier (the modifier)
-@import 
-'components/sh-site',
+
+@import 'components/sh-site',
+'components/sh-content',
 'components/sh-navMenu.scss',
-'components/sh-home.scss';
+'components/sh-footer',
+'components/_sh-home.scss';
