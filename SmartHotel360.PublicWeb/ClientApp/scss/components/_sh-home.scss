@@ -1,2 +1,39 @@
 ﻿@import '../base/variables';
 
+.sh-home {
+    &-info {
+        margin-top: 3rem;
+        padding: 0 3rem;
+
+        &-row {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        &-icon {
+            width: 6rem;
+        }
+
+        &-title {
+            font-size: $font-size-xxxl;
+            font-weight: $font-weight-medium;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        &-subtitle {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-medium;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        &-text {
+            font-size: $font-size-m;
+            line-height: $font-size-xxxl;
+        }
+    }
+}
