@@ -70,8 +70,11 @@
     }
 
     &-image {
+        $margin: -4rem;
+        bottom: $margin;
         height: auto;
         left: -5%;
+        margin-top: $margin;
         position: relative;
         width: 115%;
         z-index: 10;
@@ -82,7 +85,9 @@
         }
 
         @media screen and (min-width: $media-screen-m) {
+            bottom: 0;
             left: auto;
+            margin-top: 0;
             max-width: 40rem;
             position: absolute;
             right: -4%;
@@ -100,8 +105,6 @@
         padding-left: $padding-horizontal;
         padding-right: $padding-horizontal;
         padding-top: $padding-vertical;
-        position: relative;
-        top: -2.2rem;
         z-index: 0;
 
         @media screen and (min-width: $media-screen-s) {
@@ -110,7 +113,6 @@
             margin-right: auto;
             padding-bottom: $padding-vertical;
             padding-top: $padding-vertical;
-            top: -4rem;
         }
 
         @media screen and (min-width: $media-screen-m) {
