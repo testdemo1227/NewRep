@@ -73,6 +73,17 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
                     </div>
                 </article>
             </section>
+            <section className='sh-smartphone'>
+                <div className='sh-smartphone-wrapper'>
+                    <h2 className='sh-smartphone-title'>Discover the full smart experience with your smartphone</h2>
+                    <p className='sh-smartphone-description'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar orci nibh, et finibus ipsum efficitur id. Suspendisse ac mauris blandit, dictum orci eget, ornare dui. Pellentesque at ligula imperdiet, consectetur velit non, malesuada metus. Integer id metus vitae est interdum tincidunt sed sit amet nulla.</p>
+                    <img className='sh-smartphone-image' src=' /assets/images/smartphone.png' />
+                </div>
+                <div className='sh-smartphone-quote'>
+                    <p className='sh-smartphone-quote_text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar orci nibh, et finibus ipsum efficitur id. Suspendisse ac mauris blandit, dictum orci eget, ornare dui. Pellentesque at ligula imperdiet, consectetur velit non, malesuada metus. Integer id metus vitae est interdum tincidunt sed sit amet nulla.</p>
+                    <p className='sh-smartphone-quote_author'>Lorem Ipsum</p>
+                </div>
+            </section>
         </div>;
     }
 }

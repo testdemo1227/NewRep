@@ -21,6 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\Room.tsx" />
+    <None Remove="ClientApp\scss\components\_sh-room.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\NewFolder\" />
   </ItemGroup>
 
