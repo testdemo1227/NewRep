@@ -23,7 +23,57 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
                     </ul>
                 </div>
             </div>
-            <div className='sh-smartphone'>
+            <section className='sh-infogrid'>
+                <p className='sh-infogrid-title'>The smart experience</p>
+                <article className='sh-infogrid-row'>
+                    <div className='sh-infogrid-column'>
+                        <img className='sh-infogrid-icon' src='/assets/images/ic_check.svg' />
+                        <div className='sh-infogrid-description'>
+                            <p className='sh-infogrid-subtitle'>Check in from your phone</p>
+                            <span className='sh-infogrid-text'>
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
+                            </span>
+                        </div>
+                    </div>
+                </article>
+
+                <article className='sh-infogrid-row'>                        
+                    <div className='sh-infogrid-column sh-infogrid-column--even'>
+                        <img className='sh-infogrid-icon' src='/assets/images/ic_personalize.svg' />
+                        <div className='sh-infogrid-description sh-infogrid-description--even'>
+                            <p className='sh-infogrid-subtitle'>Personalize your experience</p>
+                            <span className='sh-infogrid-text'>
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
+                            </span>
+                        </div>
+                    </div>
+                </article>
+
+                <article className='sh-infogrid-row'>
+                    <div className='sh-infogrid-column'>
+                        <img className='sh-infogrid-icon' src='/assets/images/ic_padlock.svg' />
+                        <div className='sh-infogrid-description'>
+                            <p className='sh-infogrid-subtitle'>Find and access your room</p>
+                            <span className='sh-infogrid-text'>
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
+                            </span>
+                        </div>
+                    </div>
+                </article>
+
+                <article className='sh-infogrid-row'>                        
+                    <div className='sh-infogrid-column sh-infogrid-column--even'>
+                        <img className='sh-infogrid-icon' src='/assets/images/ic_begreen.svg' />
+                        <div className='sh-infogrid-description sh-infogrid-description--even'>
+                            <p className='sh-infogrid-subtitle'>Be green</p>
+                            <span className='sh-infogrid-text'>
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
+                            </span>
+                        </div>
+                    </div>
+                </article>
+            </section>
+            <section className='sh-smartphone'>
                 <div className='sh-smartphone-wrapper'>
                     <h2 className='sh-smartphone-title'>Discover the full smart experience with your smartphone</h2>
                     <p className='sh-smartphone-description'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar orci nibh, et finibus ipsum efficitur id. Suspendisse ac mauris blandit, dictum orci eget, ornare dui. Pellentesque at ligula imperdiet, consectetur velit non, malesuada metus. Integer id metus vitae est interdum tincidunt sed sit amet nulla.</p>
@@ -33,7 +83,7 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
                     <p className='sh-smartphone-quote_text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar orci nibh, et finibus ipsum efficitur id. Suspendisse ac mauris blandit, dictum orci eget, ornare dui. Pellentesque at ligula imperdiet, consectetur velit non, malesuada metus. Integer id metus vitae est interdum tincidunt sed sit amet nulla.</p>
                     <p className='sh-smartphone-quote_author'>Lorem Ipsum</p>
                 </div>
-            </div>
+            </section>
         </div>;
     }
 }
