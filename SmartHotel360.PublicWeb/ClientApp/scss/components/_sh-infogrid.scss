@@ -1,12 +1,11 @@
 ﻿@import '../base/variables';
 
 .sh-infogrid {
-    margin: 3rem auto;
+    margin: 6.5rem auto 5.5rem;
     max-width: 100vw;
-    padding: 0 3rem;
 
     @media screen and (min-width: $media-screen-l) {
-        max-width: 90vw;
+        max-width: 75vw;
     }
 
     &-row {
@@ -19,7 +18,7 @@
         }
 
         @media screen and (min-width: $media-screen-l) {
-            margin-bottom: -6rem;
+            margin-bottom: -4rem;
         }
 
         &:last-child {
@@ -32,26 +31,29 @@
     &-icon {
         width: 6rem;
 
-        @media screen and (min-width: $media-screen-m) and (max-width: $media-screen-l) {
+        @media screen and (min-width: $media-screen-m) {
             width: 9.6rem;
+        }
+
+        &--padlock {
+            width: 4.8rem;
+
+            @media screen and (min-width: $media-screen-m) {
+                width: 7.8rem;
+            }
         }
     }
 
-    &-title {
-        font-size: $font-size-xxxl;
-        font-weight: $font-weight-medium;
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-
     &-subtitle {
+        font-family: Poppins;
         font-size: $font-size-xl;
-        font-weight: $font-weight-medium;
+        font-weight: $font-weight-semibold;
         margin-bottom: 1rem;
         margin-top: 2rem;
     }
 
     &-text {
+        font-family: FiraSans;
         font-size: $font-size-m;
         line-height: $font-size-xxxl;
     }
@@ -92,21 +94,23 @@
             padding-left: 2rem;
             padding-right: 0;
             text-align: left;
-            width: 40vw;
+            width: 100vw;
         }
 
         @media screen and (min-width: $media-screen-l) {
-            width: 35vw;
+            width: 25vw;
         }
 
-        @media screen and (min-width: $media-screen-xxl) {
-            width: 37vw;
-        }
 
         &--even {
             @media screen and (min-width: $media-screen-m) {
                 padding-left: 0;
                 padding-right: 2rem;
+            }
+
+            @media screen and (min-width: $media-screen-l) {
+                padding-left: 2rem;
+                padding-right: 0;
             }
         }
     }

@@ -6,31 +6,22 @@
     height: 43rem;
     width: 100%;
 
-    &-download {
-        border: 1px solid $color-foreground-bright;
-        color: $color-foreground-bright;
-        margin-top: 2.75rem;
-        padding: 1.5rem;
-        text-align: center;
-        text-transform: uppercase;
-    }
-
     &-buttons {
         display: flex;
         list-style: none;
-        margin-top: 2.75rem;
+        margin-top: 7rem;
         padding: 0;
     }
 
     &-button {
-        border: 1px solid $color-foreground-bright;
+        border: 1px solid $color-background-brighter;
         cursor: pointer;
         margin-left: .5rem;
         margin-right: .5rem;
-        padding: 1rem;
+        padding: 1rem .5rem;
 
         &:hover {
-            background-color: rgba($color-foreground-bright, .5);
+            background-color: rgba($color-background-brighter, .5);
             transition: background-color $animation-speed-default ease;
         }
     }
@@ -40,11 +31,15 @@
         background-position-y: center;
         background-repeat: no-repeat;
         background-size: contain;
-        height: 2rem;
+        height: 2.5rem;
         width: 6rem;
 
-        @media screen and (min-width: $media-screen-m) {
+        @media screen and (min-width: $media-screen-s) {
             width: 9rem;
+        }
+
+        @media screen and (min-width: $media-screen-m) {
+            width: 15rem;
         }
 
         &--win {
@@ -61,7 +56,7 @@
     }
 
     &-title {
-        color: $color-foreground-bright;
+        color: $color-background-brighter;
         font-size: $font-size-xxxl;
         font-weight: $font-weight-medium;
 

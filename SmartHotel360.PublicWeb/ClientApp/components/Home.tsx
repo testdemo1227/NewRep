@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { ConferenceRoomsCarousel } from './conferenceRoomsCarousel';
 
 export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
     public render() {
@@ -7,9 +8,6 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
             <div className='sh-hero'>
                 <div className='sh-hero-wrapper'>
                     <div className='sh-hero-title'>The future of intelligent hospitality and connected workplace</div>
-                    <div className='sh-hero-download'>
-                        <span>Download the app</span>
-                    </div>
                     <ul className='sh-hero-buttons'>
                         <li className='sh-hero-button'>
                             <div className='sh-hero-download_app sh-hero-download_app--win'></div>
@@ -24,7 +22,7 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
                 </div>
             </div>
             <section className='sh-infogrid'>
-                <p className='sh-infogrid-title'>The smart experience</p>
+                <p className='sh-home-title'>The smart experience</p>
                 <article className='sh-infogrid-row'>
                     <div className='sh-infogrid-column'>
                         <img className='sh-infogrid-icon' src='/assets/images/ic_check.svg' />
@@ -51,7 +49,7 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
 
                 <article className='sh-infogrid-row'>
                     <div className='sh-infogrid-column'>
-                        <img className='sh-infogrid-icon' src='/assets/images/ic_padlock.svg' />
+                        <img className='sh-infogrid-icon sh-infogrid-icon--padlock' src='/assets/images/ic_padlock.svg' />
                         <div className='sh-infogrid-description'>
                             <p className='sh-infogrid-subtitle'>Find and access your room</p>
                             <span className='sh-infogrid-text'>
@@ -73,6 +71,11 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
                     </div>
                 </article>
             </section>
+
+            <span className='sh-home-label'>For Business travelers</span>
+            <span className='sh-home-title'>Smart conference rooms</span>
+            <ConferenceRoomsCarousel />
+
             <section className='sh-smartphone'>
                 <div className='sh-smartphone-wrapper'>
                     <h2 className='sh-smartphone-title'>Discover the full smart experience with your smartphone</h2>
