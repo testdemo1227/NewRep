@@ -1,0 +1,24 @@
+﻿@import '../base/variables';
+
+.sh-rooms {
+    $item-width: 23.5rem;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto 5.5rem;
+    width: $item-width;
+
+    @media screen and (min-width: $media-screen-s) {
+        justify-content: flex-start;
+    }
+
+    @media screen and (min-width: $media-screen-m) {
+        width: calc(#{$item-width} * 2);
+    }
+
+    @media screen and (min-width: $media-screen-l) {
+        width: calc(#{$item-width} * 3);
+    }
+}

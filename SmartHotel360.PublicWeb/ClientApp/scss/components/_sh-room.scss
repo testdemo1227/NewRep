@@ -1,0 +1,92 @@
+﻿@import '../base/variables';
+
+.sh-room {
+    $box-height: 23.3rem;
+    $box-width: 21.5rem;
+
+    background-color: $color-background-brighter;
+    height: auto;
+    margin: 1rem;
+    width: $box-width;
+
+    &-image {
+        background-size: cover;
+        height: 19rem;
+        width: $box-width;
+    }
+
+    &-button {
+        background: $color-secondary;
+        color: $color-background-brighter;
+        cursor: pointer;
+        font-size: $font-size-s;
+        line-height: 3rem;
+        padding: 0 2rem;
+        text-align: center;
+        text-transform: uppercase;
+
+        &:hover {
+            background-color: lighten($color-secondary, 10%);
+            color: $color-foreground-brighter;
+            transition: background-color $animation-speed-default ease;
+        }
+
+        &:focus,
+        &:active {
+            box-shadow: none !important;
+            color: $color-foreground-brighter;
+            outline: none !important;
+        }
+    }
+
+    &-star {
+        color: $color-foreground-bright;
+        margin: 0 .2rem;
+
+        &.active {
+            color: $color-brand;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &-info {
+        display: flex;
+        padding: 1rem 0;
+    }
+
+    &-column {
+        display: flex;
+        flex-direction: column;
+
+        &--left {
+            flex: 1 auto;
+        }
+
+        &--right {
+            text-align: right;
+        }
+    }
+
+    &-text {
+        font-family: FiraSans;
+    }
+
+    &-title {
+        font-weight: $font-weight-semibold;
+    }
+
+    &-price {
+        font-weight: $font-weight-semibold;
+    }
+
+    &-label {
+        font-size: $font-size-s;
+    }
+
+    &-row {
+        padding: .5rem 0;
+    }
+}

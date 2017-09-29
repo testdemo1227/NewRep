@@ -1,10 +1,17 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { ConferenceRoomsCarousel } from './conferenceRoomsCarousel';
+import { ConferenceRoomsCarousel } from './ConferenceRoomsCarousel';
+import Rooms from './Rooms';
+import { ApplicationState } from '../store';
+import { connect } from 'react-redux';
+import * as RoomsState from '../store/Rooms';
 
-export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
+type HomeProps =
+    RouteComponentProps<{}>;
+
+export default class Home extends React.Component<HomeProps, {}> {
     public render() {
-        return <div className='sh-home'>
+        return <div className='sh-home'>           
             <div className='sh-hero'>
                 <div className='sh-hero-wrapper'>
                     <div className='sh-hero-title'>The future of intelligent hospitality and connected workplace</div>
@@ -75,7 +82,7 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
             <span className='sh-home-label'>For Business travelers</span>
             <span className='sh-home-title'>Smart conference rooms</span>
             <ConferenceRoomsCarousel />
-
+            
             <section className='sh-smartphone'>
                 <div className='sh-smartphone-wrapper'>
                     <h2 className='sh-smartphone-title'>Discover the full smart experience with your smartphone</h2>
@@ -87,6 +94,9 @@ export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
                     <p className='sh-smartphone-quote_author'>Lorem Ipsum</p>
                 </div>
             </section>
+
+            <span className='sh-home-title'>Rooms and Conference Rooms</span>
+            <Rooms />
         </div>;
     }
 }

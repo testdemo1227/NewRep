@@ -26,7 +26,7 @@ export class ConferenceRoomsCarousel extends React.Component<{}, {}> {
 
     private setBackgroundImage(image: string): any {
         return {
-            'background-image': `url(${image})`,
+            backgroundImage: `url(${image})`,
         }
     }
     public render() {
