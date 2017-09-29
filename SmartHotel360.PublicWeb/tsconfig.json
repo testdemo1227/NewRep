@@ -7,9 +7,10 @@
     "jsx": "react",
     "experimentalDecorators": true,
     "sourceMap": true,
+    "strictNullChecks ": false,
     "skipDefaultLibCheck": true,
     "strict": true,
-    "lib": ["es6", "dom"],
+    "lib": [ "es6", "dom" ],
     "types": [ "webpack-env" ]
   },
   "exclude": [

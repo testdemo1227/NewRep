@@ -1,15 +1,17 @@
 @import '../base/variables';
 
 .sh-nav_menu {
+    $distance-left: 2rem;
+    $distance-top: 2rem;
+
     background-color: $color-brand-dark;
-    height: 5rem;
+    display: flex;
+    height: 5rem + $distance-top * 2;
+    justify-content: space-between;
     position: relative;
     width: 100%;
 
     &-logo {
-        $distance-left: 2rem;
-        $distance-top: 2rem;
-
         height: auto;
         margin-left: $distance-left;
         margin-top: .5rem;
@@ -43,5 +45,22 @@
         position: absolute;
         top: 0;
         z-index: 1000;
+    }
+
+    &-links {
+        align-items: center;
+        color: $color-foreground-brighter;
+        display: flex;
+        list-style: none;
+        margin-right: 10vw;
+    }
+
+    &-link {
+        cursor: pointer;
+
+        &:hover {
+            color: $color-brand-bright;
+            transition: color $animation-speed-default;
+        }
     }
 }

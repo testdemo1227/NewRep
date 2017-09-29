@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SmartHotel360.PublicWeb.Models;
+using Microsoft.Extensions.Options;
+using SmartHotel360.PublicWeb.Models.Settings;
+using SmartHotel360.PublicWeb.Services;
 
 namespace SmartHotel360.PublicWeb
 {
@@ -21,7 +23,8 @@ namespace SmartHotel360.PublicWeb
         {
             services.AddMvc();
 
-            services.Configure<Settings>(Configuration);
+            services.Configure<LocalSettings>(Configuration);
+            services.AddSingleton<SettingsService>( (sp) => SettingsService.Load(sp.GetService<IOptions<LocalSettings>>().Value));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

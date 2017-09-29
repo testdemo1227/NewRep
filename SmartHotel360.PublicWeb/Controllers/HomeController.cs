@@ -1,26 +1,22 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using SmartHotel360.PublicWeb.Models;
+using SmartHotel360.PublicWeb.Services;
+using SmartHotel360.PublicWeb.Models.Settings;
 
 namespace SmartHotel360.PublicWeb.Controllers
 {
     public class HomeController : Controller
     {
 
-        private readonly Settings _settings;
+        private readonly ServerSettings _globalSettings;
 
-        public HomeController(IOptions<Settings> settings)
+        public HomeController(SettingsService settingsService)
         {
-            _settings = settings.Value;
+            _globalSettings = settingsService.GlobalSettings;
         }
         public IActionResult Index()
         {
-            return View(_settings);
+            return View(_globalSettings);
         }
 
         public IActionResult Error()
