@@ -34,7 +34,7 @@
         height: 2.5rem;
         width: 6rem;
 
-        @media screen and (min-width: $media-screen-s) {
+        @media screen and (min-width: $media-screen-xs) {
             width: 7rem;
         }
 
@@ -82,7 +82,7 @@
             width: 60vw;
         }
 
-        @media screen and (max-width: $media-screen-l) and (min-width: $media-screen-s) {
+        @media screen and (max-width: $media-screen-l) and (min-width: $media-screen-xs) {
             padding: $distance 0;
             width: 70vw;
         }

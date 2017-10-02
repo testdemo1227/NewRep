@@ -1,4 +1,5 @@
 @import '../base/variables';
+@import '../base/common';
 
 .sh-nav_menu {
     $distance-left: 2rem;
@@ -11,10 +12,18 @@
     position: relative;
     width: 100%;
 
+    &-container {
+        display: flex;
+
+        @media screen and (max-width: $media-screen-s) {
+            overflow: hidden;
+            width: 5.25rem;
+        }
+    }
+
     &-logo {
         height: auto;
         margin-left: $distance-left;
-        margin-top: .5rem;
         width: 12rem;
 
         @media screen and (min-width: $media-screen-m) {
@@ -23,19 +32,20 @@
 
         &.is-home {
             margin-left: $distance-left;
-            margin-top: 1.5rem;
             width: 11rem;
 
             @media screen and (min-width: $media-screen-m) {
                 margin-left: 4rem;
-                margin-top: $distance-top;
                 width: 18rem;
             }
 
-            @media screen and (max-width: $media-screen-m) and (min-width: $media-screen-s) {
+            @media screen and (max-width: $media-screen-m) {
                 margin-left: $distance-left;
-                margin-top: $distance-top;
-                width: 16rem;
+                width: 13rem;
+            }
+
+            @media screen and (max-width: $media-screen-m) {
+                width: 10rem;
             }
         }
     }
@@ -56,11 +66,6 @@
     }
 
     &-link {
-        cursor: pointer;
-
-        &:hover {
-            color: $color-brand-bright;
-            transition: color $animation-speed-default;
-        }
+        @include menu-links;
     }
 }

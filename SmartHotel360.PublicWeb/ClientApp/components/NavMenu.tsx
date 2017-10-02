@@ -14,7 +14,7 @@ class NavMenu extends React.Component<NavMenuProps, {}> {
 
     public render() {
         return <div className={`sh-nav_menu ${this.props.isHome ? 'is-home' : ''}`}>
-            <Link to={'/'}>
+            <Link to={'/'} className='sh-nav_menu-container'>
                 <img className={`sh-nav_menu-logo ${this.props.isHome ? 'is-home' : ''}`} src='/assets/images/logo.svg' />
             </Link>
 

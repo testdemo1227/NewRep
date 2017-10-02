@@ -12,14 +12,20 @@ type AuthProps =
 class Auth extends React.Component<any, {}> {
     public render() {
 
-        return <div>
+        return <div className='sh-auth'>
             {!this.props.name
                 ? <li>
-                    <span className='sh-nav_menu-link' onClick={() => { this.props.login() }}>Login</span>
+                    <span className='sh-auth-link' onClick={() => { this.props.login() }}>Login</span>
                 </li>
-            
-                : <li>
-                    <span className='sh-nav_menu-link' onClick={() => { this.props.logout() }}>Logout</span>
+
+                : <li className='sh-auth-group'>
+                    <section className='sh-auth-profile'>
+                        <div className='sh-auth-name'>
+                            {this.props.name}
+                        </div>
+                        <span className='sh-auth-link' onClick={() => { this.props.logout() }}>Logout</span>
+                    </section>
+                    <img className='sh-auth-picture' src={this.props.gravatar} title={ this.props.name } />
                 </li>
             }
         </div>;

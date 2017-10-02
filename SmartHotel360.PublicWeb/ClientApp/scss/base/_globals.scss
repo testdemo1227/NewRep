@@ -10,3 +10,8 @@ body {
     height: 100%;
     width: 100%;
 }
+
+::selection {
+    background-color: $color-brand;
+    color: $color-foreground-brighter;
+}

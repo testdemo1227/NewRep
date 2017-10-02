@@ -1,7 +1,8 @@
-/// <reference path="../../node_modules/msal/out/msal.d.ts" />
+/// <reference path='../../node_modules/msal/out/msal.d.ts' />
 
 import { AppThunkAction } from 'ClientApp/store';
 import { Reducer } from 'redux';
+import { Md5 } from 'ts-md5/dist/md5';
 
 // TODO: Env variables
 const tenant = 'smarthotel360.onmicrosoft.com';
@@ -9,20 +10,25 @@ const policy = 'B2C_1_SignUpInPolicy';
 const client = 'b3cfbe11-ac36-4dcb-af16-8656ee286dcc';
 const scopes = ['openid'];
 const authority = `https://login.microsoftonline.com/tfp/${tenant}/${policy}`;
+const graphApi = 'https://graph.microsoft.com/v1.0/me';
 
 let userManager: Msal.UserAgentApplication;
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 export interface UserState {
-    name?: string | null;
     id?: string | null;
+    name?: string | null;
+    email?: string | null;
+    gravatar?: string | null;
     error?: boolean;
 }
 
 const initialState: UserState = {
-    name: null,
     id: null,
+    name: null,
+    email: null,
+    gravatar: null,
     error: false
 };
 
@@ -31,7 +37,7 @@ const initialState: UserState = {
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 // Use @typeName and isActionType for type detection that works even after serialization/deserialization.
 
-interface InitAction { type: 'INIT_ACTION', name: string | null, id: string | null }
+interface InitAction { type: 'INIT_ACTION', id: string | null, name: string | null, email: string | null, gravatar: string | null }
 interface LoginAction { type: 'LOGIN_ACTION', error: boolean }
 interface LogoutAction { type: 'LOGOUT_ACTION' }
 
@@ -43,18 +49,31 @@ type KnownAction = InitAction | LoginAction | LogoutAction;
 export const actionCreators = {
     init: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         userManager = new Msal.UserAgentApplication(client, authority,
-        (errorDesc: any, token: any, error: any, tokenType: any) => {
-            console.log('after loginredirect or acquireTokenPopup');
-        });
+            (errorDesc: any, token: any, error: any, tokenType: any) => {
+                console.log('after loginredirect or acquireTokenPopup');
+            });
 
         setTimeout(() => {
             userManager.acquireTokenSilent(scopes)
-            .then((accessToken: any) => {
-                const user = userManager.getUser();
-                dispatch({ type: 'INIT_ACTION', name: user.name, id: user.userIdentifier });
-            }, (error: any) => {
-                dispatch({ type: 'INIT_ACTION', name: null, id: null });
-            });
+                .then((accessToken: any) => {
+                    const user = userManager.getUser();
+
+                    // get email
+                    const jwt = Msal.Utils.decodeJwt(accessToken);
+                    let email = user.name;
+                    if (jwt && jwt.JWSPayload) {
+                        const decoded = JSON.parse(atob(jwt.JWSPayload));
+                        if (decoded && decoded.emails && decoded.emails[0]) {
+                            email = decoded.emails[0];
+                        }
+                    }
+       
+
+                    dispatch({
+                        type: 'INIT_ACTION', id: user.userIdentifier, name: user.name, email: email, gravatar: 'https://www.gravatar.com/avatar/' + Md5.hashStr(email.toLowerCase()).toString() });
+                }, (error: any) => {
+                    dispatch({ type: 'INIT_ACTION', id: null, name: null, email: null, gravatar: null });
+                });
         }, 10);
     },
 
@@ -64,11 +83,11 @@ export const actionCreators = {
                 dispatch({ type: 'LOGIN_ACTION', error: false });
             }, (error: any) => {
                 userManager.loginRedirect(scopes);
-                dispatch({ type: 'LOGIN_ACTION', error: true});
+                dispatch({ type: 'LOGIN_ACTION', error: true });
             });
     },
     logout: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        dispatch({ type: 'LOGOUT_ACTION'});
+        dispatch({ type: 'LOGOUT_ACTION' });
         userManager.logout();
     }
 };
@@ -78,7 +97,7 @@ export const actionCreators = {
 export const reducer: Reducer<UserState> = (state: UserState, action: KnownAction) => {
     switch (action.type) {
         case 'INIT_ACTION':
-            return { ...state, error: false, name: action.name, id: action.id };
+            return { ...state, error: false, id: action.id, name: action.name, email: action.email, gravatar: action.gravatar };
         case 'LOGIN_ACTION':
             return { ...state, error: action.error };
         case 'LOGOUT_ACTION':
