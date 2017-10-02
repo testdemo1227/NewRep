@@ -1,6 +1,6 @@
 ﻿@import '../base/variables';
 
-.sh-conference_rooms {
+.sh-rooms_feature {
     $wrapper-width: 26rem;
     $image-height: 16.5rem;
     $box-padding: 4rem;
@@ -8,7 +8,9 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+    list-style: none;
     margin-bottom: 3rem;
+    padding: 0;
     text-align: center;
 
     &-wrapper {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { ConferenceRoomsCarousel } from './ConferenceRoomsCarousel';
+import ConferenceRoomsFeatures from './ConferenceRoomsFeatures';
 import Rooms from './Rooms';
 import { ApplicationState } from '../store';
 import { connect } from 'react-redux';
@@ -81,7 +81,7 @@ export default class Home extends React.Component<HomeProps, {}> {
 
             <span className='sh-home-label'>For Business travelers</span>
             <span className='sh-home-title'>Smart conference rooms</span>
-            <ConferenceRoomsCarousel />
+            <ConferenceRoomsFeatures />
             
             <section className='sh-smartphone'>
                 <div className='sh-smartphone-wrapper'>
