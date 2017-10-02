@@ -1,16 +1,16 @@
 /// <reference path='../../node_modules/msal/out/msal.d.ts' />
 
-import { AppThunkAction } from 'ClientApp/store';
 import { Reducer } from 'redux';
 import { Md5 } from 'ts-md5/dist/md5';
+import { AppThunkAction } from 'ClientApp/store';
+import { settings } from '../Settings';
 
 // TODO: Env variables
-const tenant = 'smarthotel360.onmicrosoft.com';
-const policy = 'B2C_1_SignUpInPolicy';
-const client = 'b3cfbe11-ac36-4dcb-af16-8656ee286dcc';
+const tenant = settings.b2c.tenant;
+const policy = settings.b2c.policy;
+const client = settings.b2c.client;
 const scopes = ['openid'];
 const authority = `https://login.microsoftonline.com/tfp/${tenant}/${policy}`;
-const graphApi = 'https://graph.microsoft.com/v1.0/me';
 
 let userManager: Msal.UserAgentApplication;
 

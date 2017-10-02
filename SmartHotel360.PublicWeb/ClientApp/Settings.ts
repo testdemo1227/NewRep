@@ -1,8 +1,19 @@
 ﻿class Settings {
     public production = false;
-    public bookingsUrl = '';
-    public hotelsUrl = '';
-    public suggestionsUrl = '';
+    public urls = {
+        hotels: '',
+        bookings: '',
+        suggestions: '',
+        tasks: ''
+    };
+    public tokens = {
+        bingmaps: ''
+    };
+    public b2c = {
+        tenant: '',
+        client: '',
+        policy: ''
+    };
 }
 
 declare global {
