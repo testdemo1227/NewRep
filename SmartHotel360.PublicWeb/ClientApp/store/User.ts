@@ -22,6 +22,7 @@ export interface UserState {
     email?: string | null;
     gravatar?: string | null;
     error?: boolean;
+    isLoading?: boolean;
 }
 
 const initialState: UserState = {
@@ -29,7 +30,8 @@ const initialState: UserState = {
     name: null,
     email: null,
     gravatar: null,
-    error: false
+    error: false,
+    isLoading: false
 };
 
 // -----------------
@@ -97,11 +99,11 @@ export const actionCreators = {
 export const reducer: Reducer<UserState> = (state: UserState, action: KnownAction) => {
     switch (action.type) {
         case 'INIT_ACTION':
-            return { ...state, error: false, id: action.id, name: action.name, email: action.email, gravatar: action.gravatar };
+            return { ...state, error: false, id: action.id, name: action.name, email: action.email, gravatar: action.gravatar, isLoading: false };
         case 'LOGIN_ACTION':
-            return { ...state, error: action.error };
+            return { ...state, error: action.error, isLoading: true };
         case 'LOGOUT_ACTION':
-            return { ...state, error: false };
+            return { ...state, error: false, isLoading: true };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;
