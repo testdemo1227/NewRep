@@ -1,16 +1,18 @@
-﻿import { AppThunkAction } from 'ClientApp/store';
+﻿import { fetch, addTask } from 'domain-task';
+import { AppThunkAction } from 'ClientApp/store';
 import { Reducer } from 'redux';
+import { settings } from '../Settings';
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 export interface Room {
-    image: string;
-    title: string;
-    rating: number;
+    id: number;
+    name: string;
+    itemType: string;
     city: string;
+    rating: number;
     price: number;
-    currency: string;
-    type: string;
+    picture: string
 }
 
 export interface RoomsState {
@@ -38,41 +40,15 @@ type KnownAction = RequestRoomsAction | ReceiveRoomsAction;
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 export const actionCreators = {
     request: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        // TODO: Use api
-        setTimeout(() => {
-            const data = [
-                {
-                    image: '/assets/images/hotel_1.png',
-                    title: 'Lorem Ipsum',
-                    rating: 3,
-                    city: 'Stockholm, Sweden',
-                    price: 130,
-                    currency: '$',
-                    type: 'Book a room'
-                },
-                {
-                    image: '/assets/images/hotel_2.png',
-                    title: 'Lorem Ipsum',
-                    rating: 3,
-                    city: 'Stockholm, Sweden',
-                    price: 130,
-                    currency: '$',
-                    type: 'Book a room'
-                },
-                {
-                    image: '/assets/images/hotel_3.png',
-                    title: 'Lorem Ipsum',
-                    rating: 3,
-                    city: 'Stockholm, Sweden',
-                    price: 130,
-                    currency: '$',
-                    type: 'Book a conference room'
-                }
-            ];
- 
-            dispatch({ type: 'RECEIVE_ROOMS_ACTION', list: data });
-        }, 1000);
-        dispatch({ type: 'REQUEST_ROOMS_ACTION'});
+
+       let fetchTask = fetch(`${settings.urls.hotels}Featured`)
+            .then(response => response.json() as Promise<Room[]>)
+            .then(data => {
+                dispatch({ type: 'RECEIVE_ROOMS_ACTION', list: data });
+            });
+
+        addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
+        dispatch({ type: 'REQUEST_ROOMS_ACTION' });
     }
 };
 

@@ -18,7 +18,7 @@
         width: calc(#{$item-width} * 2);
     }
 
-    @media screen and (min-width: $media-screen-l) {
+    @media screen and (min-width: $media-screen-xl) {
         width: calc(#{$item-width} * 3);
     }
 }

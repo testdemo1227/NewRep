@@ -77,12 +77,12 @@
         text-align: center;
         width: 80vw;
 
-        @media screen and (min-width: $media-screen-l) {
+        @media screen and (min-width: $media-screen-xl) {
             padding: $distance 0;
             width: 60vw;
         }
 
-        @media screen and (max-width: $media-screen-l) and (min-width: $media-screen-xs) {
+        @media screen and (max-width: $media-screen-xl) and (min-width: $media-screen-xs) {
             padding: $distance 0;
             width: 70vw;
         }
