@@ -4,17 +4,37 @@ import { Reducer } from 'redux';
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 export interface Feature {
-    title: string;
-    imageUrl: string;
-    description: string;
+    title: string | null;
+    imageUrl: string | null;
+    description: string | null;
+}
+
+type TranslationUnits = 'rem' | 'px' | 'em' | '%';
+
+export interface Translation {
+    current: number;
+    factor: number;
+    units: TranslationUnits;
+    styles: any;
+    min: number;
+    max: number;
 }
 
 export interface FeaturesState {
     list?: Feature[];
+    translation: Translation;
 }
 
 const initialState: FeaturesState = {
-    list: []
+    list: [],
+    translation: {
+        current: 0,
+        factor: 30,
+        units: 'rem',
+        styles: {},
+        min: 0,
+        max: 0
+    }
 };
 
 // -----------------
@@ -24,17 +44,31 @@ const initialState: FeaturesState = {
 
 interface RequestFeaturesAction { type: 'REQUEST_FEATURES_ACTION' }
 interface ReceiveFeaturesAction { type: 'RECEIVE_FEATURES_ACTION', list: Feature[] }
+interface TranslateAction { type: 'TRANSLATE_ACTION', current: number }
 
-type KnownAction = RequestFeaturesAction | ReceiveFeaturesAction;
+
+type KnownAction = RequestFeaturesAction | ReceiveFeaturesAction | TranslateAction;
+
+// ---------------
+// FUNCTIONS - Our functions to reuse in this code.
+function createStyles(value: number, units: TranslationUnits): any {
+    return {
+        transform: `translateX(${value}${units})`
+    };
+}
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 export const actionCreators = {
     request: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-
         // Static content
         const data = [
+            {
+                title: null,
+                imageUrl: null,
+                description: null
+            },
             {
                 title: 'Book a smart conference room',
                 imageUrl: '/assets/images/conference_room_1.png',
@@ -58,17 +92,43 @@ export const actionCreators = {
         ];
 
         dispatch({ type: 'RECEIVE_FEATURES_ACTION', list: data });
+    },
+
+    translateLeft: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        const state = getState().conferenceRoomsFeatures;
+        let current = state.translation.current -= state.translation.factor;
+        current = current < state.translation.max ? state.translation.current += state.translation.factor : current;
+
+        dispatch({ type: 'TRANSLATE_ACTION', current: current});
+    },
+
+    translateRight: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        const state = getState().conferenceRoomsFeatures;
+        let current = state.translation.current += state.translation.factor;
+        current = current > state.translation.min ? state.translation.current -= state.translation.factor : current;
+
+        dispatch({ type: 'TRANSLATE_ACTION', current: current });
     }
 };
 
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 export const reducer: Reducer<FeaturesState> = (state: FeaturesState, action: KnownAction) => {
+    let translation = 0;
+
     switch (action.type) {
         case 'REQUEST_FEATURES_ACTION':
             return { ...state };
         case 'RECEIVE_FEATURES_ACTION':
-            return { ...state, list: action.list };
+            const length = action.list.length % 2 === 0 ? action.list.length : action.list.length + 1;
+            const min = ((length / 2) - 2) * state.translation.factor;
+            const max = -((length / 2) - 1) * state.translation.factor;
+
+            return {
+                ...state, list: action.list, translation: { ...state.translation, min: min, max: max }
+            };
+        case 'TRANSLATE_ACTION':
+            return { ...state, translation: { ...state.translation, current: action.current, styles: createStyles(action.current, state.translation.units) } };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

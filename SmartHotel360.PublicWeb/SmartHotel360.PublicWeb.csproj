@@ -21,6 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="postcss.config.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\assets\images\facebook.svg" />
     <None Include="wwwroot\assets\images\instagram.svg" />
     <None Include="wwwroot\assets\images\twitter.svg" />

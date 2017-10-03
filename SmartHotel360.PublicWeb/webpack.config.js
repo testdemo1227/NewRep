@@ -32,7 +32,7 @@ module.exports = (env) => {
         entry: { 'main-client': './ClientApp/boot-client.tsx' },
         module: {
             rules: [
-                { test: /\.scss$/, use: ExtractTextPlugin.extract({ use: isDevBuild ? ['css-loader', 'sass-loader'] : ['css-loader?minimize', 'sass-loader'] }) }
+                { test: /\.scss$/, use: ExtractTextPlugin.extract({ use: isDevBuild ? ['css-loader', 'postcss-loader', 'sass-loader'] : ['css-loader?minimize', 'postcss-loader', 'sass-loader'] }) }
             ]
         },
         output: { path: path.join(__dirname, clientBundleOutputDir) },

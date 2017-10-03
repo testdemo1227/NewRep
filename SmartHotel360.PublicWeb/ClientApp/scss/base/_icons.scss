@@ -1,6 +1,10 @@
 @import 'mixins/icomoon';
 $icons: (
-    sh-play: 'e900'
+    sh-smart-finde: 'e900',
+    sh-smart-perso: 'e901',
+    sh-smart-green: 'e902',
+    sh-smart-check: 'e903',
+    sh-chevron: 'e904'
 );
 
 @include icomoon-generate($icons);

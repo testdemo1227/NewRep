@@ -27,6 +27,7 @@ module.exports = (env) => {
                 'react-dom',
                 'react-router-dom',
                 'react-redux',
+                'react-swipeable',
                 'redux',
                 'redux-thunk',
                 'react-router-redux',
