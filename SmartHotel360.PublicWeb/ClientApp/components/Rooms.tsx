@@ -19,9 +19,9 @@ class Rooms extends React.Component<any, {}> {
             {this.props.isLoading
                 ? <div> Loading... </div>
                 :
-                    this.props.list.map((room: any, key: any) =>
-                        <div className='sh-rooms-item' key={key} ><RoomHighlighted {...room} /></div>
-                    )
+                this.props.list.map((room: any, key: any) =>
+                    <div className='sh-rooms-item' key={key} ><RoomHighlighted {...room} /></div>
+                )
             }
         </div>;
     }

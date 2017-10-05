@@ -1,0 +1,18 @@
+﻿@import '../base/variables';
+
+.sh-filter_rating {
+    &-star {
+        color: $color-foreground-bright;
+        cursor: pointer;
+        margin: 0 .2rem;
+
+        &.active,
+        &:hover {
+            color: $color-brand;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

@@ -19,10 +19,12 @@ module.exports = (env) => {
             vendor: [
                 'bootstrap',
                 'normalize.css',
-                'bootstrap/dist/css/bootstrap.css',
+                'bootstrap/dist/css/bootstrap.css',                
                 'domain-task',
                 'event-source-polyfill',
                 'history',
+                'rc-slider',
+                'rc-slider/assets/index.css',
                 'react',
                 'react-dom',
                 'react-router-dom',

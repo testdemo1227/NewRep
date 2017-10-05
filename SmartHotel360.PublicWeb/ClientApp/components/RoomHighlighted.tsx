@@ -2,7 +2,7 @@
 import Room from './Room';
 
 export class RoomHighlighted extends Room {
-    private getButtonText(type: string): string{
+    private getButtonText(type: string): string {
         return type === 'hotel' ? 'Book a room' : 'Book a conference Room';
     }
     public navigationButtons(): JSX.Element {
