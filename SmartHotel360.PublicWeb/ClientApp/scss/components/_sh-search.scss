@@ -1,0 +1,86 @@
+﻿@import '../base/variables';
+
+.sh-search {
+    $height: 12rem;
+    $padding: 2vw;
+
+    display: flex;
+    height: $height;
+    justify-content: center;
+    padding-left: $padding;
+    padding-right: $padding;
+
+
+    @media screen and (min-width: $media-screen-m) {
+        $padding: 8vw;
+        padding-left: $padding;
+        padding-right: $padding;
+    }
+
+    @media screen and (min-width: $media-screen-l) {
+        $padding: 14vw;
+        padding-left: $padding;
+        padding-right: $padding;
+    }
+
+    &-wrapper {
+        background-color: $color-background-brighter;
+        border-radius: 4px;
+        box-shadow: 0 0 21px 2px rgba($color-background-darker, .08);
+        height: $height;
+        transform: translateY(-$height/2);
+        width: 100%;
+    }
+
+    &-tabs {
+        $margin: 1rem;
+
+        border-bottom: 1px solid $color-foreground-bright;
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        margin-left: $margin;
+        margin-right: $margin;
+    }
+
+    &-tab {
+        $vpadding: 1.5rem;
+        $hpadding: 2rem;
+        $margin: 1rem;
+        $shadow: inset 0 -5px 0;
+
+        box-shadow: $shadow transparent;
+        cursor: pointer;
+        font-size: $font-size-l;
+        margin-left: $margin;
+        margin-right: $margin;
+        padding-bottom: $vpadding;
+        padding-left: $hpadding;
+        padding-right: $hpadding;
+        padding-top: $vpadding;
+
+        &:hover {
+            color: $color-secondary;
+            transition: color $animation-speed-default;
+        }
+
+        &.is-active {
+            box-shadow: $shadow $color-secondary;
+            color: $color-secondary;
+        }
+    }
+
+    &-inputs {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+    }
+
+    &-value {
+        display: none;
+
+        &.is-filled {
+            display: block;
+        }
+    }
+}

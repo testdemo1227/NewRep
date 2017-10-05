@@ -5,6 +5,7 @@ import Rooms from './Rooms';
 import { ApplicationState } from '../store';
 import { connect } from 'react-redux';
 import * as RoomsState from '../store/Rooms';
+import Search from './Search';
 
 type HomeProps =
     RouteComponentProps<{}>;
@@ -28,6 +29,7 @@ export default class Home extends React.Component<HomeProps, {}> {
                     </ul>
                 </div>
             </div>
+            <Search />
             <section className='sh-infogrid'>
                 <p className='sh-home-title'>The smart experience</p>
                 <article className='sh-infogrid-row'>

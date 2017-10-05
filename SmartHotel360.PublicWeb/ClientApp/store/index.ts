@@ -3,6 +3,7 @@ import * as NavMenu from './NavMenu';
 import * as Counter from './Counter';
 import * as Rooms from './Rooms';
 import * as User from './User';
+import * as Search from './Search';
 import * as ConferenceRoomsFeatures from './ConferenceRoomsFeatures';
 
 // the top-level state object
@@ -13,6 +14,7 @@ export interface ApplicationState {
     rooms: Rooms.RoomsState;
     user: User.UserState;
     conferenceRoomsFeatures: ConferenceRoomsFeatures.FeaturesState;
+    search: Search.SearchState;
 }
 
 // whenever an action is dispatched, Redux will update each top-level application state property using
@@ -24,7 +26,8 @@ export const reducers = {
     weatherForecasts: WeatherForecasts.reducer,
     rooms: Rooms.reducer,
     user: User.reducer,
-    conferenceRoomsFeatures: ConferenceRoomsFeatures.reducer
+    conferenceRoomsFeatures: ConferenceRoomsFeatures.reducer,
+    search: Search.reducer
 };
 
 // this type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

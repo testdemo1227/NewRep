@@ -31,15 +31,12 @@
         background-position-y: center;
         background-repeat: no-repeat;
         background-size: contain;
-        height: 2.5rem;
+        height: 1rem;
         width: 6rem;
 
-        @media screen and (min-width: $media-screen-xs) {
-            width: 7rem;
-        }
-
         @media screen and (min-width: $media-screen-m) {
-            width: 15rem;
+            height: 1.5rem;
+            width: 7.5rem;
         }
 
         &--win {
@@ -57,10 +54,14 @@
 
     &-title {
         color: $color-background-brighter;
-        font-size: $font-size-xxxl;
+        font-size: $font-size-xxl;
         font-weight: $font-weight-medium;
 
-        @media screen and (min-width: $media-screen-m) {
+        @media screen and (min-width: $media-screen-s) {
+            font-size: $font-size-xxxl;
+        }
+
+        @media screen and (min-width: $media-screen-l) {
             font-size: $font-size-xxxxl;
         }
     }
