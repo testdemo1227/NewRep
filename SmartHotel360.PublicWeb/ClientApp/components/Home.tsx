@@ -6,6 +6,7 @@ import { ApplicationState } from '../store';
 import { connect } from 'react-redux';
 import * as RoomsState from '../store/Rooms';
 import Search from './Search';
+import { RoomHighlighted } from './RoomHighlighted';
 
 type HomeProps =
     RouteComponentProps<{}>;
@@ -98,7 +99,7 @@ export default class Home extends React.Component<HomeProps, {}> {
             </section>
 
             <span className='sh-home-title'>Rooms and Conference Rooms</span>
-            <Rooms />
+            <Rooms component={RoomHighlighted} />
         </div>;
     }
 }

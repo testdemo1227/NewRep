@@ -21,6 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\FilterCancelation.tsx" />
+    <None Remove="ClientApp\components\FilterNeighborhood.tsx" />
+    <None Remove="ClientApp\components\FilterRelevance.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="postcss.config.js" />
   </ItemGroup>
 
@@ -29,6 +35,12 @@
     <None Include="wwwroot\assets\images\instagram.svg" />
     <None Include="wwwroot\assets\images\twitter.svg" />
     <None Include=".ts-lint.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\FilterCancelation.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\FilterNeighborhood.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\FilterRelevance.tsx" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

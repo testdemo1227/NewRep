@@ -21,4 +21,14 @@
     @media screen and (min-width: $media-screen-xl) {
         width: calc(#{$item-width} * 3);
     }
+
+    &-title {
+        clear: both;
+        display: block;
+        font-size: $font-size-xxl;
+        font-weight: $font-weight-medium;
+        padding: 0 1rem;
+        text-align: left;
+        width: 100%;
+    }
 }
