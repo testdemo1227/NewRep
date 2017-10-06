@@ -45,18 +45,6 @@ export default class Home extends React.Component<HomeProps, {}> {
                     </div>
                 </article>
 
-                <article className='sh-infogrid-row'>                        
-                    <div className='sh-infogrid-column sh-infogrid-column--even'>
-                        <img className='sh-infogrid-icon' src='/assets/images/ic_personalize.svg' />
-                        <div className='sh-infogrid-description sh-infogrid-description--even'>
-                            <p className='sh-infogrid-subtitle'>Personalize your experience</p>
-                            <span className='sh-infogrid-text'>
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
-                            </span>
-                        </div>
-                    </div>
-                </article>
-
                 <article className='sh-infogrid-row'>
                     <div className='sh-infogrid-column'>
                         <img className='sh-infogrid-icon sh-infogrid-icon--padlock' src='/assets/images/ic_padlock.svg' />
@@ -69,10 +57,23 @@ export default class Home extends React.Component<HomeProps, {}> {
                     </div>
                 </article>
 
-                <article className='sh-infogrid-row'>                        
-                    <div className='sh-infogrid-column sh-infogrid-column--even'>
+                <article className='sh-infogrid-row'>
+                    <div className='sh-infogrid-column'>
+                        <img className='sh-infogrid-icon' src='/assets/images/ic_personalize.svg' />
+                        <div className='sh-infogrid-description'>
+                            <p className='sh-infogrid-subtitle'>Personalize your experience</p>
+                            <span className='sh-infogrid-text'>
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
+                            </span>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article className='sh-infogrid-row'>
+                    <div className='sh-infogrid-column'>
                         <img className='sh-infogrid-icon' src='/assets/images/ic_begreen.svg' />
-                        <div className='sh-infogrid-description sh-infogrid-description--even'>
+                        <div className='sh-infogrid-description'>
                             <p className='sh-infogrid-subtitle'>Be green</p>
                             <span className='sh-infogrid-text'>
                                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.

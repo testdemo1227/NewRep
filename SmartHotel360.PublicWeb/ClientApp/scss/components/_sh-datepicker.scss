@@ -1,0 +1,32 @@
+﻿@import '../base/variables';
+
+.react-datepicker {
+    border: 0;
+    font-family: Poppins;
+    padding: 2rem;
+
+    &__header {
+        background-color: $color-background-brighter;
+        border: 0;
+    }
+
+    &__day-names {
+        font-weight: $font-weight-semibold;
+    }
+
+    &__day-name {
+        width: 2.5rem;
+    }
+
+    &__current-month {
+        font-weight: $font-weight-medium;
+        margin-bottom: 1.5rem;
+    }
+
+    &__day--selected,
+    &__day--in-selecting-range,
+    &__day--in-range {
+        border-radius: 1rem;
+    }
+}
+

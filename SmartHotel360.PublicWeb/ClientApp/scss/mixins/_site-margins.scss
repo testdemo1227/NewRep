@@ -1,0 +1,19 @@
+@import '../base/variables';
+
+@mixin site-margins($factor: 1) {
+    // Paddings
+    $padding-site-default: 2vw * $factor;
+    $padding-site-m: 8vw * $factor;
+    $padding-site-l: 14vw * $factor;
+
+    padding: 0 $padding-site-default;
+
+
+    @media screen and (min-width: $media-screen-m) {
+        padding: 0 $padding-site-m;
+    }
+
+    @media screen and (min-width: $media-screen-l) {
+        padding: 0 $padding-site-l;
+    }
+}

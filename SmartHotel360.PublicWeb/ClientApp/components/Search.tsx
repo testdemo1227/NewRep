@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { ApplicationState } from '../store';
 import * as SearchStore from '../store/Search';
 
@@ -34,7 +35,7 @@ class Search extends React.Component<any, {}> {
         return (<ul>
             {this.props.where.list.map((city: SearchStore.City, key: number) =>
                 <div className='sh-search-option' key={key} onClick={() => this.props.selectWhere(city)}>
-                    {city.fullname}
+                    {city.full}
                 </div>
             )}
         </ul>);
@@ -80,7 +81,7 @@ class Search extends React.Component<any, {}> {
     private renderOptionWhen(): JSX.Element {
         // SSR not supported
         const DatePicker: any = (require('react-datepicker') as any).default;
-        return (<div>
+        return (<div className='sh-search-when'>
             <DatePicker
                 selected={this.props.when.value.startDate}
                 selectsStart
@@ -130,6 +131,10 @@ class Search extends React.Component<any, {}> {
         this.props.updateGuestsWork(e.currentTarget.value);
     }
 
+    private onChangePeople = (e: any) => {
+        this.props.updatePeople(e.currentTarget.value);
+    }
+
     private renderOptionGuests(): JSX.Element {
         return (<div className='sh-guests'>
             <section className='sh-guests-config'>
@@ -152,14 +157,13 @@ class Search extends React.Component<any, {}> {
         return (<div className='sh-guests sh-guests--people'>
             <section className='sh-guests-config'>
                 <div className='sh-guests-people'>
-                    <input type='number' value={this.props.guests.value.people}  />
+                    <input type='number' value={this.props.guests.value.people} onChange={this.onChangePeople} />
                 </div>
             </section>
         </div>);
     }
 
     private renderCurrentOption(): JSX.Element {
-        debugger
         switch (this.props.selected) {
             case SearchStore.Option.Where:
                 return this.renderOptionWhere();
@@ -173,6 +177,12 @@ class Search extends React.Component<any, {}> {
                 return this.renderOptionPeople();
             default:
                 return (<div></div>);
+        }
+    }
+
+    private FindRoom = (e: any) => {
+        if (!this.props.where.value.full && !this.props.when.value.isFilled) {
+            e.preventDefault();
         }
     }
 
@@ -191,11 +201,11 @@ class Search extends React.Component<any, {}> {
                 </ul>
                 <ul className='sh-search-inputs'>
                     <li className='sh-search-group'>
-                        <div className={'sh-search-value ' + (this.props.where.value.fullname ? 'is-filled' : '')}
+                        <div className={'sh-search-value ' + (this.props.where.value.full ? 'is-filled' : '')}
                             onClick={this.onClickWhere}>
-                            {this.props.where.value.fullname}
+                            {this.props.where.value.full}
                         </div>
-                        <input className={'sh-search-input ' + (!this.props.where.value.fullname ? '' : 'is-hidden')}
+                        <input className={'sh-search-input ' + (!this.props.where.value.full ? '' : 'is-hidden')}
                             type='text'
                             ref='whereinput'
                             onKeyUp={this.onChangeWhere}
@@ -205,7 +215,7 @@ class Search extends React.Component<any, {}> {
                     <li className='sh-search-group'>
                         <div className={'sh-search-value ' + (this.props.when.value.isFilled ? 'is-filled' : '')}
                             onClick={this.onClickWhen}>
-                            {this.props.when.value.fulldate}
+                            {this.props.when.value.full}
                         </div>
                         <input className={'sh-search-input ' + (!this.props.when.value.isFilled ? '' : 'is-hidden')}
                                 type='text'
@@ -216,11 +226,13 @@ class Search extends React.Component<any, {}> {
                     {this.renderGuestsOrPeople()}
 
                     <li className='sh-search-group'>
-                        <input className='sh-search-button' type='button' disabled={!this.props.where.value.fullname && !this.props.when.value.isFilled} value='Find a Room' />
+                        <Link to={'/SearchRooms'} className='sh-search-button' onClick={this.FindRoom}>
+                            Find a Room
+                        </Link>
                     </li>
 
                 </ul>
-                <section className='sh-search-Option'>
+                <section className='sh-search-options'>
                     {this.renderCurrentOption()}
                 </section>
             </div>

@@ -30,7 +30,7 @@ export class City {
         public name?: string,
         public country?: string) {}
     
-    public get fullname(): string {
+    public get full(): string {
         return this.name ? `${this.name}, ${this.country}` : '';
     }
 }
@@ -42,6 +42,19 @@ export class Guests {
         public baby?: number,
         public rooms?: number,
         public work?: boolean) { }
+
+    public get full(): string {
+        return this.adults ? `${this.adults}, ${this.kids}, ${this.baby}, ${this.rooms}` : '';
+    }
+}
+
+export class People {
+    constructor(
+        public value?: number) { }
+
+    public get full(): string {
+        return this.value ? `${this.value}` : '';
+    }
 }
 
 export class Dates {
@@ -50,7 +63,7 @@ export class Dates {
         public endDate?: moment.Moment,
         public isFilled = false) { }
 
-    public get fulldate(): string {
+    public get full(): string {
         return this.startDate ? `${this.startDate}, ${this.endDate}` : '';
     }
 }
@@ -63,6 +76,7 @@ export interface SearchState {
     where: Input<City>;
     when: Input<Dates>;
     guests: Input<Guests>;
+    people: Input<People>;
 }
 
 const initialState: SearchState = {
@@ -82,6 +96,10 @@ const initialState: SearchState = {
     guests: {
         value: new Guests(2, 0, 0, 1, false),
         isLoading: false
+    },
+    people: {
+        value: new People(0),
+        isLoading: false
     }
 };
 
@@ -97,10 +115,11 @@ interface SelectWhereAction  { type: 'SELECT_WHERE_ACTION', city: City }
 interface ResetWhereAction   { type: 'RESET_WHERE_ACTION' }
 interface SelectWhenAction { type: 'SELECT_WHEN_ACTION', next: Option, start: moment.Moment, end: moment.Moment }
 interface SelectGuestsAction { type: 'SELECT_GUESTS_ACTION', adults: number, kids: number, baby: number, rooms: number, work: boolean }
+interface SelectPepopleAction { type: 'SELECT_PEOPLE_ACTION', value: number }
 interface SwitchTabAction { type: 'SWITCH_TAB_ACTION', tab: Tab }
 
 
-type KnownAction = InitAction | RequestWhereAction | ReceiveWhereAction | SelectWhereAction | ResetWhereAction | SelectWhenAction | SelectGuestsAction | SwitchTabAction;
+type KnownAction = InitAction | RequestWhereAction | ReceiveWhereAction | SelectWhereAction | ResetWhereAction | SelectWhenAction | SelectGuestsAction | SwitchTabAction | SelectPepopleAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -175,6 +194,11 @@ export const actionCreators = {
         dispatch({ type: 'SELECT_GUESTS_ACTION', adults: guests.adults || 0, kids: guests.kids || 0, baby: guests.baby || 0, rooms: guests.rooms || 0, work: value });
     },
 
+    updatePeople: (value: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        const people = getState().search.people.value;
+        dispatch({ type: 'SELECT_PEOPLE_ACTION', value: people.value || 0 });
+    },
+
     switchTab: (tab: Tab): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'SWITCH_TAB_ACTION', tab: tab });
     }
@@ -199,6 +223,8 @@ export const reducer: Reducer<SearchState> = (state: SearchState, action: KnownA
             return { ...state, selected: action.next, when: { ...state.when, value: new Dates(action.start, action.end, true) } };
         case 'SELECT_GUESTS_ACTION':
             return { ...state, guests: { ...state.guests, value: new Guests(action.adults, action.kids, action.baby, action.rooms, action.work) } };
+        case 'SELECT_PEOPLE_ACTION':
+            return { ...state, people: { ...state.people, value: new People(action.value) } };
         case 'SWITCH_TAB_ACTION':
             return { ...state, tab: action.tab, selected: action.tab === Tab.Smart ? Option.Guests : Option.People };
         default:

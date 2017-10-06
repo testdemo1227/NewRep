@@ -1,12 +1,13 @@
 ﻿@import '../base/variables';
+@import '../mixins/site-margins';
 
 .sh-infogrid {
-    margin: 6.5rem auto 5.5rem;
+    $block-padding: 2.75vw;
+
+    margin: 0 0 5.5rem 0;
     max-width: 100vw;
 
-    @media screen and (min-width: $media-screen-xl) {
-        max-width: 75vw;
-    }
+    @include site-margins($factor: 1.2);
 
     &-row {
         display: flex;
@@ -56,6 +57,11 @@
         font-family: FiraSans;
         font-size: $font-size-m;
         line-height: $font-size-xxxl;
+        max-width: 28rem;
+
+        @media screen and (min-width: $media-screen-m) {
+            max-width: 100%;
+        }
     }
 
     &-column {
@@ -65,34 +71,16 @@
         padding: 0 2rem;
 
         @media screen and (min-width: $media-screen-s) {
-            padding: 0 8rem;
+            padding: 0 3.5vw;
         }
 
         @media screen and (min-width: $media-screen-m) {
             flex-direction: row;
-            padding: 0 15rem;
-        }
-
-        @media screen and (min-width: $media-screen-l) {
-            flex-direction: row;
-            padding: 0 20rem;
         }
 
         @media screen and (min-width: $media-screen-xl) {
             flex-direction: row;
             padding: 0;
-        }
-
-        &--even {
-            @media screen and (min-width: $media-screen-m) {
-                flex-direction: row-reverse;
-                justify-content: flex-end;
-            }
-
-            @media screen and (min-width: $media-screen-xl) {
-                flex-direction: row;
-                justify-content: flex-end;
-            }
         }
     }
 
@@ -101,27 +89,38 @@
 
         @media screen and (min-width: $media-screen-m) {
             padding-bottom: 3rem;
-            padding-left: 2rem;
+            padding-left: $block-padding;
             padding-right: 0;
             text-align: left;
             width: 100vw;
         }
 
         @media screen and (min-width: $media-screen-xl) {
-            width: 25vw;
+            width: 23vw;
+        }
+    }
+
+    &-row:nth-of-type(2n) &-column {
+        @media screen and (min-width: $media-screen-m) {
+            flex-direction: row-reverse;
+            justify-content: flex-end;
         }
 
+        @media screen and (min-width: $media-screen-xl) {
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+    }
 
-        &--even {
-            @media screen and (min-width: $media-screen-m) {
-                padding-left: 0;
-                padding-right: 2rem;
-            }
+    &-row:nth-of-type(2n) &-description {
+        @media screen and (min-width: $media-screen-m) {
+            padding-left: 0;
+            padding-right: 2rem;
+        }
 
-            @media screen and (min-width: $media-screen-xl) {
-                padding-left: 2rem;
-                padding-right: 0;
-            }
+        @media screen and (min-width: $media-screen-xl) {
+            padding-left: $block-padding;
+            padding-right: 0;
         }
     }
 }
