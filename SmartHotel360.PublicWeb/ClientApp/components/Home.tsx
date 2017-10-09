@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import ConferenceRoomsFeatures from './ConferenceRoomsFeatures';
-import Rooms from './Rooms';
 import { ApplicationState } from '../store';
 import { connect } from 'react-redux';
+import Rooms from './Rooms';
 import * as RoomsState from '../store/Rooms';
 import Search from './Search';
 import { RoomHighlighted } from './RoomHighlighted';
@@ -100,7 +100,7 @@ export default class Home extends React.Component<HomeProps, {}> {
             </section>
 
             <span className='sh-home-title'>Rooms and Conference Rooms</span>
-            <Rooms component={RoomHighlighted} />
+            <Rooms component={RoomHighlighted} source={RoomsState.Sources.Featured} />
         </div>;
     }
 }

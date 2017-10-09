@@ -374,8 +374,8 @@ class Search extends React.Component<any, {}> {
 
 }
 
-// Wire up the React component to the Redux store
+// wire up the React component to the Redux store
 export default connect(
-    (state: ApplicationState) => state.search, // Selects which state properties are merged into the component's props
-    SearchStore.actionCreators                 // Selects which action creators are merged into the component's props
+    (state: ApplicationState) => state.search, // selects which state properties are merged into the component's props
+    SearchStore.actionCreators                 // selects which action creators are merged into the component's props
 )(Search) as typeof Search;

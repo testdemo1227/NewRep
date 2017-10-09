@@ -3,44 +3,31 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import Slider, { Range } from 'rc-slider';
+import * as RoomsStore from '../store/Rooms';
 
-type FilterPriceState = {
-    minPrice: number,
-    maxPrice: number
-}
+type FilterProps =
+    RoomsStore.RoomsState
+    & typeof RoomsStore.actionCreators;
 
-//TODO: add store
-export default class FilterPrice extends React.Component<{}, FilterPriceState> {
-
-    constructor() {
-        super();
-        this.state = {
-            minPrice: 0,
-            maxPrice: 1000
-        }
-    }
-
-    public applyFilter = () => {
-        let title = `$${this.state.minPrice} - $${this.state.maxPrice}`;
-    }
-
-    private buildTitle(): string {
-        return `$${this.state.minPrice} - $${this.state.maxPrice}`;
-    }
+class FilterPrice extends React.Component<FilterProps, {}> {
 
     private onSliderChange = (value: Array<number>) => {
-        this.setState({ minPrice: value[0], maxPrice: value[1] });
+        this.props.updatePrice(value[0], value[1]);
     }
 
     public render() {
-        const min = 0,
-            max = 1000;
         return <div className='sh-filter_price'>
             <div className='sh-filter_price-range'>
-                <span className='sh-filter_price-value'>$ {this.state.minPrice}</span>
-                <span className='sh-filter_price-value'>$ {this.state.maxPrice}</span>
+                <span className='sh-filter_price-value'>$ {this.props.filters.minPrice}</span>
+                <span className='sh-filter_price-value'>$ {this.props.filters.maxPrice}</span>
             </div>
-            <Range min={min} max={max} defaultValue={[0, 1000]} tipFormatter={value => `$${value}`} onChange={value => this.onSliderChange(value)} />
+            <Range min={0} max={1000} defaultValue={[this.props.filters.minPrice, this.props.filters.maxPrice]} tipFormatter={value => `$${value}`} onChange={this.onSliderChange} />
         </div>;
     }
 }
+
+// Wire up the React component to the Redux store
+export default connect(
+    (state: ApplicationState) => state.rooms, // Selects which state properties are merged into the component's props
+    RoomsStore.actionCreators                 // Selects which action creators are merged into the component's props
+)(FilterPrice) as any;

@@ -27,6 +27,7 @@ interface Input<T> {
 
 export class City {
     constructor(
+        public id?: number,
         public name?: string,
         public country?: string) {}
     
@@ -152,7 +153,7 @@ export const actionCreators = {
             .then(response => response.json() as Promise<any>)
             .then(data => {
                 data = data.map((item: any) => {
-                    return new City(item.name, item.country);
+                    return new City(item.id, item.name, item.country);
                 });
                 dispatch({ type: 'RECEIVE_WHERE_ACTION', list: data });
             });
@@ -190,7 +191,7 @@ export const actionCreators = {
 
     updateGuestsAdults: (value: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const guests = getState().search.guests.value;
-        dispatch({ type: "SELECT_GUESTS_ACTION", adults: value, kids: guests.kids || 0, baby: guests.baby || 0, rooms: guests.rooms || 0, work: guests.work || false });
+        dispatch({ type: 'SELECT_GUESTS_ACTION', adults: value, kids: guests.kids || 0, baby: guests.baby || 0, rooms: guests.rooms || 0, work: guests.work || false });
     },
 
     updateGuestsKids: (value: number): AppThunkAction<KnownAction> => (dispatch, getState) => {

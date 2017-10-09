@@ -16,7 +16,8 @@ $icons: (
     sh-star: 'e90e',
     sh-wifi: 'e90f',
     sh-key: 'e908',
-    sh-keys: 'e910'
+    sh-keys: 'e910',
+    sh-tick: 'e911'
 );
 
 @include icomoon-generate($icons);

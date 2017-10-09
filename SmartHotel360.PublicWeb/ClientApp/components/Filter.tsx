@@ -1,15 +1,25 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import * as $ from 'jquery';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
+import { ApplicationState } from '../store';
+import * as RoomsStore from '../store/Rooms';
 
-type FilterProps = {
-    title: string,
-    id: string,
-    left?: number,
-    right?: number
-}
+type FilterProps =
+    {
+        title: string,
+        left?: number,
+        right?: number,
+        disabled?: boolean
+    }
+    & RoomsStore.RoomsState
+    & typeof RoomsStore.actionCreators;
 
-export default class Filter extends React.Component<FilterProps, {}> {
+class Filter extends React.Component<FilterProps, {}> {
+
+    private $header: JQuery;
+    private $dropdown: JQuery;
+
     private setStyles = () => {
         return {
             left: this.props.left,
@@ -18,31 +28,54 @@ export default class Filter extends React.Component<FilterProps, {}> {
     }
 
     private toggle = () => {
-        $(`#${this.props.id} .sh-filter-header`).toggleClass('active');
-        $(`#${this.props.id} .sh-filter-dropdown`).toggleClass('active');
+        if (this.props.disabled) {
+            return;
+        }
+
+        this.$header.toggleClass('active');
+        this.$dropdown.toggleClass('active');
+    }
+
+    private onClickCancel = () => {
+        this.close();
+    }
+
+    private onClickApply = () => {
+        this.props.requestFiltered();
+        this.close();
     }
 
     private close = () => {
-        console.log('focus');
-        $(`#${this.props.id} .sh-filter-header`).removeClass('active');
-        $(`#${this.props.id} .sh-filter-dropdown`).removeClass('active');
+        this.$header.removeClass('active');
+        this.$dropdown.removeClass('active');
     }
     
     public render() {
-        return <div className='sh-filter' id={this.props.id}>
-            <label className='sh-filter-header sh-filter-arrow' onClick={this.toggle}>
+        return <div className='sh-filter'>
+            <label className='sh-filter-header sh-filter-arrow' ref='header' onClick={this.toggle}>
                 <span className='sh-filter-title'>{this.props.title}</span>
                 <i className='sh-filter-icon icon-sh-chevron'></i>
             </label>
-            <section className='sh-filter-dropdown' style={this.setStyles()}>
-                <div>                
+            <section className='sh-filter-dropdown' ref='dropdown' style={this.setStyles()}>
+                <div>
                     {this.props.children}
-                </div>   
+                </div>
                 <ul className='sh-filter-actions'>
-                    <li className='sh-filter-button sh-filter-button--cancel'>Cancel</li>
-                    <li className='sh-filter-button sh-filter-button--apply'>Apply</li>
+                    <li className='sh-filter-button sh-filter-button--cancel' onClick={this.onClickCancel}>Cancel</li>
+                    <li className='sh-filter-button sh-filter-button--apply' onClick={this.onClickApply}>Apply</li>
                 </ul>
             </section>
         </div>;
     }
+
+    public componentDidMount() {
+        this.$header = $(this.refs.header);
+        this.$dropdown = $(this.refs.dropdown);
+    }
 }
+
+// Wire up the React component to the Redux store
+export default connect(
+    (state: ApplicationState) => state.rooms, // Selects which state properties are merged into the component's props
+    RoomsStore.actionCreators                 // Selects which action creators are merged into the component's props
+)(Filter) as any;

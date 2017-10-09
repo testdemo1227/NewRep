@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
-import * as SearchStore from "../store/Search";
+import * as SearchStore from '../store/Search';
 
 type SearchInfoProps =
     SearchStore.SearchState

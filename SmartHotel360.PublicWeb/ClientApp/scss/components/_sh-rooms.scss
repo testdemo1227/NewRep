@@ -13,30 +13,30 @@
 
     &-item {
         height: $item-xs-size;
-        margin: 0 $item-xs-margin;
+        margin: $item-xs-margin;
         width: $item-xs-size;
 
         @media screen and (min-width: $media-screen-s) {
             height: $item-s-size;
-            margin: 0 $item-s-margin;
+            margin: $item-s-margin;
             width: $item-s-size;
         }
 
         @media screen and (min-width: $media-screen-m) {
             height: $item-m-size;
-            margin: 0 $item-m-margin;
+            margin: $item-m-margin;
             width: $item-m-size;
         }
 
         @media screen and (min-width: $media-screen-l) {
             height: $item-l-size;
-            margin: 0 $item-l-margin;
+            margin: $item-l-margin;
             width: $item-l-size;
         }
 
         @media screen and (min-width: $media-screen-xl) {
             height: $item-xl-size;
-            margin: 0 $item-xl-margin;
+            margin: $item-xl-margin;
             width: $item-xl-size;
         }
     }

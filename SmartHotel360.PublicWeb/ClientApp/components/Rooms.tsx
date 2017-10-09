@@ -3,15 +3,26 @@ import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import Loading from './Loading';
 import * as RoomsStore from '../store/Rooms';
+import { RoomHighlighted } from './RoomHighlighted';
 
 type RoomsProps =
-    RoomsStore.RoomsState
+    {
+        component: any,
+        source?: any,
+        title?: string,
+        modifier?: string
+    }
+    & RoomsStore.RoomsState
     & typeof RoomsStore.actionCreators;
 
-// TODO: remove any
-class Rooms extends React.Component<any, {}> {
+class Rooms extends React.Component<RoomsProps, {}> {
     public componentDidMount() {
-        this.props.request();
+        if (this.props.source === RoomsStore.Sources.Featured) {
+            this.props.requestFeatured();
+            return;
+        }
+
+        this.props.requestFiltered()
     }
     public render() {
         
@@ -30,8 +41,8 @@ class Rooms extends React.Component<any, {}> {
     }
 }
 
-// Wire up the React component to the Redux store
+// wire up the React component to the Redux store
 export default connect(
     (state: ApplicationState) => state.rooms, // Selects which state properties are merged into the component's props
-    RoomsStore.actionCreators                 // Selects which action creators are merged into the component's props
-)(Rooms) as typeof Rooms;
+    RoomsStore.actionCreators                 // selects which action creators are merged into the component's props
+)(Rooms) as any;

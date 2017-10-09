@@ -53,9 +53,9 @@
 
     &-room {
         align-items: center;
-        display: flex;
         border: 1px solid $color-foreground-bright;
         cursor: pointer;
+        display: flex;
         flex-direction: column;
         justify-content: center;
         margin: 0 1rem;
@@ -91,9 +91,9 @@
 
     &-room_input {
         border: 0;
-        text-align: center;
         font-size: $font-size-xxxxl;
         font-weight: $font-weight-semibold;
+        text-align: center;
         width: 50%;
 
         &:focus {
@@ -135,8 +135,9 @@
         height: $size;
         margin: 0 .5rem;
         width: $size;
-        
-        &:focus, &:active:focus {
+
+        &:focus,
+        &:active:focus {
             box-shadow: none;
             outline: 0;
         }

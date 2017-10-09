@@ -20,12 +20,8 @@ export default class Room extends React.Component<RoomsStore.Room, {}> {
         const max = 5;
         let stars = [];
 
-        for (let i = 0; i < max; i++) {
-            if (i < rating) {
-                stars.push(<i className='glyphicon glyphicon-star sh-room-star active' key={i}></i>);
-            } else {
-                stars.push(<i className='glyphicon glyphicon-star sh-room-star' key={i}></i>);
-            }
+        for (let i = 1; i <= max; i++) {
+            stars.push(<i className={'sh-room-star active icon-sh-star ' + (i <= rating ? 'is-active' : '')} key={i}></i>);
         }
 
         return stars;

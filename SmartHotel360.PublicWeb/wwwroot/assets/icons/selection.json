@@ -6,25 +6,25 @@
         "paths": [
           "M797.699 438.068c-0.196 90.299-57.933 167.062-138.482 195.582l-1.454 0.449v338.731l-71.83 51.29-71.83-51.29v-341.493c-78.063-30.954-132.261-105.809-132.261-193.323 0-111.779 88.419-202.906 199.131-207.256l0.395-0.012c-8.44-107.786-97.982-192.053-207.205-192.053-114.381 0-207.178 92.413-207.8 206.648l-0 0.059v230.385h128.526v460.89h-294.888v-460.89h128.526v-237.952h0.36c4.11-132.334 112.372-238.048 245.324-238.048 131.135 0 238.25 102.843 245.089 232.274l0.026 0.609c101.272 14.964 178.145 101.171 178.374 205.377l0 0.024zM37.837 513.622v385.216h219.214v-385.216h-90.689v64.143h-37.837v-64.143h-90.689zM551.939 710.013h37.837v37.837h-37.837v37.717h37.837v37.837h-37.837v129.967l33.993 24.264 33.993-24.264v-310.023c-9.010 1.456-19.447 2.327-30.072 2.402l-0.077 0c-13.404-0.037-26.478-1.347-39.138-3.815l1.301 0.211v67.866zM589.776 268.102c-93.818 0.068-169.846 76.139-169.846 169.966 0 93.87 76.096 169.966 169.966 169.966s169.966-76.096 169.966-169.966v0c-0.157-93.849-76.228-169.877-170.078-169.966l-0.008-0zM533.081 347.379h105.823v37.837h-105.823v-37.837z"
         ],
+        "width": 798,
         "attrs": [
           {
             "fill": "rgb(55, 141, 147)"
           }
         ],
-        "width": 798,
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_key"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_key"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -33,13 +33,13 @@
       ],
       "properties": {
         "order": 16,
-        "id": 18,
+        "id": 0,
         "name": "sh-key",
         "prevSize": 32,
         "code": 59656
       },
       "setIdx": 0,
-      "setId": 2,
+      "setId": 4,
       "iconIdx": 0
     },
     {
@@ -47,34 +47,34 @@
         "paths": [
           "M816.64 558.322l72.785 219.012-35.367 48.66-57.358-17.724-73.442-220.9c-59.197-3.021-108.528-42.106-126.651-95.588l-0.292-0.994c-4.553-13.295-7.182-28.613-7.182-44.544 0-54.743 31.036-102.237 76.472-125.846l0.787-0.372c-39.377-69.64-101.995-122.25-177.113-147.854l-2.265-0.671-18.053 88.376-307.471-63.185 40.372-196.693 307.389 63.102-16.986 82.96c85.899 28.379 155.316 86.818 197.264 162.578l0.906 1.784c12.020-3.692 25.837-5.818 40.15-5.818 78.121 0 141.451 63.33 141.451 141.451 0 45.595-21.573 86.152-55.069 112.020l-0.328 0.243zM221.884 30.361l-30.033 146.309 257.087 52.763 29.951-146.227zM764.615 630.122l24.371-8.124 8.124 24.453-24.371 8.124 8.124 24.453 24.371-8.124 8.124 24.371-24.371 8.124 27.9 84.191 27.161 8.37 16.822-23.058-66.713-200.467c-5.187 2.721-11.447 5.437-17.91 7.72l-1.045 0.322c-7.123 2.408-15.625 4.442-24.37 5.727l-0.822 0.099zM840.355 409.551c-15.801-46.401-58.998-79.184-109.853-79.184-63.95 0-115.792 51.842-115.792 115.792s51.842 115.792 115.792 115.792c45.048 0 84.088-25.725 103.23-63.285l0.304-0.657c7.726-15.106 12.253-32.952 12.253-51.855 0-13.094-2.172-25.681-6.176-37.42l0.242 0.816zM674.434 399.622l68.354-22.73 8.124 24.453-68.354 22.73zM421.449 484.305c68.973 10.236 121.292 69.037 121.292 140.057 0 61.534-39.276 113.895-94.126 133.381l-0.99 0.307v230.829l-48.906 34.957-48.906-34.957v-232.716c-53.137-21.171-90.007-72.176-90.007-131.793 0-76.141 60.142-138.234 135.512-141.368l0.284-0.009c-5.313-73.728-66.431-131.529-141.049-131.529-78.090 0-141.394 63.304-141.394 141.394 0 0.051 0 0.103 0 0.154l-0-0.008v157.141h87.474v314.117h-200.631v-314.117h87.474v-162.228h0.246c2.66-90.156 76.381-162.228 166.936-162.228 89.284 0 162.204 70.064 166.777 158.21l0.017 0.408zM375.579 809.747h25.684v25.766h-25.684v25.766h25.684v25.684h-25.684v88.705l23.14 16.576 23.14-16.576v-211.381c-6.139 1.022-13.264 1.645-20.519 1.723l-0.078 0.001c-9.128-0.074-17.999-0.966-26.604-2.608l0.92 0.146v46.199zM285.561 624.378c0.070 63.87 51.863 115.62 115.743 115.62 63.923 0 115.743-51.82 115.743-115.743s-51.82-115.743-115.743-115.743c-0.014 0-0.029 0-0.043 0l0.002-0c-63.896 0.154-115.641 51.957-115.702 115.86l-0 0.006zM87.474 719.647v-43.819h-61.708v262.667h149.181v-262.667h-61.79v43.819h-25.684zM434.743 588.273h-72.047v-25.684h72.047v25.684z"
         ],
+        "width": 889,
         "attrs": [
           {}
         ],
-        "width": 889,
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_keys"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {}
           ]
-        }
+        },
+        "tags": [
+          "ic_keys"
+        ],
+        "grid": 0
       },
       "attrs": [
         {}
       ],
       "properties": {
         "order": 15,
-        "id": 17,
+        "id": 1,
         "name": "sh-keys",
         "prevSize": 32,
         "code": 59664
       },
       "setIdx": 0,
-      "setId": 2,
+      "setId": 4,
       "iconIdx": 1
     },
     {
@@ -89,17 +89,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_air_conditioning"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_air_conditioning"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -108,13 +108,13 @@
       ],
       "properties": {
         "order": 13,
-        "id": 16,
+        "id": 2,
         "name": "sh-air-conditioning",
         "prevSize": 32,
         "code": 59653
       },
       "setIdx": 0,
-      "setId": 2,
+      "setId": 4,
       "iconIdx": 2
     },
     {
@@ -129,17 +129,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_beach"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_beach"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -148,13 +148,13 @@
       ],
       "properties": {
         "order": 12,
-        "id": 15,
+        "id": 3,
         "name": "sh-beach",
         "prevSize": 32,
         "code": 59654
       },
       "setIdx": 0,
-      "setId": 2,
+      "setId": 4,
       "iconIdx": 3
     },
     {
@@ -169,17 +169,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_breakfast"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_breakfast"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -188,13 +188,13 @@
       ],
       "properties": {
         "order": 11,
-        "id": 14,
+        "id": 4,
         "name": "sh-breakfast",
         "prevSize": 32,
         "code": 59655
       },
       "setIdx": 0,
-      "setId": 2,
+      "setId": 4,
       "iconIdx": 4
     },
     {
@@ -209,17 +209,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_elevator"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_elevator"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -228,14 +228,14 @@
       ],
       "properties": {
         "order": 9,
-        "id": 12,
+        "id": 5,
         "name": "sh-elevator",
         "prevSize": 32,
         "code": 59657
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 6
+      "setId": 4,
+      "iconIdx": 5
     },
     {
       "icon": {
@@ -249,17 +249,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_gym"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_gym"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -268,14 +268,14 @@
       ],
       "properties": {
         "order": 8,
-        "id": 11,
+        "id": 6,
         "name": "sh-gym",
         "prevSize": 32,
         "code": 59658
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 7
+      "setId": 4,
+      "iconIdx": 6
     },
     {
       "icon": {
@@ -289,17 +289,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_less"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_less"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -308,14 +308,14 @@
       ],
       "properties": {
         "order": 7,
-        "id": 10,
+        "id": 7,
         "name": "sh-less",
         "prevSize": 32,
         "code": 59659
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 8
+      "setId": 4,
+      "iconIdx": 7
     },
     {
       "icon": {
@@ -329,17 +329,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_plus"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_plus"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -348,14 +348,14 @@
       ],
       "properties": {
         "order": 6,
-        "id": 9,
+        "id": 8,
         "name": "sh-plus",
         "prevSize": 32,
         "code": 59660
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 9
+      "setId": 4,
+      "iconIdx": 8
     },
     {
       "icon": {
@@ -369,17 +369,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_pool"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_pool"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -388,14 +388,14 @@
       ],
       "properties": {
         "order": 5,
-        "id": 8,
+        "id": 9,
         "name": "sh-pool",
         "prevSize": 32,
         "code": 59661
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 10
+      "setId": 4,
+      "iconIdx": 9
     },
     {
       "icon": {
@@ -409,17 +409,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_star"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_star"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -428,14 +428,14 @@
       ],
       "properties": {
         "order": 4,
-        "id": 7,
+        "id": 10,
         "name": "sh-star",
         "prevSize": 32,
         "code": 59662
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 11
+      "setId": 4,
+      "iconIdx": 10
     },
     {
       "icon": {
@@ -449,17 +449,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "ic_wifi"
-        ],
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_wifi"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -468,14 +468,14 @@
       ],
       "properties": {
         "order": 3,
-        "id": 6,
+        "id": 11,
         "name": "sh-wifi",
         "prevSize": 32,
         "code": 59663
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 12
+      "setId": 4,
+      "iconIdx": 11
     },
     {
       "icon": {
@@ -490,17 +490,17 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "ic_padlock"
-        ],
-        "grid": 0,
         "colorPermutations": {
           "5514114716773781": [
             {
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_padlock"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -509,14 +509,14 @@
       ],
       "properties": {
         "order": 43,
-        "id": 0,
+        "id": 12,
         "name": "sh-smart-finde",
         "prevSize": 32,
         "code": 59648
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 14
+      "setId": 4,
+      "iconIdx": 12
     },
     {
       "icon": {
@@ -539,10 +539,6 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "ic_personalize"
-        ],
-        "grid": 0,
         "colorPermutations": {
           "5514114716773781": [
             {
@@ -555,7 +551,11 @@
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_personalize"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -570,14 +570,14 @@
       ],
       "properties": {
         "order": 44,
-        "id": 1,
+        "id": 13,
         "name": "sh-smart-perso",
         "prevSize": 32,
         "code": 59649
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 15
+      "setId": 4,
+      "iconIdx": 13
     },
     {
       "icon": {
@@ -596,10 +596,6 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "ic_begreen"
-        ],
-        "grid": 0,
         "colorPermutations": {
           "5514114716773781": [
             {
@@ -609,7 +605,11 @@
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_begreen"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -621,14 +621,14 @@
       ],
       "properties": {
         "order": 45,
-        "id": 2,
+        "id": 14,
         "name": "sh-smart-green",
         "prevSize": 32,
         "code": 59650
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 16
+      "setId": 4,
+      "iconIdx": 14
     },
     {
       "icon": {
@@ -647,10 +647,6 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "ic_check"
-        ],
-        "grid": 0,
         "colorPermutations": {
           "5514114716773781": [
             {
@@ -660,7 +656,11 @@
               "f": 1
             }
           ]
-        }
+        },
+        "tags": [
+          "ic_check"
+        ],
+        "grid": 0
       },
       "attrs": [
         {
@@ -672,14 +672,14 @@
       ],
       "properties": {
         "order": 46,
-        "id": 3,
+        "id": 15,
         "name": "sh-smart-check",
         "prevSize": 32,
         "code": 59651
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 17
+      "setId": 4,
+      "iconIdx": 15
     },
     {
       "icon": {
@@ -691,29 +691,63 @@
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "uEA17-arrow"
-        ],
-        "grid": 0,
         "colorPermutations": {
           "5514114716773781": [
             {}
           ]
-        }
+        },
+        "tags": [
+          "uEA17-arrow"
+        ],
+        "grid": 0
       },
       "attrs": [
         {}
       ],
       "properties": {
         "order": 47,
-        "id": 4,
+        "id": 16,
         "name": "sh-chevron",
         "prevSize": 32,
         "code": 59652
       },
       "setIdx": 0,
-      "setId": 2,
-      "iconIdx": 18
+      "setId": 4,
+      "iconIdx": 16
+    },
+    {
+      "icon": {
+        "paths": [
+          "M492.024 1024l-492.024-492.024 138.751-139.144 353.273 352.879 746.892-746.499 138.751 139.144z"
+        ],
+        "attrs": [
+          {
+            "fill": "rgb(55, 141, 147)"
+          }
+        ],
+        "width": 1378,
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "ic_tick"
+        ]
+      },
+      "attrs": [
+        {
+          "fill": "rgb(55, 141, 147)"
+        }
+      ],
+      "properties": {
+        "order": 49,
+        "id": 17,
+        "name": "sh-tick",
+        "prevSize": 32,
+        "code": 59665
+      },
+      "setIdx": 1,
+      "setId": 3,
+      "iconIdx": 0
     }
   ],
   "height": 1024,

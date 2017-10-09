@@ -10,7 +10,7 @@ export default class Checkbox extends React.Component<CheckboxProps, {}> {
             <label className='sh-checkbox'>
                 <input className='sh-checkbox-input is-hidden' type='checkbox' />
                 <span className='sh-checkbox-name'>{this.props.name}</span>
-                <span className='sh-checkbox-label'></span>
+                <span className='sh-checkbox-label icon-sh-tick'></span>
             </label>
         </div>
     }

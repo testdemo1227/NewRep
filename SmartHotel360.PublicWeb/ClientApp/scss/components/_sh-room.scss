@@ -38,9 +38,10 @@
 
     &-star {
         color: $color-foreground-bright;
+        font-size: $font-size-s;
         margin: 0 .2rem;
 
-        &.active {
+        &.is-active {
             color: $color-brand;
         }
 
