@@ -22,7 +22,7 @@ export interface RoomsState {
 
 const initialState: RoomsState = {
     list: [],
-    isLoading: false
+    isLoading: false,
 };
 
 // -----------------

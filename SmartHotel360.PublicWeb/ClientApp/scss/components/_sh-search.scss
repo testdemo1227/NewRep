@@ -2,16 +2,21 @@
 @import '../mixins/site-margins';
 
 .sh-search {
-    @include site-margins;
-
     $height: 12rem;
-
-    display: flex;
-    height: $height  * .85;
+    @include site-margins;
+    display: block;
     justify-content: center;
+
+    &--info {
+        height: 4rem;
+    }
 
     &-group {
         margin: 0 2rem;
+    }
+
+    &--info &-group:first-of-type {
+        margin-left: 0;
     }
 
     &-wrapper {
@@ -21,6 +26,12 @@
         height: 10rem;
         transform: translateY(-$height/2);
         width: 100%;
+    }
+
+    &--info &-wrapper {
+        box-shadow: none;
+        height: auto;
+        transform: translateY(0);
     }
 
     &-tabs {
@@ -66,6 +77,14 @@
         justify-content: center;
         list-style: none;
         margin-top: 2rem;
+        padding-left: 0;
+    }
+
+    &--info &-inputs {
+        color: $color-brand;
+        font-weight: $font-weight-semibold;
+        justify-content: space-around;
+        padding-top: .5rem;
     }
 
     &-input {
@@ -82,6 +101,7 @@
         display: none;
 
         &.is-filled {
+            color: $color-brand;
             display: block;
             line-height: 2.3rem;
             margin-left: -2.3rem;
@@ -100,12 +120,40 @@
     }
 
     &-options {
-        margin-top: 2.5rem;
+        display: block;
+        float: left;
+        height: auto;
+        margin: 0 auto;
+        padding-top: 2.5rem;
+        width: 100%;
     }
 
     &-when {
         display: flex;
         justify-content: center;
         width: 100%;
+    }
+
+    &-button {
+        background-color: $color-secondary;
+        border-radius: 0;
+        color: $color-foreground-brighter;
+        font-size: $font-size-xs;
+        line-height: 2.5rem;
+        padding: 0 2.5rem;
+        text-transform: uppercase;
+
+        &:hover {
+            background-color: lighten($color-secondary, 10%);
+            color: $color-foreground-brighter;
+            transition: background-color $animation-speed-default ease;
+        }
+
+        &:focus,
+        &:active {
+            box-shadow: none !important;
+            color: $color-foreground-brighter;
+            outline: none !important;
+        }
     }
 }

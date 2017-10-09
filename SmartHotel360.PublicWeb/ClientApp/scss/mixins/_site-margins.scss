@@ -1,19 +1,27 @@
 @import '../base/variables';
 
 @mixin site-margins($factor: 1) {
+
+    @function calculate($size, $length, $margin, $factor) {
+        @return ((100% -((($size + $margin) * $length) + $margin * 2)) / 2) * $factor;
+    }
     // Paddings
-    $padding-site-default: 2vw * $factor;
-    $padding-site-m: 8vw * $factor;
-    $padding-site-l: 14vw * $factor;
+    $padding-site-default: calculate($item-s-size, $item-s-length, $item-s-margin, $factor);
+    $padding-site-m: calculate($item-m-size, $item-m-length, $item-m-margin, $factor);
+    $padding-site-l: calculate($item-l-size, $item-l-length, $item-l-margin, $factor);
+    $padding-site-xl: calculate($item-xl-size, $item-xl-length, $item-xl-margin, $factor);
 
-    padding: 0 $padding-site-default;
-
+    margin: 0 $padding-site-default;
 
     @media screen and (min-width: $media-screen-m) {
-        padding: 0 $padding-site-m;
+        margin: 0 $padding-site-m;
     }
 
     @media screen and (min-width: $media-screen-l) {
-        padding: 0 $padding-site-l;
+        margin: 0 $padding-site-l;
+    }
+
+    @media screen and (min-width: $media-screen-xl) {
+        margin: 0 $padding-site-xl;
     }
 }

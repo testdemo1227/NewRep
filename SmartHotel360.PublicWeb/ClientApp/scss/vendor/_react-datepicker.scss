@@ -1,0 +1,59 @@
+﻿@import '../base/variables';
+
+.react-datepicker {
+    border: 0;
+    font-family: Poppins;
+    padding: 2rem;
+
+    &__header {
+        background-color: $color-background-brighter;
+        border: 0;
+    }
+
+    &__day-names {
+        font-weight: $font-weight-semibold;
+    }
+
+    &__current-month {
+        font-weight: $font-weight-medium;
+        margin-bottom: 1.5rem;
+    }
+
+    &__day--in-range {
+        background-color: $color-brand-brighter;
+        color: $color-brand;
+    }
+
+    &__day:hover {
+        color: $color-brand;
+    }
+
+    &__day--selected,
+    &__day--in-range-start {
+        background-color: $color-brand;
+        color: $color-background-brighter;
+    }
+
+
+    &__day--selected,
+    &__day--selected:hover,
+    &__day--in-selecting-range,
+    &__day--in-selecting-range:hover,
+    &__day--in-range,
+    &__day--in-range:hover,
+    &__day:hover {
+        border-radius: 1rem;
+    }
+
+    &__day--in-selecting-range:not(.react-datepicker__day--in-range) {
+        background-color: rgba($color-brand, .5);
+    }
+
+    &__day--selected:hover,
+    &__day--in-selecting-range:hover,
+    &__day--in-range:hover,
+    &__day--in-selecting-range {
+        background-color: $color-brand;
+        color: $color-background-brighter;
+    }
+}

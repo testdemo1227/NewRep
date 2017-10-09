@@ -13,7 +13,7 @@ export default class SearchRooms extends React.Component<SearchRoomsProps, {}> {
         return <div className='sh-search_rooms'>
             <SearchInfo />
             <Filters />
-            <Rooms component={Room} title='Smart Rooms'/>
+            <Rooms component={Room} title='Smart Rooms' modifier='full'/>
         </div>;
     }
 }

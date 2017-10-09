@@ -1,7 +1,7 @@
 ﻿@import '../base/variables';
+@import '../mixins/site-margins';
 
 .sh-rooms {
-    $item-width: 23.5rem;
     $factor: 1.25;
 
     display: flex;
@@ -9,23 +9,45 @@
     flex-wrap: wrap;
     justify-content: center;
     margin: 0 auto 5.5rem;
-    width: $item-width;
+    max-width: 100%;
 
-    @media screen and (min-width: $item-width * $factor * 2) {
-        max-width: $item-width * 2;
-        width: 100%;
-    }
+    &-item {
+        height: $item-xs-size;
+        margin: 0 $item-xs-margin;
+        width: $item-xs-size;
 
-    @media screen and (min-width: $item-width * $factor * 4) {
-        max-width: 100%;
+        @media screen and (min-width: $media-screen-s) {
+            height: $item-s-size;
+            margin: 0 $item-s-margin;
+            width: $item-s-size;
+        }
+
+        @media screen and (min-width: $media-screen-m) {
+            height: $item-m-size;
+            margin: 0 $item-m-margin;
+            width: $item-m-size;
+        }
+
+        @media screen and (min-width: $media-screen-l) {
+            height: $item-l-size;
+            margin: 0 $item-l-margin;
+            width: $item-l-size;
+        }
+
+        @media screen and (min-width: $media-screen-xl) {
+            height: $item-xl-size;
+            margin: 0 $item-xl-margin;
+            width: $item-xl-size;
+        }
     }
 
     &-title {
+        @include site-margins;
         clear: both;
         display: block;
         font-size: $font-size-xxl;
         font-weight: $font-weight-medium;
-        padding: 0 1rem;
+        padding: 2rem 0;
         text-align: left;
         width: 100%;
     }

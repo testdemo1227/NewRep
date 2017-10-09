@@ -1,14 +1,16 @@
 ﻿@import '../base/variables';
+@import '../mixins/site-margins';
 
 .sh-filters {
     $border-weight: 1px;
     $border-color: rgba($color-background-bright, .5);
+
+    @include site-margins;
 
     align-items: center;
     border-bottom: $border-weight solid $border-color;
     border-top: $border-weight solid $border-color;
     display: flex;
     justify-content: space-between;
-    margin: 3rem 0;
-    padding: .6rem 2rem;
+    padding: .5rem 0;
 }

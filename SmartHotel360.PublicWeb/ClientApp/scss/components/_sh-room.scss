@@ -2,17 +2,15 @@
 
 .sh-room {
     $box-height: 23.3rem;
-    $box-width: 21.5rem;
+    $box-margin: 1rem;
 
     background-color: $color-background-brighter;
-    height: auto;
-    margin: 1rem;
-    width: $box-width;
+    width: 100%;
 
     &-image {
+        background-position: center;
         background-size: cover;
         height: 19rem;
-        width: $box-width;
     }
 
     &-button {
@@ -21,7 +19,6 @@
         cursor: pointer;
         font-size: $font-size-s;
         line-height: 3rem;
-        padding: 0 2rem;
         text-align: center;
         text-transform: uppercase;
 

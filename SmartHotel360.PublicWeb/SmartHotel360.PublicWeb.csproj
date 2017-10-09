@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\IncrementDecrement.tsx" />
     <TypeScriptCompile Include="ClientApp\components\FilterCancelation.tsx" />
     <TypeScriptCompile Include="ClientApp\components\FilterNeighborhood.tsx" />
     <TypeScriptCompile Include="ClientApp\components\FilterRelevance.tsx" />

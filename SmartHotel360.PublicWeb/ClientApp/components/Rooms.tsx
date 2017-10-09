@@ -1,6 +1,7 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
+import Loading from './Loading';
 import * as RoomsStore from '../store/Rooms';
 
 type RoomsProps =
@@ -12,14 +13,12 @@ class Rooms extends React.Component<any, {}> {
     public componentDidMount() {
         this.props.request();
     }
-    
-
     public render() {
         
-        return <div className='sh-rooms'>
+        return <div className={'sh-rooms ' + (this.props.modifier ? `sh-rooms--${this.props.modifier}` : '')}>
             <span className='sh-rooms-title'>{this.props.title}</span>
             {this.props.isLoading
-                ? <div> Loading... </div>
+                ? <Loading />
                 :
                 this.props.list.map((room: any, key: any) =>
                     <div className='sh-rooms-item' key={key}>

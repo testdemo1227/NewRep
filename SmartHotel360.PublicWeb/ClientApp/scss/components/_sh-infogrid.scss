@@ -3,11 +3,11 @@
 
 .sh-infogrid {
     $block-padding: 2.75vw;
+    @include site-margins($factor: 1.2);
 
     margin: 0 0 5.5rem 0;
     max-width: 100vw;
 
-    @include site-margins($factor: 1.2);
 
     &-row {
         display: flex;

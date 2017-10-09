@@ -5,6 +5,9 @@
 'base/states',
 'base/utilities';
 
+// Vendor Modifications
+@import 'vendor/react-datepicker';
+
 // Base Files
 @import 'base/globals';
 
@@ -39,4 +42,6 @@
 'components/sh-filter-services',
 'components/sh-checkbox',
 'components/sh-datepicker',
-'components/sh-filter-price';
+'components/sh-guests',
+'components/sh-filter-price',
+'components/sh-increment-decrement';

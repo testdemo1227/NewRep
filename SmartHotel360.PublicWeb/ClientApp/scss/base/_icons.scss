@@ -4,7 +4,19 @@ $icons: (
     sh-smart-perso: 'e901',
     sh-smart-green: 'e902',
     sh-smart-check: 'e903',
-    sh-chevron: 'e904'
+    sh-chevron: 'e904',
+    sh-air-conditioning: 'e905',
+    sh-beach: 'e906',
+    sh-breakfast: 'e907',
+    sh-elevator: 'e909',
+    sh-gym: 'e90a',
+    sh-less: 'e90b',
+    sh-plus: 'e90c',
+    sh-pool: 'e90d',
+    sh-star: 'e90e',
+    sh-wifi: 'e90f',
+    sh-key: 'e908',
+    sh-keys: 'e910'
 );
 
 @include icomoon-generate($icons);
