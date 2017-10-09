@@ -2,13 +2,16 @@
 
 .sh-filter_rating {
     direction: rtl;
+    font-size: 0;
+    margin-right: 2rem;
+    min-width: 7rem;
 
     &-star {
         color: $color-foreground-bright;
         cursor: pointer;
         display: inline-block;
         font-size: $font-size-s;
-        margin: 0 .2rem;
+        margin: -.4rem .2rem;
 
         &.is-active,
         &.is-active ~ & {

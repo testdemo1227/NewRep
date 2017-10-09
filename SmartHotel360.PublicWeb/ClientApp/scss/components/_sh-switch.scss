@@ -8,12 +8,14 @@
 
     &-button {
         display: inline-block;
+        flex: 0 0 auto;
         height: $switch-height;
         position: relative;
         width: 3rem;
     }
 
-    .title {
+    &-title {
+        flex: 0 0 auto;
         font-weight: lighter;
         padding: 1rem;
     }

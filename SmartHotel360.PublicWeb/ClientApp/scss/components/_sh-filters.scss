@@ -6,11 +6,13 @@
     $border-color: rgba($color-background-bright, .5);
 
     @include site-margins;
-
     align-items: center;
     border-bottom: $border-weight solid $border-color;
     border-top: $border-weight solid $border-color;
     display: flex;
     justify-content: space-between;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
     padding: .5rem 0;
 }
