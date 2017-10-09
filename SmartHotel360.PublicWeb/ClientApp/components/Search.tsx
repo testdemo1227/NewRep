@@ -11,10 +11,7 @@ type SearchProps =
     SearchStore.SearchState
     & typeof SearchStore.actionCreators;
 
-type guestsType = 'adults' | 'kids' | 'babies';
-
-// TODO: remove any
-class Search extends React.Component<any, {}> {
+class Search extends React.Component<SearchProps, {}> {
 
     public didComponentMount() {
         // Because this plugin doesn't accept SSR
@@ -30,6 +27,8 @@ class Search extends React.Component<any, {}> {
     }
 
     private onClickWhere = () => {
+        this.props.resetGuests();
+        this.props.resetWhen();
         this.props.resetWhere();
         let input: any = this.refs.whereinput;
         input.value = '';
@@ -53,29 +52,31 @@ class Search extends React.Component<any, {}> {
                     onClick={this.onClickGuests}>
                     {this.props.guests.value.full}
                 </div>
-                <input className={'sh-search-input ' + (!this.props.guests.value.isFilled ? '' : 'is-hidden')}
-                    type='text'
-                    ref='guestsinput'
-                    onClick={this.onClickGuests}
-                    placeholder='Guests' />
+                <span className={'sh-search-input ' + (!this.props.guests.value.isFilled ? '' : 'is-hidden ') + (this.props.selected === SearchStore.Option.Guests ? 'is-active' : '')}
+                    onClick={this.onClickGuests}>
+                        Guests
+                </span>
             </li>);
         }
 
         if (this.props.tab === SearchStore.Tab.Conference) {
             return (<li className='sh-search-group'>
-                <input className='sh-search-input'
-                    type='text'
-                    ref='peopleinput'
-                    placeholder='People' />
+                <span className='sh-search-input'>
+                    People
+                </span>
             </li>);
         }
     }
 
     private onClickWhen = () => {
+        if (this.props.selected === SearchStore.Option.Where) {
+            let input: any = this.refs.whereinput;
+            setTimeout(() => input.focus(), 10);
+            return;
+        }
+
+        this.props.resetGuests();
         this.props.resetWhen();
-        let input: any = this.refs.wheninput;
-        input.value = '';
-        setTimeout(() => input.focus(), 10);
     }
 
     private onChangeWhenStart = (date: moment.Moment) => {
@@ -111,10 +112,17 @@ class Search extends React.Component<any, {}> {
     }
 
     private onClickGuests = () => {
+        if (this.props.selected === SearchStore.Option.Where) {
+            let input: any = this.refs.whereinput;
+            setTimeout(() => input.focus(), 10);
+            return;
+        }
+
+        if (this.props.selected === SearchStore.Option.When) {
+            return;
+        }
+
         this.props.resetGuests();
-        let input: any = this.refs.guestsinput;
-        input.value = '';
-        setTimeout(() => input.focus(), 10);
     }
 
     private checkNumber(n: string): boolean {
@@ -150,21 +158,21 @@ class Search extends React.Component<any, {}> {
         this.props.updatePeople(e.currentTarget.value);
     }
 
-    private removeGuest = (type: guestsType) => {        
+    private removeGuest = (type: SearchStore.Guest) => {        
         switch (type) {
-            case 'adults':
+            case SearchStore.Guest.Adults:
                 let adults = this.props.guests.value.adults - 1;
                 if (adults) {
                     this.props.updateGuestsAdults(adults);
                 }
                 break;
-            case 'kids':
+            case SearchStore.Guest.Kids:
                 let kids = this.props.guests.value.kids - 1;
                 if (kids >= 0) {
                     this.props.updateGuestsKids(kids);
                 }
                 break;
-            default:
+            case SearchStore.Guest.Babies:
                 let babies = this.props.guests.value.baby - 1;
                 if (babies >= 0) {
                     this.props.updateGuestsBaby(babies);
@@ -173,17 +181,17 @@ class Search extends React.Component<any, {}> {
         }
     }
 
-    private addGuest = (type: guestsType) => {
+    private addGuest = (type: SearchStore.Guest) => {
         switch (type) {
-            case 'adults':
+            case SearchStore.Guest.Adults:
                 let adults = this.props.guests.value.adults + 1;
                 this.props.updateGuestsAdults(adults);
                 break;
-            case 'kids':
+            case SearchStore.Guest.Kids:
                 let kids = this.props.guests.value.kids + 1;
                 this.props.updateGuestsKids(kids);
                 break;
-            default:
+            case SearchStore.Guest.Babies:
                 let babies = this.props.guests.value.baby + 1;
                 this.props.updateGuestsBaby(babies);
                 break;
@@ -229,8 +237,8 @@ class Search extends React.Component<any, {}> {
                         </div>
                         <IncrementDecrement
                             value={this.props.guests.value.adults}
-                            increment={() => this.addGuest('adults')}
-                            decrement={() => this.removeGuest('adults')}
+                            increment={() => this.addGuest(SearchStore.Guest.Adults)}
+                            decrement={() => this.removeGuest(SearchStore.Guest.Adults)}
                             change={this.onChangeGuestsAdults} />
                     </div>
                     <div className='sh-guests-people_row'>
@@ -240,8 +248,8 @@ class Search extends React.Component<any, {}> {
                         </div>
                         <IncrementDecrement
                             value={this.props.guests.value.kids}
-                            increment={() => this.addGuest('kids')}
-                            decrement={() => this.removeGuest('kids')}
+                            increment={() => this.addGuest(SearchStore.Guest.Kids)}
+                            decrement={() => this.removeGuest(SearchStore.Guest.Kids)}
                             change={this.onChangeGuestsKids} />
                     </div>
                     <div className='sh-guests-people_row'>
@@ -251,8 +259,8 @@ class Search extends React.Component<any, {}> {
                         </div>                        
                         <IncrementDecrement
                             value={this.props.guests.value.baby}
-                            increment={() => this.addGuest('babies')}
-                            decrement={() => this.removeGuest('babies')}
+                            increment={() => this.addGuest(SearchStore.Guest.Babies)}
+                            decrement={() => this.removeGuest(SearchStore.Guest.Babies)}
                             change={this.onChangeGuestsBaby} />
                         
                     </div>
@@ -288,7 +296,7 @@ class Search extends React.Component<any, {}> {
         return (<div className='sh-guests sh-guests--people'>
             <section className='sh-guests-config'>
                 <div className='sh-guests-people'>
-                    <input type='number' value={this.props.guests.value.people} onChange={this.onChangePeople} />
+                    <input type='number' value={this.props.people.value.total} onChange={this.onChangePeople} />
                 </div>
             </section>
         </div>);
@@ -308,12 +316,6 @@ class Search extends React.Component<any, {}> {
                 return this.renderOptionPeople();
             default:
                 return (<div></div>);
-        }
-    }
-
-    private FindRoom = (e: any) => {
-        if (!this.props.where.value.full && !this.props.when.value.isFilled) {
-            e.preventDefault();
         }
     }
 
@@ -339,9 +341,9 @@ class Search extends React.Component<any, {}> {
                         <input className={'sh-search-input ' + (!this.props.where.value.full ? '' : 'is-hidden')}
                             type='text'
                             ref='whereinput'
+                            placeholder='Where'
                             onKeyUp={this.onChangeWhere}
-                            onClick={this.onClickWhere}
-                            placeholder='Where' />
+                            onClick={this.onClickWhere} />
                     </li>
 
                     <li className='sh-search-group'>
@@ -349,17 +351,16 @@ class Search extends React.Component<any, {}> {
                             onClick={this.onClickWhen}>
                             {this.props.when.value.full}
                         </div>
-                        <input className={'sh-search-input ' + (!this.props.when.value.isFilled ? '' : 'is-hidden')}
-                            type='text'
-                            ref='wheninput'
-                            onClick={this.onClickWhen}
-                            placeholder='When' />
+                        <span className={'sh-search-input ' + (!this.props.when.value.isFilled ? '' : 'is-hidden ') + (this.props.selected === SearchStore.Option.When ? 'is-active' : '')}
+                            onClick={this.onClickWhen}> 
+                                When
+                        </span>
                     </li>
 
                     {this.renderGuestsOrPeople()}
 
                     <li className='sh-search-group'>
-                        <Link to={'/SearchRooms'} className='sh-search-button btn' onClick={this.FindRoom}>
+                        <Link to={'/SearchRooms'} className={'sh-search-button btn ' + (this.props.where.value.full && this.props.when.value.isFilled ? '' : 'is-disabled')}>
                             Find a Room
                         </Link>
                     </li>
@@ -378,4 +379,4 @@ class Search extends React.Component<any, {}> {
 export default connect(
     (state: ApplicationState) => state.search, // selects which state properties are merged into the component's props
     SearchStore.actionCreators                 // selects which action creators are merged into the component's props
-)(Search) as typeof Search;
+)(Search) as any;

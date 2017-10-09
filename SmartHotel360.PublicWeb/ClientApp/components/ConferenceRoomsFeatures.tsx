@@ -9,8 +9,7 @@ type ConferenceRoomsFeaturesProps =
     & Swipeable.SwipeableProps
     & typeof ConferenceRoomsFeaturesStore.actionCreators;
 
-// TODO: remove any
-class ConferenceRoomsFeatures extends React.Component<any, {}> {
+class ConferenceRoomsFeatures extends React.Component<ConferenceRoomsFeaturesProps, {}> {
 
     public componentDidMount() {
         this.props.request();
@@ -76,4 +75,4 @@ class ConferenceRoomsFeatures extends React.Component<any, {}> {
 export default connect(
     (state: ApplicationState) => state.conferenceRoomsFeatures, // Selects which state properties are merged into the component's props
     ConferenceRoomsFeaturesStore.actionCreators                 // Selects which action creators are merged into the component's props
-)(ConferenceRoomsFeatures) as typeof ConferenceRoomsFeatures;
+)(ConferenceRoomsFeatures) as any;

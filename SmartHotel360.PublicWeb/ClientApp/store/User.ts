@@ -17,19 +17,19 @@ let userManager: Msal.UserAgentApplication;
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 export interface UserState {
-    id?: string | null;
-    name?: string | null;
-    email?: string | null;
-    gravatar?: string | null;
-    error?: boolean;
-    isLoading?: boolean;
+    id: string | null;
+    name: string | null;
+    email: string;
+    gravatar: string;
+    error: boolean;
+    isLoading: boolean;
 }
 
 const initialState: UserState = {
     id: null,
     name: null,
-    email: null,
-    gravatar: null,
+    email: '',
+    gravatar: '',
     error: false,
     isLoading: false
 };
@@ -39,7 +39,7 @@ const initialState: UserState = {
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 // Use @typeName and isActionType for type detection that works even after serialization/deserialization.
 
-interface InitAction { type: 'INIT_ACTION', id: string | null, name: string | null, email: string | null, gravatar: string | null }
+interface InitAction { type: 'INIT_ACTION', id: string | null, name: string | null, email: string, gravatar: string }
 interface LoginAction { type: 'LOGIN_ACTION', error: boolean }
 interface LogoutAction { type: 'LOGOUT_ACTION' }
 
@@ -74,7 +74,7 @@ export const actionCreators = {
                     dispatch({
                         type: 'INIT_ACTION', id: user.userIdentifier, name: user.name, email: email, gravatar: 'https://www.gravatar.com/avatar/' + Md5.hashStr(email.toLowerCase()).toString() });
                 }, (error: any) => {
-                    dispatch({ type: 'INIT_ACTION', id: null, name: null, email: null, gravatar: null });
+                    dispatch({ type: 'INIT_ACTION', id: null, name: null, email: '', gravatar: '' });
                 });
         }, 10);
     },

@@ -8,8 +8,7 @@ type SearchInfoProps =
     SearchStore.SearchState
     & typeof SearchStore.actionCreators;
 
-// tODO: remove any
-class SearchInfo extends React.Component<any, {}> {
+class SearchInfo extends React.Component<SearchInfoProps, {}> {
     public didComponentMount() {
     }
 
@@ -52,4 +51,4 @@ class SearchInfo extends React.Component<any, {}> {
 export default connect(
     (state: ApplicationState) => state.search, // selects which state properties are merged into the component's props
     SearchStore.actionCreators                 // selects which action creators are merged into the component's props
-)(SearchInfo) as typeof SearchInfo;
+)(SearchInfo) as any;

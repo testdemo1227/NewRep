@@ -8,8 +8,7 @@ type AuthProps =
     UserStore.UserState
     & typeof UserStore.actionCreators;
 
-// TODO: remove any
-class Auth extends React.Component<any, {}> {
+class Auth extends React.Component<AuthProps, {}> {
     private renderLogin() {
         if (!this.props.name && !this.props.isLoading) {
             return (<li>
@@ -59,4 +58,4 @@ class Auth extends React.Component<any, {}> {
 export default connect(
     (state: ApplicationState) => state.user, // Selects which state properties are merged into the component's props
     UserStore.actionCreators                 // Selects which action creators are merged into the component's props
-)(Auth) as typeof Auth;
+)(Auth) as any;

@@ -87,13 +87,30 @@
         padding-top: .5rem;
     }
 
+    &-input,
+    &-value {
+        cursor: pointer;
+        display: inline-flex;
+        width: 10vw;
+    }
+
     &-input {
         border: 0;
+        color: $color-foreground-bright;
         line-height: 2rem;
+        position: relative;
 
         &:focus {
             color: $color-brand;
             outline: 0;
+        }
+
+        &::placeholder {
+            color: $color-foreground-dark;
+        }
+
+        &.is-active {
+            color: $color-foreground-dark;
         }
     }
 
@@ -104,7 +121,6 @@
             color: $color-brand;
             display: block;
             line-height: 2.3rem;
-            margin-left: -2.3rem;
         }
     }
 
@@ -154,6 +170,10 @@
             box-shadow: none !important;
             color: $color-foreground-brighter;
             outline: none !important;
+        }
+
+        &.is-disabled {
+            pointer-events: none;
         }
     }
 }

@@ -19,9 +19,15 @@ export enum Tab {
     Conference
 }
 
+export enum Guest {
+    Adults,
+    Kids,
+    Babies
+}
+
 interface Input<T> {
     value: T;
-    list?: T[];
+    list: T[];
     isLoading: boolean;
 }
 
@@ -60,10 +66,10 @@ export class Guests {
 
 export class People {
     constructor(
-        public value?: number) { }
+        public total?: number) { }
 
     public get full(): string {
-        return this.value ? `${this.value}` : '';
+        return this.total ? `${this.total}` : '';
     }
 }
 
@@ -101,14 +107,17 @@ const initialState: SearchState = {
     },
     when: {
         value: new Dates(),
+        list: [],
         isLoading: false
     },
     guests: {
-        value: new Guests(2, 0, 0, 1, false, false),
+        value: new Guests(0, 0, 0, 0, false, false),
+        list: [],
         isLoading: false
     },
     people: {
         value: new People(0),
+        list: [],
         isLoading: false
     }
 };
@@ -127,18 +136,28 @@ interface ResetWhenAction { type: 'RESET_WHEN_ACTION' }
 interface ResetGuestsAction { type: 'RESET_GUESTS_ACTION' }
 interface SelectWhenAction { type: 'SELECT_WHEN_ACTION', next: Option, start: moment.Moment, end: moment.Moment }
 interface SelectGuestsAction { type: 'SELECT_GUESTS_ACTION', adults: number, kids: number, baby: number, rooms: number, work: boolean }
-interface SelectPepopleAction { type: 'SELECT_PEOPLE_ACTION', value: number }
+interface SelectPepopleAction { type: 'SELECT_PEOPLE_ACTION', total: number }
 interface SwitchTabAction { type: 'SWITCH_TAB_ACTION', tab: Tab }
 
 
 type KnownAction = InitAction | RequestWhereAction | ReceiveWhereAction | SelectWhereAction | ResetWhereAction | SelectWhenAction | SelectGuestsAction | SwitchTabAction | SelectPepopleAction | ResetWhenAction | ResetGuestsAction;
+
+// ---------------
+// FUNCTIONS - Our functions to reuse in this code.
+function checkNextTabOnSwitch(currentTab: Tab, selectedOption: Option) {
+    if (selectedOption === Option.Where || selectedOption === Option.When) {
+        return selectedOption;
+    }
+
+    return currentTab === Tab.Smart ? Option.Guests : Option.People;
+}
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 export const actionCreators = {
 
-    init: (value: string): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    init: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'INIT_ACTION'});
     },
     searchWhere: (value: string): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -166,15 +185,15 @@ export const actionCreators = {
         dispatch({ type: 'SELECT_WHERE_ACTION', city: city });
     },
 
-    resetWhere: (city: City): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    resetWhere: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'RESET_WHERE_ACTION'});
     },
 
-    resetWhen: (dates: Dates): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    resetWhen: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'RESET_WHEN_ACTION' });
     },
 
-    resetGuests: (guests: Guests): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    resetGuests: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'RESET_GUESTS_ACTION' });
     },
 
@@ -216,7 +235,7 @@ export const actionCreators = {
 
     updatePeople: (value: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const people = getState().search.people.value;
-        dispatch({ type: 'SELECT_PEOPLE_ACTION', value: people.value || 0 });
+        dispatch({ type: 'SELECT_PEOPLE_ACTION', total: people.total || 0 });
     },
 
     switchTab: (tab: Tab): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -240,17 +259,17 @@ export const reducer: Reducer<SearchState> = (state: SearchState, action: KnownA
         case 'RESET_WHERE_ACTION':
             return { ...state, selected: Option.Where, where: { ...state.where, value: new City(), list: [] } };
         case 'SELECT_WHEN_ACTION':
-            return { ...state, selected: Option.Guests, when: { ...state.when, value: new Dates(action.start, action.end, true) } };
+            return { ...state, selected: action.next, when: { ...state.when, value: new Dates(action.start, action.end, true) } };
         case 'RESET_WHEN_ACTION':
             return { ...state, selected: Option.When, when: { ...state.when, value: new Dates(moment().add(7, 'days'), moment().add(10, 'days'), false)} };
         case 'SELECT_GUESTS_ACTION':
             return { ...state, guests: { ...state.guests, value: new Guests(action.adults, action.kids, action.baby, action.rooms, action.work, true) } };
         case 'RESET_GUESTS_ACTION':
-            return { ...state, selected: Option.Guests, guests: { ...state.guests, value: new Guests(2, 0, 0, 1, false , false) } };
+            return { ...state, selected: Option.Guests, guests: { ...state.guests, value: new Guests(0, 0, 0, 0, false , false) } };
         case 'SELECT_PEOPLE_ACTION':
-            return { ...state, people: { ...state.people, value: new People(action.value) } };       
+            return { ...state, people: { ...state.people, value: new People(action.total) } };       
         case 'SWITCH_TAB_ACTION':
-            return { ...state, tab: action.tab, selected: action.tab === Tab.Smart ? Option.Guests : Option.People };
+            return { ...state, tab: action.tab, selected: checkNextTabOnSwitch(action.tab, state.selected) };
         default:
             // the following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

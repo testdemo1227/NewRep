@@ -21,7 +21,7 @@ export interface Translation {
 }
 
 export interface FeaturesState {
-    list?: Feature[];
+    list: Feature[];
     translation: Translation;
 }
 

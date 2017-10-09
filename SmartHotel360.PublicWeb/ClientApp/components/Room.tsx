@@ -8,7 +8,7 @@ export default class Room extends React.Component<RoomsStore.Room, {}> {
         //    backgroundImage: `url('assets/images/conference_room_1.png'), url(${image})`
         //};
         return {
-            backgroundImage: `url('assets/images/placeholder.png'), url(${image})`
+            backgroundImage: `url('assets/images/placeholder.png')`
         };
     }
 
