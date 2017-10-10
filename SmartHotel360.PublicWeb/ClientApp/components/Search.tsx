@@ -1,10 +1,11 @@
 import * as React from 'react';
 import * as moment from 'moment';
+import * as $ from 'jquery';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ApplicationState } from '../store';
 import * as SearchStore from '../store/Search';
-import * as $ from 'jquery';
+import Loading from './Loading';
 import IncrementDecrement from './IncrementDecrement';
 
 type SearchProps =
@@ -366,8 +367,8 @@ class Search extends React.Component<SearchProps, {}> {
                     </li>
 
                 </ul>
-                <section className='sh-search-options'>
-                    {this.renderCurrentOption()}
+                <section className={'sh-search-options ' + (this.props.started ? '' : 'is-hidden')}>
+                    {this.props.isLoading ? <Loading /> : this.renderCurrentOption()}
                 </section>
             </div>
         </div>;

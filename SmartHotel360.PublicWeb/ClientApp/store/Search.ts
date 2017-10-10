@@ -28,7 +28,6 @@ export enum Guest {
 interface Input<T> {
     value: T;
     list: T[];
-    isLoading: boolean;
 }
 
 export class City {
@@ -86,6 +85,8 @@ export class Dates {
 
 export interface SearchState {
     tab: Tab;
+    started: boolean,
+    isLoading: boolean;
     shouldRender: boolean;
     minLength: number;
     selected: Option;
@@ -97,28 +98,26 @@ export interface SearchState {
 
 const initialState: SearchState = {
     tab: Tab.Smart,
+    started: false,
     shouldRender: false,
     minLength: 3,
     selected: Option.Where,
+    isLoading: false,
     where: {
         value: new City(),
-        list: [],
-        isLoading: false
+        list: []
     },
     when: {
         value: new Dates(),
-        list: [],
-        isLoading: false
+        list: []
     },
     guests: {
-        value: new Guests(0, 0, 0, 0, false, false),
-        list: [],
-        isLoading: false
+        value: new Guests(1, 0, 0, 1, false, false),
+        list: []
     },
     people: {
-        value: new People(0),
-        list: [],
-        isLoading: false
+        value: new People(1),
+        list: []
     }
 };
 
@@ -129,7 +128,7 @@ const initialState: SearchState = {
 
 interface InitAction { type: 'INIT_ACTION' }
 interface RequestWhereAction { type: 'REQUEST_WHERE_ACTION' }
-interface ReceiveWhereAction { type: 'RECEIVE_WHERE_ACTION', list: City[] }
+interface ReceiveWhereAction { type: 'RECEIVE_WHERE_ACTION', list: City[], started: boolean }
 interface SelectWhereAction  { type: 'SELECT_WHERE_ACTION', city: City }
 interface ResetWhereAction   { type: 'RESET_WHERE_ACTION' }
 interface ResetWhenAction { type: 'RESET_WHEN_ACTION' }
@@ -164,9 +163,11 @@ export const actionCreators = {
         const state = getState().search;
 
         if (value.length < state.minLength) {
-            dispatch({ type: 'RECEIVE_WHERE_ACTION', list: [] });
+            dispatch({ type: 'RECEIVE_WHERE_ACTION', list: [], started: false });
             return;
         }
+
+        dispatch({ type: 'RECEIVE_WHERE_ACTION', list: [], started: true });
 
         let fetchTask = fetch(`${settings.urls.hotels}Cities?name=${value}`)
             .then(response => response.json() as Promise<any>)
@@ -174,7 +175,7 @@ export const actionCreators = {
                 data = data.map((item: any) => {
                     return new City(item.id, item.name, item.country);
                 });
-                dispatch({ type: 'RECEIVE_WHERE_ACTION', list: data });
+                dispatch({ type: 'RECEIVE_WHERE_ACTION', list: data, started: true });
             });
 
         addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
@@ -249,25 +250,25 @@ export const actionCreators = {
 export const reducer: Reducer<SearchState> = (state: SearchState, action: KnownAction) => {
     switch (action.type) {
         case 'INIT_ACTION': 
-            return { ...state, shouldRender: true, when: { ...state.when, value: new Dates(moment().add(7, 'days'), moment().add(10, 'days') ) } };
+            return { ...state, shouldRender: true, when: { ...state.when, value: new Dates(moment().add(7, 'days'), moment().add(8, 'days') ) } };
         case 'REQUEST_WHERE_ACTION':
-            return { ...state, where: { ...state.where, isLoading: true } };
+            return { ...state, isLoading: true };
         case 'RECEIVE_WHERE_ACTION':
-            return { ...state, where: { ...state.where, isLoading: false, list: action.list } };
+            return { ...state, started: action.started, isLoading: false, where: { ...state.where, list: action.list } };
         case 'SELECT_WHERE_ACTION':
             return { ...state, selected: Option.When, where: { ...state.where, value: action.city } };
         case 'RESET_WHERE_ACTION':
-            return { ...state, selected: Option.Where, where: { ...state.where, value: new City(), list: [] } };
+            return { ...state, started: false, selected: Option.Where, where: { ...state.where, value: new City(), list: [] } };
         case 'SELECT_WHEN_ACTION':
             return { ...state, selected: action.next, when: { ...state.when, value: new Dates(action.start, action.end, true) } };
         case 'RESET_WHEN_ACTION':
-            return { ...state, selected: Option.When, when: { ...state.when, value: new Dates(moment().add(7, 'days'), moment().add(10, 'days'), false)} };
+            return { ...state, selected: Option.When, when: { ...state.when, value: new Dates(moment().add(7, 'days'), moment().add(8, 'days'), false)} };
         case 'SELECT_GUESTS_ACTION':
             return { ...state, guests: { ...state.guests, value: new Guests(action.adults, action.kids, action.baby, action.rooms, action.work, true) } };
         case 'RESET_GUESTS_ACTION':
-            return { ...state, selected: Option.Guests, guests: { ...state.guests, value: new Guests(0, 0, 0, 0, false , false) } };
+            return { ...state, selected: Option.Guests, guests: { ...state.guests, value: new Guests(1, 0, 0, 1, false , false) } };
         case 'SELECT_PEOPLE_ACTION':
-            return { ...state, people: { ...state.people, value: new People(action.total) } };       
+            return { ...state, people: { ...state.people, value: new People(action.total) } };
         case 'SWITCH_TAB_ACTION':
             return { ...state, tab: action.tab, selected: checkNextTabOnSwitch(action.tab, state.selected) };
         default:
