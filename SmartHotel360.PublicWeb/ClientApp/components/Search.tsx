@@ -15,10 +15,35 @@ type SearchProps =
 
 class Search extends React.Component<SearchProps, {}> {
 
+    public componentWillUpdate(nextProps: SearchProps): void {
+        if (nextProps.guests.value.rooms !== this.props.guests.value.rooms) {
+            const $oneRoomBox = $(this.refs.oneRoomBox);
+            const $twoRoomBox = $(this.refs.twoRoomBox);
+            const $moreRoomBox = $(this.refs.moreRoomBox);
+
+            $oneRoomBox.removeClass('is-active');
+            $twoRoomBox.removeClass('is-active');
+            $moreRoomBox.removeClass('is-active');
+
+            if (nextProps.guests.value.rooms === 1) {
+                $oneRoomBox.addClass('is-active');
+                return;
+            }
+
+            if (nextProps.guests.value.rooms === 2) {
+                $twoRoomBox.addClass('is-active');
+                return;
+            }
+
+            $moreRoomBox.addClass('is-active');
+        }
+    }
+
     public didComponentMount() {
         // Because this plugin doesn't accept SSR
         this.props.init();
     }
+
 
     private onClickTab = (tab: SearchStore.Tab) => {
         this.props.switchTab(tab);
@@ -38,10 +63,15 @@ class Search extends React.Component<SearchProps, {}> {
         setTimeout(() => input.focus(), 10);
     }
 
+    private onSelectWhere = (city: SearchStore.City) => {
+        this.props.selectWhere(city)
+        this.props.selectWhenStart(moment(this.props.when.value.startDate));
+    }
+
     private renderOptionWhere(): JSX.Element {
         return (<ul>
             {this.props.where.list.map((city: SearchStore.City, key: number) =>
-                <div className='sh-search-option' key={key} onClick={() => this.props.selectWhere(city)}>
+                <div className='sh-search-option' key={key} onClick={() => this.onSelectWhere(city)}>
                     {city.full}
                 </div>
             )}
@@ -50,7 +80,7 @@ class Search extends React.Component<SearchProps, {}> {
 
     private renderGuestsOrPeople() {
         if (this.props.tab === SearchStore.Tab.Smart) {
-            return (<li className='sh-search-group'>
+            return (<li className={'sh-search-group ' + (this.props.selected === SearchStore.Option.Guests ? 'is-active' : '')}>
                 <div className={'sh-search-value ' + (this.props.guests.value.isFilled ? 'is-filled' : '')}
                     onClick={this.onClickGuests}>
                     {this.props.guests.value.full}
@@ -63,7 +93,7 @@ class Search extends React.Component<SearchProps, {}> {
         }
 
         if (this.props.tab === SearchStore.Tab.Conference) {
-            return (<li className='sh-search-group'>
+            return (<li className={'sh-search-group ' + (this.props.selected === SearchStore.Option.People ? 'is-active' : '')}>
                 <div className={'sh-search-value ' + (this.props.people.value.full ? 'is-filled' : '')}
                     onClick={this.onClickGuests}>
                     {this.props.people.value.full}
@@ -83,9 +113,13 @@ class Search extends React.Component<SearchProps, {}> {
             return;
         }
 
+
         this.props.resetPeople();
         this.props.resetGuests();
         this.props.resetWhen();
+
+        this.props.selectWhenEnd(moment(this.props.when.value.endDate));
+        this.props.selectWhenStart(moment(this.props.when.value.startDate));
     }
 
     private onChangeWhenStart = (date: moment.Moment) => {
@@ -94,6 +128,7 @@ class Search extends React.Component<SearchProps, {}> {
 
     private onChangeWhenEnd = (date: moment.Moment) => {
         this.props.selectWhenEnd(date);
+        this.props.updateGuestsAdults(this.props.guests.value.adults);
     }
 
     private renderOptionWhen(): JSX.Element {
@@ -132,13 +167,16 @@ class Search extends React.Component<SearchProps, {}> {
         }
 
         this.props.resetGuests();
+        this.props.updateGuestsAdults(1);
+        this.props.updateGuestsBaby(0);
+        this.props.updateGuestsKids(0);
+        this.props.updateGuestsRooms(1);
     }
 
     private checkNumber(n: string): boolean {
         return !n || parseFloat(n) === Number(n);
     }
 
-    // TODO Improve this types and styles
     private onChangeGuestsAdults = (e: any) => {
         const value = e.currentTarget.value;
         if (!this.checkNumber(value)) {
@@ -213,7 +251,7 @@ class Search extends React.Component<SearchProps, {}> {
     }
 
     private removeRoom = () => {
-        if (!this.props.guests.value.rooms) {
+        if (!this.props.guests.value.rooms || this.props.guests.value.rooms < 2) {
             return;
         }
         let rooms = this.props.guests.value.rooms - 1;
@@ -222,17 +260,6 @@ class Search extends React.Component<SearchProps, {}> {
 
     private selectOneRoom = () => {
         this.props.updateGuestsRooms(1);
-    }
-
-    public componentWillUpdate(nextProps: any): void {
-        if (nextProps.guests.value.rooms !== this.props.guests.value.rooms) {
-            $('.sh-guests-room').removeClass('is-active');
-            if (nextProps.guests.value.rooms === 1) {
-                $(this.refs.oneRoomBox).addClass('is-active');
-            } else if (nextProps.guests.value.rooms === 2) {
-                $(this.refs.twoRoomBox).addClass('is-active');
-            }
-        }
     }
 
     private renderOptionGuests(): JSX.Element {
@@ -275,7 +302,7 @@ class Search extends React.Component<SearchProps, {}> {
                     </div>
                 </div>
                 <div className='sh-guests-rooms'>
-                    <div ref='oneRoomBox' className='sh-guests-room sh-guests-room--default' onClick={() => this.props.updateGuestsRooms(1)}>
+                    <div ref='oneRoomBox' className='sh-guests-room sh-guests-room--default is-active' onClick={() => this.props.updateGuestsRooms(1)}>
                         <i className='sh-guests-room_icon sh-guests-room_icon--one icon-sh-key'></i>
                         <span>One Room</span>
                     </div>
@@ -283,7 +310,7 @@ class Search extends React.Component<SearchProps, {}> {
                         <i className='sh-guests-room_icon icon-sh-keys'></i>
                         <span>Two Rooms</span>
                     </div>
-                    <div className='sh-guests-room sh-guests-room--counter'>
+                    <div ref='moreRoomBox' className='sh-guests-room sh-guests-room--counter'>
                         <div className='sh-guests-custom'>
                             <button onClick={() => this.removeRoom()} className='sh-guests-room_button'><i className='icon-sh-less'></i></button>
                             <input className='sh-guests-room_input' type='text' value={this.props.guests.value.rooms} onChange={this.onChangeGuestsRooms} />
@@ -394,13 +421,12 @@ class Search extends React.Component<SearchProps, {}> {
                         onClick={() => this.onClickTab(SearchStore.Tab.Smart)}>
                         Smart Room
                     </li>
-                    <li className={'sh-search-tab ' + (this.props.tab === SearchStore.Tab.Conference ? 'is-active' : '')}
-                        onClick={() => this.onClickTab(SearchStore.Tab.Conference)}>
+                    <li className={'sh-search-tab ' + (this.props.tab === SearchStore.Tab.Conference ? 'is-active' : '')}>
                         Conference Room
                    </li>
                 </ul>
                 <ul className='sh-search-inputs'>
-                    <li className='sh-search-group'>
+                    <li className={'sh-search-group ' + (this.props.selected === SearchStore.Option.Where ? 'is-active' : '')}>
                         <div className={'sh-search-value ' + (this.props.where.value.full ? 'is-filled' : '')}
                             onClick={this.onClickWhere}>
                             {this.props.where.value.full}
@@ -413,7 +439,7 @@ class Search extends React.Component<SearchProps, {}> {
                             onClick={this.onClickWhere} />
                     </li>
 
-                    <li className='sh-search-group'>
+                    <li className={'sh-search-group ' + (this.props.selected === SearchStore.Option.When ? 'is-active' : '')}>
                         <div className={'sh-search-value ' + (this.props.when.value.isFilled ? 'is-filled' : '')}
                             onClick={this.onClickWhen}>
                             {this.props.when.value.full}
@@ -428,7 +454,7 @@ class Search extends React.Component<SearchProps, {}> {
 
                     <li className='sh-search-group'>
                         <Link to={'/SearchRooms'} className={'sh-search-button btn ' + (this.props.where.value.full && this.props.when.value.isFilled ? '' : 'is-disabled')}>
-                            Find a Room
+                            {this.props.tab === SearchStore.Tab.Smart ? 'Find a Room' : 'Find a Conference Room'}
                         </Link>
                     </li>
 

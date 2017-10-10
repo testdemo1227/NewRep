@@ -13,6 +13,19 @@
 
     &-group {
         margin: 0 2rem;
+        position: relative;
+
+        &.is-active:before {
+            $size: .5rem;
+            background-color: $color-brand;
+            border-radius: 50%;
+            bottom: -$size;
+            content: '';
+            height: $size;
+            left: 50%;
+            position: absolute;
+            width: $size;
+        }
     }
 
     &--info &-group:first-of-type {
@@ -82,7 +95,7 @@
 
     &--info &-inputs {
         color: $color-brand;
-        font-weight: $font-weight-semibold;
+        font-weight: $font-weight-medium;
         justify-content: space-around;
         padding-top: .5rem;
     }
@@ -97,8 +110,10 @@
     &-input {
         border: 0;
         color: $color-foreground-bright;
+        justify-content: center;
         line-height: 2rem;
         position: relative;
+        text-align: center;
 
         &:focus {
             color: $color-brand;
@@ -109,11 +124,13 @@
         &.is-active {
             color: $color-brand;
             font-weight: $font-weight-medium;
+            text-align: center;
         }
     }
 
     &-value {
         display: none;
+        text-align: center;
 
         &.is-filled {
             color: $color-brand;
@@ -134,7 +151,9 @@
     }
 
     &-options {
-        background: linear-gradient(to bottom, rgba($color-foreground-darker, 0) 0%, rgba($color-foreground-darker, 0) 85%,rgba($color-foreground-darker, .03) 100%);
+        @include site-margins-remove;
+
+        background: linear-gradient(to bottom, rgba($color-foreground-darker, 0) 0%, rgba($color-foreground-darker, 0) 85%, rgba($color-foreground-darker, .03) 100%);
         border-bottom: 2px solid $color-foreground-brighter;
         display: block;
         float: left;
@@ -142,8 +161,6 @@
         padding-bottom: 5rem;
         padding-top: 2.5rem;
         width: 100%;
-
-        @include site-margins-remove();
     }
 
     &-when {
@@ -175,6 +192,7 @@
         }
 
         &.is-disabled {
+            background-color: $color-background-bright;
             pointer-events: none;
         }
     }

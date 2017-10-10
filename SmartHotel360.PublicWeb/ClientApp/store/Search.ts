@@ -270,9 +270,9 @@ export const reducer: Reducer<SearchState> = (state: SearchState, action: KnownA
         case 'SELECT_GUESTS_ACTION':
             return { ...state, guests: { ...state.guests, value: new Guests(action.adults, action.kids, action.baby, action.rooms, action.work, true) } };
         case 'RESET_GUESTS_ACTION':
-            return { ...state, selected: Option.Guests, guests: { ...state.guests, value: new Guests(0, 0, 0, 0, false, false) } };
+            return { ...state, selected: Option.Guests, guests: { ...state.guests, value: new Guests(1, 0, 0, 1, false, false) } };
         case 'RESET_PEOPLE_ACTION':
-            return { ...state, selected: Option.Guests, people: { ...state.people, value: new People(0) } };
+            return { ...state, selected: Option.Guests, people: { ...state.people, value: new People(1) } };
         case 'SELECT_PEOPLE_ACTION':
             return { ...state, people: { ...state.people, value: new People(action.total) } };
         case 'SWITCH_TAB_ACTION':

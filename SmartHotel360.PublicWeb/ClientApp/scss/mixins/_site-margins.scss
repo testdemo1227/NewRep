@@ -38,8 +38,9 @@
 
 
     @function correction($value) {
-        @return -($value + ((100% - ($value * 2)) * ($value / 100%)) / 2)
+        @return -($value + ((100% - ($value * 2)) * ($value / 100%)) / 2);
     }
+
     // Paddings
     $padding-site-default: calculate($item-s-size, $item-s-length, $item-s-margin, $factor);
     $padding-site-m: calculate($item-m-size, $item-m-length, $item-m-margin, $factor);
