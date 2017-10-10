@@ -1,6 +1,26 @@
 ﻿@import '../base/variables';
 
 .sh-guests {
+    &-form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+    }
+
+    &-textarea {
+        background-color: rgba($color-foreground-bright, .5);
+        border-color: transparent;
+        border-radius: 2px;
+        height: 10rem;
+        margin: .8rem;
+        padding: .5rem;
+        resize: none;
+
+        &:focus {
+            outline: $color-foreground-bright;
+        }
+    }
+
     &-config {
         display: flex;
         flex-direction: row;
@@ -11,26 +31,33 @@
         display: flex;
         flex-direction: column;
         width: 35%;
+    }
 
-        &_row {
-            display: flex;
-            margin: 1rem 0;
-            width: 100%;
-        }
+    &-people_row {
+        display: flex;
+        margin: 1rem 0;
+        width: 100%;
     }
 
     &-description {
         display: flex;
         flex: 1 0 auto;
         flex-direction: column;
+    }
 
-        &_title {
-            font-weight: $font-weight-semibold;
-        }
+    &-title {
+        font-weight: $font-weight-semibold;
+    }
 
-        &_text {
-            font-size: $font-size-xs;
-        }
+    &-text {
+        font-size: $font-size-xs;
+    }
+
+    &-link {
+        color: $color-brand;
+        cursor: pointer;
+        font-size: $font-size-xs;
+        text-decoration: underline;
     }
 
     &-icon {
@@ -137,7 +164,7 @@
         width: $size;
 
         &:focus,
-        &:active:focus {
+        &:active + &:focus {
             box-shadow: none;
             outline: 0;
         }
@@ -146,5 +173,41 @@
             background-color: $color-brand-brighter;
             color: $color-brand;
         }
+    }
+
+    &-people_services {
+        display: flex;
+        flex-direction: column;
+        width: 65%;
+    }
+
+
+    &-services {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    &-service {
+        color: $color-background-bright;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        margin: 0 .5rem;
+        text-align: center;
+        width: 20%;
+
+        &:hover,
+        &.is-active {
+            color: $color-brand;
+        }
+    }
+
+
+    &-service_icon {
+        font-size: $font-size-xxxl;
     }
 }

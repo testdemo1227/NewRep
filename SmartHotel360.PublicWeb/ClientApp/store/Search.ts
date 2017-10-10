@@ -65,10 +65,10 @@ export class Guests {
 
 export class People {
     constructor(
-        public total?: number) { }
+        public total: number) { }
 
     public get full(): string {
-        return this.total ? `${this.total}` : '';
+        return this.total ? `${this.total} People` : '';
     }
 }
 
@@ -133,13 +133,14 @@ interface SelectWhereAction  { type: 'SELECT_WHERE_ACTION', city: City }
 interface ResetWhereAction   { type: 'RESET_WHERE_ACTION' }
 interface ResetWhenAction { type: 'RESET_WHEN_ACTION' }
 interface ResetGuestsAction { type: 'RESET_GUESTS_ACTION' }
+interface ResetPeopleAction { type: 'RESET_PEOPLE_ACTION' }
 interface SelectWhenAction { type: 'SELECT_WHEN_ACTION', next: Option, start: moment.Moment, end: moment.Moment }
 interface SelectGuestsAction { type: 'SELECT_GUESTS_ACTION', adults: number, kids: number, baby: number, rooms: number, work: boolean }
 interface SelectPepopleAction { type: 'SELECT_PEOPLE_ACTION', total: number }
 interface SwitchTabAction { type: 'SWITCH_TAB_ACTION', tab: Tab }
 
 
-type KnownAction = InitAction | RequestWhereAction | ReceiveWhereAction | SelectWhereAction | ResetWhereAction | SelectWhenAction | SelectGuestsAction | SwitchTabAction | SelectPepopleAction | ResetWhenAction | ResetGuestsAction;
+type KnownAction = InitAction | RequestWhereAction | ReceiveWhereAction | SelectWhereAction | ResetWhereAction | SelectWhenAction | SelectGuestsAction | SwitchTabAction | SelectPepopleAction | ResetWhenAction | ResetGuestsAction | ResetPeopleAction;
 
 // ---------------
 // FUNCTIONS - Our functions to reuse in this code.
@@ -198,6 +199,10 @@ export const actionCreators = {
         dispatch({ type: 'RESET_GUESTS_ACTION' });
     },
 
+    resetPeople: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        dispatch({ type: 'RESET_PEOPLE_ACTION' });
+    },
+
     selectWhenStart: (date: moment.Moment): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const end = getState().search.when.value.endDate;
         dispatch({ type: 'SELECT_WHEN_ACTION', next: Option.When, start: date, end: (end || moment()) });
@@ -235,8 +240,7 @@ export const actionCreators = {
     },
 
     updatePeople: (value: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        const people = getState().search.people.value;
-        dispatch({ type: 'SELECT_PEOPLE_ACTION', total: people.total || 0 });
+        dispatch({ type: 'SELECT_PEOPLE_ACTION', total: value || 0 });
     },
 
     switchTab: (tab: Tab): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -266,7 +270,9 @@ export const reducer: Reducer<SearchState> = (state: SearchState, action: KnownA
         case 'SELECT_GUESTS_ACTION':
             return { ...state, guests: { ...state.guests, value: new Guests(action.adults, action.kids, action.baby, action.rooms, action.work, true) } };
         case 'RESET_GUESTS_ACTION':
-            return { ...state, selected: Option.Guests, guests: { ...state.guests, value: new Guests(1, 0, 0, 1, false , false) } };
+            return { ...state, selected: Option.Guests, guests: { ...state.guests, value: new Guests(0, 0, 0, 0, false, false) } };
+        case 'RESET_PEOPLE_ACTION':
+            return { ...state, selected: Option.Guests, people: { ...state.people, value: new People(0) } };
         case 'SELECT_PEOPLE_ACTION':
             return { ...state, people: { ...state.people, value: new People(action.total) } };
         case 'SWITCH_TAB_ACTION':

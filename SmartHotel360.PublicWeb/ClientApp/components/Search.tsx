@@ -7,6 +7,7 @@ import { ApplicationState } from '../store';
 import * as SearchStore from '../store/Search';
 import Loading from './Loading';
 import IncrementDecrement from './IncrementDecrement';
+import Checkbox from './Checkbox';
 
 type SearchProps =
     SearchStore.SearchState
@@ -22,12 +23,13 @@ class Search extends React.Component<SearchProps, {}> {
     private onClickTab = (tab: SearchStore.Tab) => {
         this.props.switchTab(tab);
     }
-    
+
     private onChangeWhere = (e: React.KeyboardEvent<HTMLInputElement>) => {
         this.props.searchWhere(e.currentTarget.value);
     }
 
     private onClickWhere = () => {
+        this.props.resetPeople();
         this.props.resetGuests();
         this.props.resetWhen();
         this.props.resetWhere();
@@ -62,7 +64,12 @@ class Search extends React.Component<SearchProps, {}> {
 
         if (this.props.tab === SearchStore.Tab.Conference) {
             return (<li className='sh-search-group'>
-                <span className='sh-search-input'>
+                <div className={'sh-search-value ' + (this.props.people.value.full ? 'is-filled' : '')}
+                    onClick={this.onClickGuests}>
+                    {this.props.people.value.full}
+                </div>
+                <span className={'sh-search-input ' + (!this.props.people.value.full ? '' : 'is-hidden ') + (this.props.selected === SearchStore.Option.Guests ? 'is-active' : '')}
+                    onClick={this.onClickGuests}>
                     People
                 </span>
             </li>);
@@ -76,6 +83,7 @@ class Search extends React.Component<SearchProps, {}> {
             return;
         }
 
+        this.props.resetPeople();
         this.props.resetGuests();
         this.props.resetWhen();
     }
@@ -216,13 +224,13 @@ class Search extends React.Component<SearchProps, {}> {
         this.props.updateGuestsRooms(1);
     }
 
-    public componentWillUpdate(nextProps: any): void {        
+    public componentWillUpdate(nextProps: any): void {
         if (nextProps.guests.value.rooms !== this.props.guests.value.rooms) {
             $('.sh-guests-room').removeClass('is-active');
             if (nextProps.guests.value.rooms === 1) {
-                $('#oneRoomBox').addClass('is-active');
+                $(this.refs.oneRoomBox).addClass('is-active');
             } else if (nextProps.guests.value.rooms === 2) {
-                $('#twoRoomBox').addClass('is-active');
+                $(this.refs.twoRoomBox).addClass('is-active');
             }
         }
     }
@@ -233,8 +241,8 @@ class Search extends React.Component<SearchProps, {}> {
                 <div className='sh-guests-people'>
                     <div className='sh-guests-people_row'>
                         <div className='sh-guests-description'>
-                            <span className='sh-guests-description_title'>Adults</span>
-                            <span className='sh-guests-description_text'>14 years and up</span>
+                            <span className='sh-guests-title'>Adults</span>
+                            <span className='sh-guests-text'>14 years and up</span>
                         </div>
                         <IncrementDecrement
                             value={this.props.guests.value.adults}
@@ -244,8 +252,8 @@ class Search extends React.Component<SearchProps, {}> {
                     </div>
                     <div className='sh-guests-people_row'>
                         <div className='sh-guests-description'>
-                            <span className='sh-guests-description_title'>Kids</span>
-                            <span className='sh-guests-description_text'>From 2 to 13 years</span>
+                            <span className='sh-guests-title'>Kids</span>
+                            <span className='sh-guests-text'>From 2 to 13 years</span>
                         </div>
                         <IncrementDecrement
                             value={this.props.guests.value.kids}
@@ -255,31 +263,31 @@ class Search extends React.Component<SearchProps, {}> {
                     </div>
                     <div className='sh-guests-people_row'>
                         <div className='sh-guests-description'>
-                            <span className='sh-guests-description_title'>Baby</span>
-                            <span className='sh-guests-description_text'>Under 2 years</span>
-                        </div>                        
+                            <span className='sh-guests-title'>Baby</span>
+                            <span className='sh-guests-text'>Under 2 years</span>
+                        </div>
                         <IncrementDecrement
                             value={this.props.guests.value.baby}
                             increment={() => this.addGuest(SearchStore.Guest.Babies)}
                             decrement={() => this.removeGuest(SearchStore.Guest.Babies)}
                             change={this.onChangeGuestsBaby} />
-                        
+
                     </div>
                 </div>
                 <div className='sh-guests-rooms'>
-                    <div id='oneRoomBox' className='sh-guests-room sh-guests-room--default' onClick={() => this.props.updateGuestsRooms(1)}>
+                    <div ref='oneRoomBox' className='sh-guests-room sh-guests-room--default' onClick={() => this.props.updateGuestsRooms(1)}>
                         <i className='sh-guests-room_icon sh-guests-room_icon--one icon-sh-key'></i>
                         <span>One Room</span>
                     </div>
-                    <div id='twoRoomBox' className='sh-guests-room sh-guests-room--default' onClick={ () => this.props.updateGuestsRooms(2) }>
+                    <div ref='twoRoomBox' className='sh-guests-room sh-guests-room--default' onClick={() => this.props.updateGuestsRooms(2)}>
                         <i className='sh-guests-room_icon icon-sh-keys'></i>
                         <span>Two Rooms</span>
                     </div>
                     <div className='sh-guests-room sh-guests-room--counter'>
                         <div className='sh-guests-custom'>
-                            <button onClick={ () => this.removeRoom() } className='sh-guests-room_button'><i className='icon-sh-less'></i></button>
+                            <button onClick={() => this.removeRoom()} className='sh-guests-room_button'><i className='icon-sh-less'></i></button>
                             <input className='sh-guests-room_input' type='text' value={this.props.guests.value.rooms} onChange={this.onChangeGuestsRooms} />
-                            <button onClick={ () => this.addRoom() } className='sh-guests-room_button'><i className='icon-sh-plus'></i></button>
+                            <button onClick={() => this.addRoom()} className='sh-guests-room_button'><i className='icon-sh-plus'></i></button>
                         </div>
                         <span>Rooms</span>
                     </div>
@@ -293,11 +301,69 @@ class Search extends React.Component<SearchProps, {}> {
         </div>);
     }
 
+    private addPeople = () => {
+        let people = this.props.people.value.total + 1;
+        this.props.updatePeople(people);
+    }
+
+    private removePeople = () => {
+        let people = this.props.people.value.total - 1;
+        if (!people) {
+            return;
+        }
+        this.props.updatePeople(people);
+    }
+
+    private selectService = (e: any) => {
+        $(e.currentTarget).toggleClass('is-active');
+    }
+
     private renderOptionPeople(): JSX.Element {
+        let services = [
+            {
+                icon: 'sh-wifi',
+                description: 'Free Wi-Fi'
+            },
+            {
+                icon: 'sh-air-conditioning',
+                description: 'Air conditioning'
+            },
+            {
+                icon: 'sh-breakfast',
+                description: 'Breakfast'
+            },
+            {
+                icon: 'sh-elevator',
+                description: 'Elevator'
+            }
+        ]
+
         return (<div className='sh-guests sh-guests--people'>
             <section className='sh-guests-config'>
                 <div className='sh-guests-people'>
-                    <input type='number' value={this.props.people.value.total} onChange={this.onChangePeople} />
+                    <div className='sh-guests-people_row'>
+                        <div className='sh-guests-description'>
+                            <span className='sh-guests-title'>People (1-40)</span>
+                            <span className='sh-guests-text'>(1-40 people)</span>
+                            <a className='sh-guests-link'>Request Quotes (41+ people)</a>
+                        </div>
+                        <IncrementDecrement
+                            value={this.props.people.value.total}
+                            increment={() => this.addPeople()}
+                            decrement={() => this.removePeople()}
+                            change={() => this.onChangePeople} />
+                    </div>
+                </div>
+                <div className='sh-guests-people_services'>
+                    <ul className='sh-guests-services'>
+                        {services.map((service: any, key: any) =>
+                            <li className='sh-guests-service' onClick={this.selectService} key={key}><i className={`sh-guests-service_icon icon-${service.icon}`}></i>{service.description}</li>
+                        )}
+                    </ul>
+                    <div className='sh-guests-form'>
+                        <Checkbox name='Need more options?' />
+                        <textarea className='sh-guests-textarea' />
+                    </div>
                 </div>
             </section>
         </div>);
