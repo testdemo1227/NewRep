@@ -35,7 +35,7 @@ export default class Home extends React.Component<HomeProps, {}> {
                 <p className='sh-home-title'>The smart experience</p>
                 <article className='sh-infogrid-row'>
                     <div className='sh-infogrid-column'>
-                        <img className='sh-infogrid-icon' src='/assets/images/ic_check.svg' />
+                        <i className='sh-infogrid-icon icon-sh-smart-check'></i>
                         <div className='sh-infogrid-description'>
                             <p className='sh-infogrid-subtitle'>Check in from your phone</p>
                             <span className='sh-infogrid-text'>
@@ -47,7 +47,7 @@ export default class Home extends React.Component<HomeProps, {}> {
 
                 <article className='sh-infogrid-row'>
                     <div className='sh-infogrid-column'>
-                        <img className='sh-infogrid-icon sh-infogrid-icon--padlock' src='/assets/images/ic_padlock.svg' />
+                        <i className='sh-infogrid-icon icon-sh-smart-finde'></i>
                         <div className='sh-infogrid-description'>
                             <p className='sh-infogrid-subtitle'>Find and access your room</p>
                             <span className='sh-infogrid-text'>
@@ -59,7 +59,7 @@ export default class Home extends React.Component<HomeProps, {}> {
 
                 <article className='sh-infogrid-row'>
                     <div className='sh-infogrid-column'>
-                        <img className='sh-infogrid-icon' src='/assets/images/ic_personalize.svg' />
+                        <i className='sh-infogrid-icon icon-sh-smart-person'></i>
                         <div className='sh-infogrid-description'>
                             <p className='sh-infogrid-subtitle'>Personalize your experience</p>
                             <span className='sh-infogrid-text'>
@@ -72,7 +72,7 @@ export default class Home extends React.Component<HomeProps, {}> {
 
                 <article className='sh-infogrid-row'>
                     <div className='sh-infogrid-column'>
-                        <img className='sh-infogrid-icon' src='/assets/images/ic_begreen.svg' />
+                        <i className='sh-infogrid-icon icon-sh-smart-green'></i>
                         <div className='sh-infogrid-description'>
                             <p className='sh-infogrid-subtitle'>Be green</p>
                             <span className='sh-infogrid-text'>
