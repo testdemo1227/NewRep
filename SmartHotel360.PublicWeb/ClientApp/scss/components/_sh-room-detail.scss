@@ -1,0 +1,141 @@
+﻿@import '../base/variables';
+@import '../mixins/site-margins';
+
+.sh-room_detail {
+    position: relative;
+    $column-left-size: 60%;
+
+    &-background {
+        background-position-y: -30rem;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 42rem;
+        width: 100%;
+    }
+
+    &-wrapper {
+        @include site-margins;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 4rem;
+        margin-top: 3rem;
+    }
+
+    &-column {
+        margin: 0 1rem;
+        position: relative;
+
+        &--left {
+            width: 60%;
+        }
+
+        &--right {
+            width: 40%;
+        }
+    }
+
+    &-tabs {
+        border-bottom: 1px solid $color-background-bright;
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+
+    &-tab {
+        cursor: pointer;
+        padding: 1.5rem;
+
+        &.is-active {
+            box-shadow: inset 0 -5px 0 $color-brand;
+            color: $color-brand;
+        }
+    }
+
+    &-filters {
+        background: $color-background-brighter;
+        box-shadow: 0 0 21px 2px rgba($color-background-darker, .08);
+        min-height: 30rem;
+        position: absolute;
+        top: -10rem;
+        width: 100%;
+    }
+
+    &-content {
+        margin-top: 2rem;
+    }
+
+    &-back {
+        color: $color-background-bright;
+        cursor: pointer;
+        display: flex;
+        left: 2rem;
+        padding: 0 1rem;
+        position: absolute;
+        top: .5rem;
+
+        &:hover {
+            color: $color-background-dark;
+            text-decoration: none;
+        }
+    }
+
+    &-arrow {
+        color: $color-background-dark;
+        display: block;
+        margin: 0 1rem;
+        transform: rotate(-90deg);
+    }
+
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        line-height: $font-size-xxl;
+        margin-bottom: 2rem;
+    }
+
+    &-title {
+        font-size: $font-size-xxl;
+        font-weight: $font-weight-medium;
+    }
+
+    &-location {
+        color: $color-brand;
+    }
+
+    &-description {
+        font-family: FiraSans;
+        line-height: $font-size-xxxl;
+    }
+
+    &-filter_header {
+        align-items: center;
+        background: $color-secondary-brighter;
+        display: flex;
+        height: 7rem;
+        justify-content: flex-end;
+        padding: 0 2rem;
+    }
+
+    &-filter_title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        margin: 0 .5rem;
+    }
+
+    &-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &-picture {
+        background-image: url('/assets/images/placeholder.png');
+        background-position-y: center;
+        background-size: cover;
+        height: calc(30rem / 3);
+        margin: .5rem;
+        width: calc(40rem / 3);
+    }
+}

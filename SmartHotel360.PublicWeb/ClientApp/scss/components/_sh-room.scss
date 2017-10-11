@@ -69,18 +69,22 @@
     }
 
     &-text {
+        color: $color-background-darker;
         font-family: FiraSans;
     }
 
     &-title {
+        color: $color-background-darker;
         font-weight: $font-weight-semibold;
     }
 
     &-price {
+        color: $color-background-darker;
         font-weight: $font-weight-semibold;
     }
 
     &-label {
+        color: $color-background-darker;
         font-size: $font-size-s;
     }
 

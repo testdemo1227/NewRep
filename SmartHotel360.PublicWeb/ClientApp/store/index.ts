@@ -5,6 +5,7 @@ import * as Rooms from './Rooms';
 import * as User from './User';
 import * as Search from './Search';
 import * as ConferenceRoomsFeatures from './ConferenceRoomsFeatures';
+import * as RoomDetail from './RoomDetail';
 
 // the top-level state object
 export interface ApplicationState {
@@ -15,6 +16,7 @@ export interface ApplicationState {
     user: User.UserState;
     conferenceRoomsFeatures: ConferenceRoomsFeatures.FeaturesState;
     search: Search.SearchState;
+    roomDetail: RoomDetail.RoomDetailState;
 }
 
 // whenever an action is dispatched, Redux will update each top-level application state property using
@@ -27,7 +29,8 @@ export const reducers = {
     rooms: Rooms.reducer,
     user: User.reducer,
     conferenceRoomsFeatures: ConferenceRoomsFeatures.reducer,
-    search: Search.reducer
+    search: Search.reducer,
+    roomDetail: RoomDetail.reducer
 };
 
 // this type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

@@ -6,6 +6,7 @@ import FetchData from './components/FetchData';
 import Counter from './components/Counter';
 import NavMenu from './components/NavMenu';
 import SearchRooms from './components/SearchRooms';
+import RoomDetail from './components/RoomDetail';
 
 export const routes = <Layout>
     <Route component={NavMenu} />
@@ -14,4 +15,5 @@ export const routes = <Layout>
     <Route exact path='/SearchRooms' component={SearchRooms} />
     <Route path='/counter' component={Counter} />
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
+    <Route path='/RoomDetail/:hotelId' component={RoomDetail} />
 </Layout>;

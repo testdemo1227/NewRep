@@ -16,6 +16,10 @@
         margin: $item-xs-margin;
         width: $item-xs-size;
 
+        &:hover {
+            text-decoration: none;
+        }
+
         @media screen and (min-width: $media-screen-s) {
             height: $item-s-size;
             margin: $item-s-margin;

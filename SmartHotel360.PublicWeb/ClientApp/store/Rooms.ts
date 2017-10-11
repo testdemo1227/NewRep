@@ -77,7 +77,7 @@ export const actionCreators = {
     requestFiltered: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
 
         const state = getState();
-        console.log(state.rooms.filters);
+
         let fetchTask = fetch(`${settings.urls.hotels}Hotels/search?cityId=${state.search.where.value.id}&rating=${state.rooms.filters.rating}&minPrice=${state.rooms.filters.minPrice}&maxPrice=${state.rooms.filters.maxPrice}`, { method: 'GET' })
             .then(response => response.json() as Promise<Room[]>)
             .then(data => {

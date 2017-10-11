@@ -4,6 +4,7 @@ import { ApplicationState } from '../store';
 import Loading from './Loading';
 import * as RoomsStore from '../store/Rooms';
 import { RoomHighlighted } from './RoomHighlighted';
+import { Link } from 'react-router-dom';
 
 type RoomsProps =
     {
@@ -16,6 +17,7 @@ type RoomsProps =
     & typeof RoomsStore.actionCreators;
 
 class Rooms extends React.Component<RoomsProps, {}> {
+   
     public componentDidMount() {
         if (this.props.source === RoomsStore.Sources.Featured) {
             this.props.requestFeatured();
@@ -24,6 +26,7 @@ class Rooms extends React.Component<RoomsProps, {}> {
 
         this.props.requestFiltered()
     }
+
     public render() {
         
         return <div className={'sh-rooms ' + (this.props.modifier ? `sh-rooms--${this.props.modifier}` : '')}>
@@ -31,10 +34,10 @@ class Rooms extends React.Component<RoomsProps, {}> {
             {this.props.isLoading
                 ? <Loading />
                 :
-                this.props.list.map((room: any, key: any) =>
-                    <div className='sh-rooms-item' key={key}>
+                this.props.list.map((room: RoomsStore.Room, key: number) =>
+                    <Link className='sh-rooms-item' key={key} to={`/RoomDetail/${room.id}`}>
                         {React.createElement(this.props.component, Object.assign({}, this.props, {...room }))}
-                    </div>
+                    </Link>
                 )
             }
         </div>;
