@@ -50,16 +50,16 @@ export class Guests {
         public work?: boolean,
         public isFilled = false) { }
 
-    private setRoomLabel(): string {
+    public get roomsFull(): string {
         return this.rooms > 1 ? `${this.rooms} Rooms` : `${this.rooms} Room`;
     }
 
-    private setGuestsLabel(): string {
+    public get guestsFull(): string {
         return (this.adults + this.kids + this.baby) > 1 ? `${this.adults + this.kids + this.baby} Guests` : `${this.adults + this.kids + this.baby} Guest`;
     }
 
     public get full(): string {
-        return this.isFilled ? `${this.setGuestsLabel()}, ${this.setRoomLabel()}` : '';
+        return this.isFilled ? `${this.roomsFull}, ${this.guestsFull}` : '';
     }
 }
 
@@ -78,8 +78,24 @@ export class Dates {
         public endDate?: moment.Moment,
         public isFilled = false) { }
 
+    public get startFull(): string {
+        return this.startDate ? `${this.startDate.format('DD MMM')}` : '';
+    }
+
+    public get endFull(): string {
+        return this.endDate ? `${this.endDate.format('DD MMM')}` : '';
+    }
+
+    public get startFullComplex(): string {
+        return this.startDate ? `${this.startDate.format('dd, MMM DD, YYYY')}` : '';
+    }
+
+    public get endFullComplex(): string {
+        return this.endDate ? `${this.endDate.format('dd, MMM DD, YYYY')}` : '';
+    }
+
     public get full(): string {
-        return this.startDate && this.endDate ? `${this.startDate.format('DD MMM')} - ${this.endDate.format('DD MMM')}` : '';
+        return `${this.startFull} - ${this.endFull}`;
     }
 }
 

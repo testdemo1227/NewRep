@@ -6,6 +6,7 @@
 .sh-loading {
     animation-delay: -.16s;
     color: $color-brand;
+    display: inline-block;
     font-size: $font-size-m * .85;
     position: relative;
     text-indent: -9999em;

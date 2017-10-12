@@ -11,7 +11,8 @@ export interface RoomDetail {
     stars: number,
     location: string,
     country: string,
-    price: string
+    price: string,
+    phone: string,
 }
 
 export enum Tabs {
@@ -26,13 +27,13 @@ export enum Option {
 
 export interface RoomDetailState {
     tab: Tabs;
-    isLoading: boolean;
     room: RoomDetail;
+    isBooking: boolean;
+    booked: boolean;
 }
 
 const initialState: RoomDetailState = {
     tab: Tabs.Hotel,
-    isLoading: false,
     room: {
         image: '/assets/images/room_detail.png',
         description: `Lorem ipsum dolor sit amet, 
@@ -52,8 +53,11 @@ Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
         stars: 4,
         location: 'St. Unioninkatu, 416',
         country: '',
-        price: '$588'
-    }
+        price: '$588',
+        phone: '999 999 999'
+    },
+    isBooking: false,
+    booked: false
 };
 // -----------------
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
@@ -62,8 +66,10 @@ Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
 
 interface SwitchTabAction { type: 'SWITCH_TAB_ACTION', tab: Tabs }
 interface InitRoomDetailAction { type: 'INIT_ROOM_DETAIL_ACTION' }
+interface BookRoomAction { type: 'BOOK_ROOM_ACTION' }
+interface BookingRoomAction { type: 'BOOKING_ROOM_ACTION' }
 
-type KnownAction = SwitchTabAction | InitRoomDetailAction;
+type KnownAction = SwitchTabAction | InitRoomDetailAction | BookRoomAction | BookingRoomAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -76,6 +82,11 @@ export const actionCreators = {
 
     switchTab: (tab: Tabs): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'SWITCH_TAB_ACTION', tab: tab });
+    },
+
+    book: (tab: Tabs): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        dispatch({ type: 'BOOKING_ROOM_ACTION' });
+        setTimeout(() => dispatch({ type: 'BOOK_ROOM_ACTION' }), 2000);
     }
 }
 
@@ -84,9 +95,13 @@ export const actionCreators = {
 export const reducer: Reducer<RoomDetailState> = (state: RoomDetailState, action: KnownAction) => {
     switch (action.type) {        
         case 'INIT_ROOM_DETAIL_ACTION':
-                return {...state };        
+                return {...state };
         case 'SWITCH_TAB_ACTION':
             return { ...state, tab: action.tab };
+        case 'BOOKING_ROOM_ACTION':
+            return { ...state, isBooking: true, booked: false };
+        case 'BOOK_ROOM_ACTION':
+            return { ...state, isBooking: false, booked: true };
         default:
             // the following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

@@ -4,17 +4,19 @@ import { ApplicationState } from '../store';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import SearchInfo from './SearchInfo';
 import * as RoomDetailStore from '../store/RoomDetail';
-import * as SearchStore from '../store/Search';
+import * as SearchStore from '../store/RoomDetail';
+import Loading from './Loading';
 
 type RoomDetailProps =
     RoomDetailStore.RoomDetailState
+    & SearchStore.RoomDetailState
     & typeof RoomDetailStore.actionCreators
     & RouteComponentProps<{}>
 
-class RoomDetail extends React.Component<RoomDetailProps, {}> {
+// TODO Remove any
+class RoomDetail extends React.Component<any, {}> {
 
     public componentDidMount() {
-        // Because this plugin doesn't accept SSR
         this.props.init();
     }
 
@@ -22,7 +24,11 @@ class RoomDetail extends React.Component<RoomDetailProps, {}> {
         this.props.switchTab(tab);
     }
 
-    private renderCurrentOption(): JSX.Element {
+    private onClickBook = () => {
+        this.props.book();
+    }
+
+    private renderCurrentOption(): any {
         switch (this.props.tab) {
             case RoomDetailStore.Tabs.Hotel:
                 return (<article className='sh-room_detail-description'>
@@ -72,6 +78,50 @@ class RoomDetail extends React.Component<RoomDetailProps, {}> {
                             <span className='sh-room_detail-filter_title'>{this.props.room.price}</span>
                             <span>Total</span>
                         </header>
+                        <section className='sh-room_detail-info'>
+                            <span className='sh-room_detail-title'>{this.props.room.name}</span>
+                            <span className='sh-room_detail-location u-display-block'>{this.props.room.location}</span>
+                            <span className='sh-room_detail-phone u-display-block'>{this.props.room.phone}</span>
+
+                            <div className='sh-room_detail-extra sh-room_detail-extra--double row'>
+                                <div className='col-xs-6'>
+                                    <span className='sh-room_detail-small'>Check-In</span>
+                                    <span className='sh-room_detail-subtitle'>{this.props.when.value.startFullComplex}</span>
+                                </div>
+                                <div className='col-xs-6'>
+                                    <span className='sh-room_detail-small'>Check-Out</span>
+                                    <span className='sh-room_detail-subtitle'>{this.props.when.value.endFullComplex}</span>
+                                </div>
+                            </div>
+                            <div className='sh-room_detail-extra row'>
+                                <div className='col-xs-4'>
+                                    <span className='sh-room_detail-small'>Room</span>
+                                    <span className='sh-room_detail-subtitle'>{this.props.guests.value.roomsFull}</span>
+                                </div>
+                                <div className='col-xs-4'>
+                                    <span className='sh-room_detail-small'>Guests</span>
+                                    <span className='sh-room_detail-subtitle'>{this.props.guests.value.guestsFull}</span>
+                                </div>
+                                <div className='col-xs-4'>
+                                    <span className='sh-room_detail-small'>Rate</span>
+                                    <span className='sh-room_detail-subtitle'>{this.props.room.price}</span>
+                                </div>
+                            </div>
+
+                            <div className={'sh-room_detail-extra sh-room_detail-extra--double row ' + (this.props.booked ? '' : 'is-invisible')}>
+                                <div className='col-xs-12'>
+                                    <span className='sh-room_detail-subtitle'>Thanks USERNAME,</span>
+                                    <span className='sh-room_detail-small'>Your booking at {this.props.room.name} is confirmed.</span>
+                                </div>
+                            </div>
+
+                            <div className='sh-room_detail-extra'>
+                                <span className={'sh-room_detail-book btn ' + (this.props.booked ? 'is-disabled' : '')}
+                                        onClick={this.onClickBook}>
+                                    {this.props.isBooking ? <Loading isBright={true} /> : 'Book now'}
+                                </span>
+                            </div>
+                        </section>
                     </aside>
                 </div>
             </section>
@@ -91,6 +141,6 @@ class RoomDetail extends React.Component<RoomDetailProps, {}> {
 
 // wire up the React component to the Redux store
 export default connect(
-    (state: ApplicationState) => state.roomDetail, // selects which state properties are merged into the component's props
-    RoomDetailStore.actionCreators                 // selects which action creators are merged into the component's props
-)(RoomDetail) as typeof RoomDetail;
+    (state: ApplicationState) => { return { ...state.roomDetail, ...state.search } }, // selects which state properties are merged into the component's props
+    RoomDetailStore.actionCreators // selects which action creators are merged into the component's props
+)(RoomDetail) as any;
