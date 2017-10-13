@@ -28,12 +28,67 @@ class RoomDetail extends React.Component<any, {}> {
         this.props.book();
     }
 
+    private renderDescription() {
+        let services = [
+            {
+                icon: 'sh-wifi',
+                description: 'Free Wi-Fi'
+            },
+            {
+                icon: 'sh-air-conditioning',
+                description: 'Air conditioning'
+            },
+            {
+                icon: 'sh-breakfast',
+                description: 'Breakfast'
+            },
+            {
+                icon: 'sh-elevator',
+                description: 'Elevator'
+            }
+        ];
+
+        return (<div>
+            <article className='sh-room_detail-description'>
+                {this.props.room.description}
+            </article>
+            <h3 className='sh-room_detail-subtitle'>Services</h3>
+            <div className='sh-room_detail-extra'>
+                <ul className='sh-room_detail-services'>
+                    {services.map((service: any, key: any) =>
+                        <li className='sh-room_detail-service' key={key}>
+                            <i className={`sh-room_detail-service_icon icon-${service.icon}`}></i>
+                            {service.description}
+                        </li>
+                    )}
+                </ul>
+            </div>
+            <div className='sh-room_detail-extra'>
+                <h3 className='sh-room_detail-subtitle'>Information</h3>
+
+                <div className='sh-room_detail-extra'>
+                    <h4 className='sh-room_detail-smalltitle'>Check-In/Out</h4>
+                    <p className='sh-room_detail-text'>12:00 pm / 11:00 pm</p>
+                </div>
+
+                <div className='sh-room_detail-extra'>
+                    <h4 className='sh-room_detail-smalltitle'>Cancellation policy</h4>
+                    <p className='sh-room_detail-text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                </div>
+
+                <div className='sh-room_detail-extra'>
+                    <h4 className='sh-room_detail-smalltitle'>Kids policy</h4>
+                    <p className='sh-room_detail-text'>Free Kids under 3 years</p>
+                    <p className='sh-room_detail-text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                </div>
+            </div>
+        </div>);
+    }
+
     private renderCurrentOption(): any {
         switch (this.props.tab) {
             case RoomDetailStore.Tabs.Hotel:
-                return (<article className='sh-room_detail-description'>
-                    {this.props.room.description}
-                </article>)
+                return this.renderDescription();
             case RoomDetailStore.Tabs.Reviews:
                 return (<article>reviews</article>)
         }
