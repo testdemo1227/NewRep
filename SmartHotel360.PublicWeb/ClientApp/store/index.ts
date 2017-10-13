@@ -1,6 +1,4 @@
-import * as WeatherForecasts from './WeatherForecasts';
 import * as NavMenu from './NavMenu';
-import * as Counter from './Counter';
 import * as Rooms from './Rooms';
 import * as User from './User';
 import * as Search from './Search';
@@ -10,8 +8,6 @@ import * as RoomDetail from './RoomDetail';
 // the top-level state object
 export interface ApplicationState {
     nav: NavMenu.NavMenuState;
-    counter: Counter.CounterState;
-    weatherForecasts: WeatherForecasts.WeatherForecastsState;
     rooms: Rooms.RoomsState;
     user: User.UserState;
     conferenceRoomsFeatures: ConferenceRoomsFeatures.FeaturesState;
@@ -24,8 +20,6 @@ export interface ApplicationState {
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
     nav: NavMenu.reducer,
-    counter: Counter.reducer,
-    weatherForecasts: WeatherForecasts.reducer,
     rooms: Rooms.reducer,
     user: User.reducer,
     conferenceRoomsFeatures: ConferenceRoomsFeatures.reducer,
