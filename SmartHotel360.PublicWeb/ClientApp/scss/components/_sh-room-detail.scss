@@ -102,8 +102,18 @@
     }
 
     &-subtitle {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-regular;
+    }
+
+    &-smalltitle {
         font-size: $font-size-l;
         font-weight: $font-weight-regular;
+    }
+
+    &-text {
+        font-size: $font-size-m;
+        margin: .5rem 0;
     }
 
     &-location {
@@ -139,11 +149,14 @@
     }
 
     &-picture {
+        $margin: 1rem;
+
         background-image: url('/assets/images/placeholder.png');
         background-position-y: center;
         background-size: cover;
         height: calc(30rem / 3);
-        margin: .5rem;
+        margin-bottom: $margin;
+        margin-right: $margin;
         width: calc(40rem / 3);
     }
 
@@ -228,5 +241,30 @@
 
     &-service_icon {
         font-size: 3rem;
+    }
+
+
+    &-review {
+        display: block;
+        margin-top: 2rem;
+    }
+
+    &-review_header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &-star {
+        color: $color-foreground-bright;
+        font-size: $font-size-s;
+        margin: 0 .2rem;
+
+        &.is-active {
+            color: $color-brand;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
     }
 }

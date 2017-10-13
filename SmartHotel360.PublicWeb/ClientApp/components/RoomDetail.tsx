@@ -55,7 +55,7 @@ class RoomDetail extends React.Component<any, {}> {
             <h3 className='sh-room_detail-subtitle'>Services</h3>
             <div className='sh-room_detail-extra'>
                 <ul className='sh-room_detail-services'>
-                    {services.map((service: any, key: any) =>
+                    {services.map((service: any, key: number) =>
                         <li className='sh-room_detail-service' key={key}>
                             <i className={`sh-room_detail-service_icon icon-${service.icon}`}></i>
                             {service.description}
@@ -82,6 +82,75 @@ class RoomDetail extends React.Component<any, {}> {
                     <p className='sh-room_detail-text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                 </div>
             </div>
+            <div className='sh-room_detail-extra'>
+                <ul className='sh-room_detail-gallery'>
+                    <li className='sh-room_detail-picture'></li>
+                    <li className='sh-room_detail-picture'></li>
+                    <li className='sh-room_detail-picture'></li>
+                    <li className='sh-room_detail-picture'></li>
+                </ul>
+            </div>
+        </div>);
+    }
+
+    private drawStars(rating: number): JSX.Element[] {
+        const max = 5;
+        let stars = [];
+
+        for (let i = 1; i <= max; i++) {
+            stars.push(<i className={'sh-room_detail-star active icon-sh-star ' + (i <= rating ? 'is-active' : '')} key={i}></i>);
+        }
+
+        return stars;
+    }
+
+    private renderReviews() {
+        let reviews = [
+            {
+                'user': 'Della Howell',
+                'room': 'Double room',
+                'message': 'Brings together the integrity and character of a historic building with a simple, sophisticated design. Boasts 173 rooms, a restaurant, two bars, an event space, meeting rooms and an inviting lobby.',
+                'date': '2012-03-14T00:00:00',
+                'rating': 4
+            },
+            {
+                'user': 'Sophia Campbell',
+                'room': 'Double room',
+                'message': 'From the moment you step in, you can perfectly understand why this hotel has been short listed for the annual World Architecture Festival Awards...',
+                'date': '2010-06-13T00:00:00',
+                'rating': 3
+            },
+            {
+                'user': 'Timothy Lucas',
+                'room': 'Single room',
+                'message': 'Hotel located just behind the Tate, with great breakfast spots and Borough Market nearby. Two people stay for the same price as one, so bring a friend. Whom you would share a double bed with.',
+                'date': '2010-12-14T00:00:00',
+                'rating': 3
+            }
+        ];
+
+        return (<div>
+            <div className='sh-room_detail-extra'>
+                <ul className='sh-room_detail-reviews'>
+                    {reviews.map((review: any, key: number) =>
+                        <li className='sh-room_detail-review' key={key}>
+                            <header className='sh-room_detail-review_header'>
+                                <div>
+                                    <span className='sh-room_detail-subtitle u-pr-2'>{review.user}</span>
+                                    <span className='sh-room_detail-smalltitle u-pr-2'>{review.room}</span>
+                                    <span>{review.date}</span>
+                                </div>
+                                <div>
+                                    {this.drawStars(review.rating)}
+                                </div>
+                            </header>
+                            <div className='sh-room_detail-extra'>
+                                <p className='sh-room_detail-text'>{review.message}</p>
+                            </div>
+                        </li>
+                    )}
+                </ul>
+            </div>
         </div>);
     }
 
@@ -90,7 +159,7 @@ class RoomDetail extends React.Component<any, {}> {
             case RoomDetailStore.Tabs.Hotel:
                 return this.renderDescription();
             case RoomDetailStore.Tabs.Reviews:
-                return (<article>reviews</article>)
+                return this.renderReviews();
         }
     }
 
@@ -141,31 +210,31 @@ class RoomDetail extends React.Component<any, {}> {
                             <div className='sh-room_detail-extra sh-room_detail-extra--double row'>
                                 <div className='col-xs-6'>
                                     <span className='sh-room_detail-small'>Check-In</span>
-                                    <span className='sh-room_detail-subtitle'>{this.props.when.value.startFullComplex}</span>
+                                    <span className='sh-room_detail-smalltitle'>{this.props.when.value.startFullComplex}</span>
                                 </div>
                                 <div className='col-xs-6'>
                                     <span className='sh-room_detail-small'>Check-Out</span>
-                                    <span className='sh-room_detail-subtitle'>{this.props.when.value.endFullComplex}</span>
+                                    <span className='sh-room_detail-smalltitle'>{this.props.when.value.endFullComplex}</span>
                                 </div>
                             </div>
                             <div className='sh-room_detail-extra row'>
                                 <div className='col-xs-4'>
                                     <span className='sh-room_detail-small'>Room</span>
-                                    <span className='sh-room_detail-subtitle'>{this.props.guests.value.roomsFull}</span>
+                                    <span className='sh-room_detail-smalltitle'>{this.props.guests.value.roomsFull}</span>
                                 </div>
                                 <div className='col-xs-4'>
                                     <span className='sh-room_detail-small'>Guests</span>
-                                    <span className='sh-room_detail-subtitle'>{this.props.guests.value.guestsFull}</span>
+                                    <span className='sh-room_detail-smalltitle'>{this.props.guests.value.guestsFull}</span>
                                 </div>
                                 <div className='col-xs-4'>
                                     <span className='sh-room_detail-small'>Rate</span>
-                                    <span className='sh-room_detail-subtitle'>{this.props.room.price}</span>
+                                    <span className='sh-room_detail-smalltitle'>{this.props.room.price}</span>
                                 </div>
                             </div>
 
                             <div className={'sh-room_detail-extra sh-room_detail-extra--double row ' + (this.props.booked ? '' : 'is-invisible')}>
                                 <div className='col-xs-12'>
-                                    <span className='sh-room_detail-subtitle'>Thanks USERNAME,</span>
+                                    <span className='sh-room_detail-smalltitle'>Thanks USERNAME,</span>
                                     <span className='sh-room_detail-small'>Your booking at {this.props.room.name} is confirmed.</span>
                                 </div>
                             </div>
@@ -178,16 +247,6 @@ class RoomDetail extends React.Component<any, {}> {
                             </div>
                         </section>
                     </aside>
-                </div>
-            </section>
-            <section className='sh-room_detail-wrapper'>
-                <div className='sh-room_detail-column sh-room_detail-column--left'>
-                    <ul className='sh-room_detail-gallery'>
-                        <li className='sh-room_detail-picture'></li>
-                        <li className='sh-room_detail-picture'></li>
-                        <li className='sh-room_detail-picture'></li>
-                        <li className='sh-room_detail-picture'></li>
-                    </ul>
                 </div>
             </section>
         </div>;
