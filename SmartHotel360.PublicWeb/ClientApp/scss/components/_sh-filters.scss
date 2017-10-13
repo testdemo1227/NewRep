@@ -13,9 +13,10 @@
         border-bottom: $border-weight solid $border-color;
         border-top: $border-weight solid $border-color;
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         max-width: 100%;
-        overflow-x: auto;
+        overflow-x: hidden;
         overflow-y: hidden;
         padding: .5rem 0;
     }

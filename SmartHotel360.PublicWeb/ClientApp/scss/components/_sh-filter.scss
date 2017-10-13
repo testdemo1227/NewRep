@@ -5,6 +5,10 @@
     padding: 0 1rem;
     z-index: 100;
 
+    &.active {
+        z-index: 1000;
+    }
+
     &-dropdown {
         background-color: rgba($color-background-brighter, .9);
         border: 0;

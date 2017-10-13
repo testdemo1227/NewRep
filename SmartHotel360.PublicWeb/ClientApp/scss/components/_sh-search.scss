@@ -7,12 +7,10 @@
     display: block;
     justify-content: center;
 
-    &--info {
-        height: 4rem;
-    }
-
     &-group {
-        margin: 0 2rem;
+        $separation: 1.5rem;
+
+        margin: 1rem $separation;
         position: relative;
 
         &.is-active:before {
@@ -26,19 +24,36 @@
             position: absolute;
             width: $size;
         }
+
+        @media screen and (min-width: $media-screen-m) {
+            margin: 0 $separation;
+            width: 33%;
+        }
+    }
+
+    &--info {
+        @media screen and (min-width: $media-screen-m) {
+            height: 4rem;
+        }
     }
 
     &--info &-group:first-of-type {
-        margin-left: 0;
+        @media screen and (min-width: $media-screen-m) {
+            margin-left: 0;
+        }
     }
 
     &-wrapper {
         background-color: $color-background-brighter;
         border-radius: 4px;
         box-shadow: 0 0 21px 2px rgba($color-background-darker, .08);
-        height: $height;
+        height: auto;
         transform: translateY(-$height/2);
         width: 100%;
+
+        @media screen and (min-width: $media-screen-m) {
+            height: $height;
+        }
     }
 
     &--info &-wrapper {
@@ -87,10 +102,15 @@
 
     &-inputs {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         list-style: none;
         margin-top: 2rem;
         padding-left: 0;
+
+        @media screen and (min-width: $media-screen-m) {
+            flex-direction: row;
+        }
     }
 
     &--info &-inputs {
@@ -104,7 +124,7 @@
     &-value {
         cursor: pointer;
         display: inline-flex;
-        width: 10vw;
+        width: 100%;
     }
 
     &-input {
@@ -152,24 +172,37 @@
 
     &-options {
         @include site-margins-remove;
-
         background: linear-gradient(to bottom, rgba($color-foreground-darker, 0) 0%, rgba($color-foreground-darker, 0) 85%, rgba($color-foreground-darker, .03) 100%);
         border-bottom: 2px solid $color-foreground-brighter;
         display: block;
         float: left;
         height: auto;
+        margin: 0 auto;
         padding-bottom: 5rem;
         padding-top: 2.5rem;
         width: 100%;
+
+        @media screen and (min-width: $media-screen-m) {
+            flex-direction: row;
+        }
     }
 
     &-when {
         display: flex;
+        flex-direction: column;
         justify-content: center;
+        margin: 0 auto;
         width: 100%;
+
+        @media screen and (min-width: $media-screen-m) {
+            flex-direction: row;
+            width: 60%;
+        }
     }
 
     &-button {
+        display: block;
+        margin: 0 auto;
         background-color: $color-secondary;
         border-radius: 0;
         color: $color-foreground-brighter;

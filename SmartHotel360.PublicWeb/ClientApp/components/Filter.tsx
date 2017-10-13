@@ -19,6 +19,7 @@ class Filter extends React.Component<FilterProps, {}> {
 
     private $header: JQuery;
     private $dropdown: JQuery;
+    private $filter: JQuery;
 
     private setStyles = () => {
         return {
@@ -34,6 +35,7 @@ class Filter extends React.Component<FilterProps, {}> {
 
         this.$header.toggleClass('active');
         this.$dropdown.toggleClass('active');
+        this.$filter.toggleClass('active');
     }
 
     private onClickCancel = () => {
@@ -48,10 +50,11 @@ class Filter extends React.Component<FilterProps, {}> {
     private close = () => {
         this.$header.removeClass('active');
         this.$dropdown.removeClass('active');
+        this.$filter.removeClass('active');
     }
     
     public render() {
-        return <div className='sh-filter'>
+        return <div ref='filter' className='sh-filter'>
             <label className='sh-filter-header sh-filter-arrow' ref='header' onClick={this.toggle}>
                 <span className='sh-filter-title'>{this.props.title}</span>
                 <i className='sh-filter-icon icon-sh-chevron'></i>
@@ -71,6 +74,7 @@ class Filter extends React.Component<FilterProps, {}> {
     public componentDidMount() {
         this.$header = $(this.refs.header);
         this.$dropdown = $(this.refs.dropdown);
+        this.$filter = $(this.refs.filter);
     }
 }
 
