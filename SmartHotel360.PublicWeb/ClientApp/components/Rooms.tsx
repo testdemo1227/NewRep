@@ -27,8 +27,7 @@ class Rooms extends React.Component<RoomsProps, {}> {
         this.props.requestFiltered()
     }
 
-    public render() {
-        
+    public render() {        
         return <div className={'sh-rooms ' + (this.props.modifier ? `sh-rooms--${this.props.modifier}` : '')}>
             <span className='sh-rooms-title'>{this.props.title}</span>
             {this.props.isLoading

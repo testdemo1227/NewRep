@@ -11,12 +11,12 @@
         background-repeat: no-repeat;
         background-size: cover;
         height: 42rem;
+        position: relative;
         width: 100%;
     }
 
     &-wrapper {
         @include site-margins;
-
         display: flex;
         flex-direction: row;
         margin-bottom: 4rem;
@@ -28,11 +28,21 @@
         position: relative;
 
         &--left {
-            width: 60%;
+            width: 100%;
+
+            @media screen and (min-width: $media-screen-l) {
+                width: 60%;
+            }
         }
 
         &--right {
-            width: 40%;
+            display: none;
+            width: 0;
+
+            @media screen and (min-width: $media-screen-l) {
+                display: block;
+                width: 40%;
+            }
         }
     }
 
@@ -55,11 +65,27 @@
 
     &-filters {
         background: $color-background-brighter;
+        bottom: 0;
         box-shadow: 0 0 21px 2px rgba($color-background-darker, .08);
-        min-height: 30rem;
+        left: 0;
+        margin: 0 auto;
+        height: 23rem;
         position: absolute;
-        top: -8rem;
-        width: 100%;
+        right: 0;
+        width: 90%;
+
+        @media screen and (min-width: $media-screen-l) {
+            top: -8rem;
+            width: 100%;
+        }
+    }
+
+    &-show_small {
+        display: block;
+
+        @media screen and (min-width: $media-screen-l) {
+            display: none;
+        }
     }
 
     &-content {
@@ -91,6 +117,7 @@
 
     &-header {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         line-height: $font-size-xxl;
         margin-bottom: 2rem;
@@ -224,6 +251,7 @@
     &-services {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         list-style: none;
         margin: 0;
         padding: 0;
@@ -234,7 +262,8 @@
         color: $color-brand;
         display: flex;
         flex-direction: column;
-        margin: 0 .5rem;
+        justify-content: space-between;
+        margin: .5rem .5rem;
         text-align: center;
         width: 20%;
     }
@@ -266,5 +295,9 @@
         &:last-child {
             margin-right: 0;
         }
+    }
+
+    &-search {
+        margin-left: 16rem;
     }
 }

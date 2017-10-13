@@ -6,6 +6,7 @@ import SearchInfo from './SearchInfo';
 import * as RoomDetailStore from '../store/RoomDetail';
 import * as SearchStore from '../store/RoomDetail';
 import Loading from './Loading';
+import * as moment from 'moment';
 
 type RoomDetailProps =
     RoomDetailStore.RoomDetailState
@@ -18,6 +19,7 @@ class RoomDetail extends React.Component<any, {}> {
 
     public componentDidMount() {
         this.props.init();
+        this.props.requestRoom(this.props.match.params.hotelId);
     }
 
     private onClickTab = (tab: RoomDetailStore.Tabs) => {
@@ -28,26 +30,21 @@ class RoomDetail extends React.Component<any, {}> {
         this.props.book();
     }
 
-    private renderDescription() {
-        let services = [
-            {
-                icon: 'sh-wifi',
-                description: 'Free Wi-Fi'
-            },
-            {
-                icon: 'sh-air-conditioning',
-                description: 'Air conditioning'
-            },
-            {
-                icon: 'sh-breakfast',
-                description: 'Breakfast'
-            },
-            {
-                icon: 'sh-elevator',
-                description: 'Elevator'
-            }
-        ];
+    private calculateTotal = () => {
+        let start = moment(this.props.when.value.startFullComplex);
+        let end = moment(this.props.when.value.endFullComplex);
+        let nights = Math.abs(start.diff(end, 'days'));
+        return this.props.room.pricePerNight * nights;
+    }
 
+    private getServicesIcon = (key: number) => {
+        if (!key) {
+            return;
+        }
+        return RoomDetailStore.ServicesDictionary[key];
+    }
+
+    private renderDescription() {
         return (<div>
             <article className='sh-room_detail-description'>
                 {this.props.room.description}
@@ -55,10 +52,10 @@ class RoomDetail extends React.Component<any, {}> {
             <h3 className='sh-room_detail-subtitle'>Services</h3>
             <div className='sh-room_detail-extra'>
                 <ul className='sh-room_detail-services'>
-                    {services.map((service: any, key: number) =>
+                    {this.props.room.services.map((service: any, key: number) =>
                         <li className='sh-room_detail-service' key={key}>
-                            <i className={`sh-room_detail-service_icon icon-${service.icon}`}></i>
-                            {service.description}
+                            <i className={`sh-room_detail-service_icon icon-${this.getServicesIcon(service.id)}`}></i>
+                            {service.name}
                         </li>
                     )}
                 </ul>
@@ -68,7 +65,7 @@ class RoomDetail extends React.Component<any, {}> {
 
                 <div className='sh-room_detail-extra'>
                     <h4 className='sh-room_detail-smalltitle'>Check-In/Out</h4>
-                    <p className='sh-room_detail-text'>12:00 pm / 11:00 pm</p>
+                    <p className='sh-room_detail-text'>{this.props.room.checkInTime} / {this.props.room.checkOutTime}</p>
                 </div>
 
                 <div className='sh-room_detail-extra'>
@@ -169,12 +166,69 @@ class RoomDetail extends React.Component<any, {}> {
         };
     }
 
+    private renderAsideBooking = () => {
+        return <aside className='sh-room_detail-filters'>
+            <header className='sh-room_detail-filter_header'>
+                <span className='sh-room_detail-filter_title'>{this.calculateTotal()}</span>
+                <span>Total</span>
+            </header>
+            <section className='sh-room_detail-info'>
+                <span className='sh-room_detail-title'>{this.props.room.name}</span>
+                <span className='sh-room_detail-location u-display-block'>{this.props.room.location}</span>
+                <span className='sh-room_detail-phone u-display-block'>{this.props.room.phone}</span>
+
+                <div className='sh-room_detail-extra sh-room_detail-extra--double row'>
+                    <div className='col-xs-6'>
+                        <span className='sh-room_detail-small'>Check-In</span>
+                        <span className='sh-room_detail-smalltitle'>{this.props.when.value.startFullComplex}</span>
+                    </div>
+                    <div className='col-xs-6'>
+                        <span className='sh-room_detail-small'>Check-Out</span>
+                        <span className='sh-room_detail-smalltitle'>{this.props.when.value.endFullComplex}</span>
+                    </div>
+                </div>
+                <div className='sh-room_detail-extra row'>
+                    <div className='col-xs-4'>
+                        <span className='sh-room_detail-small'>Room</span>
+                        <span className='sh-room_detail-smalltitle'>{this.props.guests.value.roomsFull}</span>
+                    </div>
+                    <div className='col-xs-4'>
+                        <span className='sh-room_detail-small'>Guests</span>
+                        <span className='sh-room_detail-smalltitle'>{this.props.guests.value.guestsFull}</span>
+                    </div>
+                    <div className='col-xs-4'>
+                        <span className='sh-room_detail-small'>Rate</span>
+                        <span className='sh-room_detail-smalltitle'>{this.props.room.price}</span>
+                    </div>
+                </div>
+
+                <div className={'sh-room_detail-extra sh-room_detail-extra--double row ' + (this.props.booked ? '' : 'is-invisible')}>
+                    <div className='col-xs-12'>
+                        <span className='sh-room_detail-smalltitle'>Thanks USERNAME,</span>
+                        <span className='sh-room_detail-small'>Your booking at {this.props.room.name} is confirmed.</span>
+                    </div>
+                </div>
+
+                <div className='sh-room_detail-extra'>
+                    <span className={'sh-room_detail-book btn ' + (this.props.booked ? 'is-disabled' : '')}
+                        onClick={this.onClickBook}>
+                        {this.props.isBooking ? <Loading isBright={true} /> : 'Book now'}
+                    </span>
+                </div>
+            </section>
+        </aside>
+    }
+
     public render() {
         return <div className='sh-room_detail'>
-            <SearchInfo />
+            <div className='sh-room_detail-search'>
+                <SearchInfo />
+            </div>
+            
             <Link className='sh-room_detail-back' to={`/SearchRooms`}><i className='sh-room_detail-arrow icon-sh-chevron'></i>Back to hotels</Link>
-            <header className='sh-room_detail-background' style={this.setBackgroundImage(this.props.room.image)}>
-            </header>
+            {this.props.isLoading ? <Loading /> : <header className='sh-room_detail-background' style={this.setBackgroundImage(this.props.room.defaultPicture)}>
+                <div className='sh-room_detail-show_small'> {this.renderAsideBooking()}</div>
+            </header>}
             <section className='sh-room_detail-wrapper'>
                 <div className='sh-room_detail-column sh-room_detail-column--left'>
                     <ul className='sh-room_detail-tabs'>
@@ -190,63 +244,14 @@ class RoomDetail extends React.Component<any, {}> {
                     <div className='sh-room_detail-content'>
                         <header className='sh-room_detail-header'>
                             <span className='sh-room_detail-title'>{this.props.room.name}</span>
-                            <div className='sh-room_detail-stars'></div>
-                            <span className='sh-room_detail-location'>{this.props.room.location}</span>
+                            <div className='sh-room_detail-stars'>{this.drawStars(this.props.room.rating)}</div>
+                            <span className='sh-room_detail-location'>{this.props.room.city}</span>
                         </header>
                         {this.renderCurrentOption()}
                     </div>
                 </div>
                 <div className='sh-room_detail-column sh-room_detail-column--right'>
-                    <aside className='sh-room_detail-filters'>
-                        <header className='sh-room_detail-filter_header'>
-                            <span className='sh-room_detail-filter_title'>{this.props.room.price}</span>
-                            <span>Total</span>
-                        </header>
-                        <section className='sh-room_detail-info'>
-                            <span className='sh-room_detail-title'>{this.props.room.name}</span>
-                            <span className='sh-room_detail-location u-display-block'>{this.props.room.location}</span>
-                            <span className='sh-room_detail-phone u-display-block'>{this.props.room.phone}</span>
-
-                            <div className='sh-room_detail-extra sh-room_detail-extra--double row'>
-                                <div className='col-xs-6'>
-                                    <span className='sh-room_detail-small'>Check-In</span>
-                                    <span className='sh-room_detail-smalltitle'>{this.props.when.value.startFullComplex}</span>
-                                </div>
-                                <div className='col-xs-6'>
-                                    <span className='sh-room_detail-small'>Check-Out</span>
-                                    <span className='sh-room_detail-smalltitle'>{this.props.when.value.endFullComplex}</span>
-                                </div>
-                            </div>
-                            <div className='sh-room_detail-extra row'>
-                                <div className='col-xs-4'>
-                                    <span className='sh-room_detail-small'>Room</span>
-                                    <span className='sh-room_detail-smalltitle'>{this.props.guests.value.roomsFull}</span>
-                                </div>
-                                <div className='col-xs-4'>
-                                    <span className='sh-room_detail-small'>Guests</span>
-                                    <span className='sh-room_detail-smalltitle'>{this.props.guests.value.guestsFull}</span>
-                                </div>
-                                <div className='col-xs-4'>
-                                    <span className='sh-room_detail-small'>Rate</span>
-                                    <span className='sh-room_detail-smalltitle'>{this.props.room.price}</span>
-                                </div>
-                            </div>
-
-                            <div className={'sh-room_detail-extra sh-room_detail-extra--double row ' + (this.props.booked ? '' : 'is-invisible')}>
-                                <div className='col-xs-12'>
-                                    <span className='sh-room_detail-smalltitle'>Thanks USERNAME,</span>
-                                    <span className='sh-room_detail-small'>Your booking at {this.props.room.name} is confirmed.</span>
-                                </div>
-                            </div>
-
-                            <div className='sh-room_detail-extra'>
-                                <span className={'sh-room_detail-book btn ' + (this.props.booked ? 'is-disabled' : '')}
-                                        onClick={this.onClickBook}>
-                                    {this.props.isBooking ? <Loading isBright={true} /> : 'Book now'}
-                                </span>
-                            </div>
-                        </section>
-                    </aside>
+                    {this.renderAsideBooking()}
                 </div>
             </section>
         </div>;

@@ -1,18 +1,55 @@
-﻿import { Reducer } from 'redux';
+﻿import { fetch, addTask } from 'domain-task';
+import { Reducer } from 'redux';
 import { AppThunkAction } from 'ClientApp/store';
+import { settings } from '../Settings';
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 
+export interface Service {
+    id: number,
+    name: string
+}
+
+interface IServicesDicionary {
+    key: number
+}
+
+export const ServicesDictionary: { [index: number]: string } = {
+    1: 'sh-wifi',
+    2: '',
+    3: '',
+    4: 'sh-air-conditioning',
+    5: '',
+    6: '',
+    7: '',
+    8: 'sh-breakfast',
+    9: '',
+    10: '',
+    11: 'sh-pool',
+    12: '',
+    13: 'sh-gym',
+    14: '',
+    15: '',
+    16: '',
+    17: 'sh-elevator'
+};
+
 export interface RoomDetail {
-    image: string,
+    defaultPicture: string,
+    pictures: string[],
     description: string,
     name: string,
-    stars: number,
-    location: string,
-    country: string,
-    price: string,
+    rating: number,
+    city: string,
+    street: string,
+    latitude: number,
+    longitude: number,
+    checkInTime: string,
+    checkOutTime: string,
+    pricePerNight: number,
     phone: string,
+    services: Service[]
 }
 
 export enum Tabs {
@@ -30,46 +67,44 @@ export interface RoomDetailState {
     room: RoomDetail;
     isBooking: boolean;
     booked: boolean;
+    isLoading: boolean;
 }
 
 const initialState: RoomDetailState = {
     tab: Tabs.Hotel,
     room: {
-        image: '/assets/images/room_detail.png',
-        description: `Lorem ipsum dolor sit amet, 
-consectetur adipiscing elit. Sed ut tortor ut dui egestas semper eu a mauris.
-Duis at tincidunt justo. Integer quis gravida mi.
-Sed sed malesuada mauris. Aenean eu rutrum ipsum, ut venenatis quam.
-Donec dignissim, nulla ut imperdiet lobortis, dolor augue interdum velit, nec rutrum ex justo nec massa.
-Cras lobortis elit massa, a aliquam neque blandit ac.
-Proin placerat ligula in lacus pulvinar, molestie convallis massa luctus.
-Quisque turpis justo, varius eu nibh elementum, pellentesque finibus quam.
-Quisque id ipsum et ligula convallis blandit id sed libero.
-Proin aliquet mollis ipsum sed condimentum.
-Pellentesque ornare mi ac dolor venenatis consequat. Etiam tempor at metus nec elementum.
-Curabitur ut suscipit arcu. Vivamus ipsum nisl, scelerisque a varius et, tincidunt a diam.
-Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.`,
-        name: 'Smart Union Hotel',
-        stars: 4,
-        location: 'St. Unioninkatu, 416',
-        country: '',
-        price: '$588',
-        phone: '999 999 999'
+        defaultPicture: '',
+        pictures: [''],
+        description: '',
+        name: '',
+        rating: 1,
+        city: '',
+        street: '',
+        latitude: 0,
+        longitude: 0,
+        checkInTime: '',
+        checkOutTime: '',
+        pricePerNight: 0,
+        phone: '',
+        services: []
     },
     isBooking: false,
-    booked: false
+    booked: false,
+    isLoading: false
 };
 // -----------------
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 // Use @typeName and isActionType for type detection that works even after serialization/deserialization.
 
+interface RequestRoomAction { type: 'REQUEST_ROOM_ACTION' }
+interface ReceiveRoomAction { type: 'RECEIVE_ROOM_ACTION', room: RoomDetail }
 interface SwitchTabAction { type: 'SWITCH_TAB_ACTION', tab: Tabs }
 interface InitRoomDetailAction { type: 'INIT_ROOM_DETAIL_ACTION' }
 interface BookRoomAction { type: 'BOOK_ROOM_ACTION' }
 interface BookingRoomAction { type: 'BOOKING_ROOM_ACTION' }
 
-type KnownAction = SwitchTabAction | InitRoomDetailAction | BookRoomAction | BookingRoomAction;
+type KnownAction = RequestRoomAction | ReceiveRoomAction | SwitchTabAction | InitRoomDetailAction | BookRoomAction | BookingRoomAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -78,6 +113,17 @@ export const actionCreators = {
     init: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         //TODO: get initial data
         dispatch({ type: 'INIT_ROOM_DETAIL_ACTION' });
+    },
+
+    requestRoom: (id: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let fetchTask = fetch(`${settings.urls.hotels}Hotels/${id}`)
+            .then(response => response.json() as Promise<RoomDetail>)
+            .then(data => {
+                dispatch({ type: 'RECEIVE_ROOM_ACTION', room: data });
+            });
+
+        addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
+        dispatch({ type: 'REQUEST_ROOM_ACTION' });
     },
 
     switchTab: (tab: Tabs): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -96,6 +142,10 @@ export const reducer: Reducer<RoomDetailState> = (state: RoomDetailState, action
     switch (action.type) {        
         case 'INIT_ROOM_DETAIL_ACTION':
                 return {...state };
+        case 'REQUEST_ROOM_ACTION':
+                return { ...state, isLoading: true };
+        case 'RECEIVE_ROOM_ACTION':
+                return { ...state, isLoading: false, room: action.room };
         case 'SWITCH_TAB_ACTION':
             return { ...state, tab: action.tab };
         case 'BOOKING_ROOM_ACTION':
