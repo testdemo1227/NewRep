@@ -4,18 +4,36 @@ import { ApplicationState } from '../store';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import SearchInfo from './SearchInfo';
 import * as RoomDetailStore from '../store/RoomDetail';
-import * as SearchStore from '../store/RoomDetail';
+import * as SearchStore from '../store/Search';
+import * as UserStore from '../store/User';
 import Loading from './Loading';
 import * as moment from 'moment';
 
 type RoomDetailProps =
     RoomDetailStore.RoomDetailState
-    & SearchStore.RoomDetailState
+    & {search: SearchStore.SearchState}
+    & {user: UserStore.UserState}
     & typeof RoomDetailStore.actionCreators
     & RouteComponentProps<{}>
 
+interface LocalState {
+    bookingText: string;
+    canBook: boolean;
+}
+
 // TODO Remove any
-class RoomDetail extends React.Component<any, {}> {
+class RoomDetail extends React.Component<any, LocalState> {
+
+    public componentWillMount() {
+        this.state = {
+            bookingText: 'Login to book',
+            canBook: false
+        };
+
+        if (this.props.user.id) {
+            this.setState(prev => ({...prev, bookingText: 'Book now', canBook: true}));
+        }
+    }
 
     public componentDidMount() {
         this.props.init();
@@ -27,12 +45,17 @@ class RoomDetail extends React.Component<any, {}> {
     }
 
     private onClickBook = () => {
-        this.props.book();
+        if (this.props.user.id) {
+            this.props.book();
+            return;
+        }
+        
+        this.setState(prev => ({...prev, bookingText: 'Login to book'}));
     }
 
     private calculateTotal = () => {
-        let start = moment(this.props.when.value.startFullComplex);
-        let end = moment(this.props.when.value.endFullComplex);
+        let start = moment(SearchStore.getLongDate(this.props.search.when.value.startDate));
+        let end = moment(SearchStore.getLongDate(this.props.search.when.value.endDate));
         let nights = Math.abs(start.diff(end, 'days'));
         return this.props.room.pricePerNight * nights;
     }
@@ -180,21 +203,21 @@ class RoomDetail extends React.Component<any, {}> {
                 <div className='sh-room_detail-extra sh-room_detail-extra--double row'>
                     <div className='col-xs-6'>
                         <span className='sh-room_detail-small'>Check-In</span>
-                        <span className='sh-room_detail-smalltitle'>{this.props.when.value.startFullComplex}</span>
+                        <span className='sh-room_detail-smalltitle'>{SearchStore.getLongDate(this.props.search.when.value.startDate)}</span>
                     </div>
                     <div className='col-xs-6'>
                         <span className='sh-room_detail-small'>Check-Out</span>
-                        <span className='sh-room_detail-smalltitle'>{this.props.when.value.endFullComplex}</span>
+                        <span className='sh-room_detail-smalltitle'>{SearchStore.getLongDate(this.props.search.when.value.endDate)}</span>
                     </div>
                 </div>
                 <div className='sh-room_detail-extra row'>
                     <div className='col-xs-4'>
                         <span className='sh-room_detail-small'>Room</span>
-                        <span className='sh-room_detail-smalltitle'>{this.props.guests.value.roomsFull}</span>
+                        <span className='sh-room_detail-smalltitle'>{SearchStore.getFullRooms(this.props.search.guests.value)}</span>
                     </div>
                     <div className='col-xs-4'>
                         <span className='sh-room_detail-small'>Guests</span>
-                        <span className='sh-room_detail-smalltitle'>{this.props.guests.value.guestsFull}</span>
+                        <span className='sh-room_detail-smalltitle'>{SearchStore.getFullGuests(this.props.search.guests.value)}</span>
                     </div>
                     <div className='col-xs-4'>
                         <span className='sh-room_detail-small'>Rate</span>
@@ -210,9 +233,9 @@ class RoomDetail extends React.Component<any, {}> {
                 </div>
 
                 <div className='sh-room_detail-extra'>
-                    <span className={'sh-room_detail-book btn ' + (this.props.booked ? 'is-disabled' : '')}
+                    <span className={'sh-room_detail-book btn ' + (this.props.booked || !this.state.canBook ? 'is-disabled' : '')}
                         onClick={this.onClickBook}>
-                        {this.props.isBooking ? <Loading isBright={true} /> : 'Book now'}
+                        {this.props.isBooking ? <Loading isBright={true} /> : this.state.bookingText}
                     </span>
                 </div>
             </section>
@@ -260,6 +283,6 @@ class RoomDetail extends React.Component<any, {}> {
 
 // wire up the React component to the Redux store
 export default connect(
-    (state: ApplicationState) => { return { ...state.roomDetail, ...state.search } }, // selects which state properties are merged into the component's props
+    (state: ApplicationState) => ({ ...state.roomDetail, search: state.search, user: state.user }), // selects which state properties are merged into the component's props
     RoomDetailStore.actionCreators // selects which action creators are merged into the component's props
 )(RoomDetail) as any;

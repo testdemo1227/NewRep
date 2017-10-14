@@ -35,10 +35,6 @@ export class City {
         public id?: number,
         public name?: string,
         public country?: string) {}
-    
-    public get full(): string {
-        return this.name ? `${this.name}, ${this.country}` : '';
-    }
 }
 
 export class Guests {
@@ -47,36 +43,18 @@ export class Guests {
         public kids: number,
         public baby: number,
         public rooms: number,
-        public work?: boolean,
-        public isFilled = false) { }
-
-    public get roomsFull(): string {
-        return this.rooms > 1 ? `${this.rooms} Rooms` : `${this.rooms} Room`;
-    }
-
-    public get guestsFull(): string {
-        return (this.adults + this.kids + this.baby) > 1 ? `${this.adults + this.kids + this.baby} Guests` : `${this.adults + this.kids + this.baby} Guest`;
-    }
-
-    public get full(): string {
-        return this.isFilled ? `${this.roomsFull}, ${this.guestsFull}` : '';
-    }
+        public work?: boolean) { }
 }
 
 export class People {
     constructor(
         public total: number) { }
-
-    public get full(): string {
-        return this.total ? `${this.total} People` : '';
-    }
 }
 
 export class Dates {
     constructor(
         public startDate?: moment.Moment,
-        public endDate?: moment.Moment,
-        public isFilled = false) { }
+        public endDate?: moment.Moment) { }
 
     public get startFull(): string {
         return this.startDate ? `${this.startDate.format('DD MMM')}` : '';
@@ -86,26 +64,15 @@ export class Dates {
         return this.endDate ? `${this.endDate.format('DD MMM')}` : '';
     }
 
-    public get startFullComplex(): string {
-        return this.startDate ? `${this.startDate.format('dd, MMM DD, YYYY')}` : '';
-    }
-
     public get endFullComplex(): string {
         return this.endDate ? `${this.endDate.format('dd, MMM DD, YYYY')}` : '';
-    }
-
-    public get full(): string {
-        return `${this.startFull} - ${this.endFull}`;
     }
 }
 
 export interface SearchState {
-    tab: Tab;
-    started: boolean,
     isLoading: boolean;
     shouldRender: boolean;
     minLength: number;
-    selected: Option;
     where: Input<City>;
     when: Input<Dates>;
     guests: Input<Guests>;
@@ -113,11 +80,8 @@ export interface SearchState {
 }
 
 const initialState: SearchState = {
-    tab: Tab.Smart,
-    started: false,
     shouldRender: false,
     minLength: 3,
-    selected: Option.Where,
     isLoading: false,
     where: {
         value: new City(),
@@ -128,7 +92,7 @@ const initialState: SearchState = {
         list: []
     },
     guests: {
-        value: new Guests(1, 0, 0, 1, false, false),
+        value: new Guests(1, 0, 0, 1, false),
         list: []
     },
     people: {
@@ -144,7 +108,7 @@ const initialState: SearchState = {
 
 interface InitAction { type: 'INIT_ACTION' }
 interface RequestWhereAction { type: 'REQUEST_WHERE_ACTION' }
-interface ReceiveWhereAction { type: 'RECEIVE_WHERE_ACTION', list: City[], started: boolean }
+interface ReceiveWhereAction { type: 'RECEIVE_WHERE_ACTION', list: City[]}
 interface SelectWhereAction  { type: 'SELECT_WHERE_ACTION', city: City }
 interface ResetWhereAction   { type: 'RESET_WHERE_ACTION' }
 interface ResetWhenAction { type: 'RESET_WHEN_ACTION' }
@@ -153,19 +117,43 @@ interface ResetPeopleAction { type: 'RESET_PEOPLE_ACTION' }
 interface SelectWhenAction { type: 'SELECT_WHEN_ACTION', next: Option, start: moment.Moment, end: moment.Moment }
 interface SelectGuestsAction { type: 'SELECT_GUESTS_ACTION', adults: number, kids: number, baby: number, rooms: number, work: boolean }
 interface SelectPepopleAction { type: 'SELECT_PEOPLE_ACTION', total: number }
-interface SwitchTabAction { type: 'SWITCH_TAB_ACTION', tab: Tab }
 
-
-type KnownAction = InitAction | RequestWhereAction | ReceiveWhereAction | SelectWhereAction | ResetWhereAction | SelectWhenAction | SelectGuestsAction | SwitchTabAction | SelectPepopleAction | ResetWhenAction | ResetGuestsAction | ResetPeopleAction;
+type KnownAction = InitAction | RequestWhereAction | ReceiveWhereAction | SelectWhereAction | ResetWhereAction | SelectWhenAction | SelectGuestsAction | SelectPepopleAction | ResetWhenAction | ResetGuestsAction | ResetPeopleAction;
 
 // ---------------
 // FUNCTIONS - Our functions to reuse in this code.
-function checkNextTabOnSwitch(currentTab: Tab, selectedOption: Option) {
-    if (selectedOption === Option.Where || selectedOption === Option.When) {
-        return selectedOption;
-    }
+export function getFullCity(city: City) {
+    return city.name ? `${city.name}, ${city.country}` : '';
+}
 
-    return currentTab === Tab.Smart ? Option.Guests : Option.People;
+export function getFullRooms(guests: Guests) {
+    return guests.rooms > 1 ? `${guests.rooms} Rooms` : `${guests.rooms} Room`;
+}
+
+export function getFullGuests(guests: Guests) {
+    return (guests.adults + guests.kids + guests.baby) > 1 ? `${guests.adults + guests.kids + guests.baby} Guests` : `${guests.adults + guests.kids + guests.baby} Guest`;
+}
+
+export function getFullRoomsGuests(guests: Guests) {
+    return `${getFullRooms(guests)}, ${getFullGuests(guests)}`;
+}
+
+export function getFullPeople(people: People) {
+    return people.total ? `${people.total} People` : '';
+}
+
+export function getShortDate(date?: moment.Moment) {
+    date = moment(date);
+    return date ? `${date.format('DD MMM')}` : '';
+}
+
+export function getShortDates(startDate?: moment.Moment, endDate?: moment.Moment) {
+    return getShortDate(startDate) + ' - ' + getShortDate(endDate);
+}
+
+export function getLongDate(date: moment.Moment) {
+    date = moment(date);
+    return date ? `${date.format('dd, MMM DD, YYYY')}` : '';
 }
 
 // ----------------
@@ -180,11 +168,11 @@ export const actionCreators = {
         const state = getState().search;
 
         if (value.length < state.minLength) {
-            dispatch({ type: 'RECEIVE_WHERE_ACTION', list: [], started: false });
+            dispatch({ type: 'RECEIVE_WHERE_ACTION', list: [] });
             return;
         }
 
-        dispatch({ type: 'RECEIVE_WHERE_ACTION', list: [], started: true });
+        dispatch({ type: 'RECEIVE_WHERE_ACTION', list: [] });
 
         let fetchTask = fetch(`${settings.urls.hotels}Cities?name=${value}`)
             .then(response => response.json() as Promise<any>)
@@ -192,7 +180,7 @@ export const actionCreators = {
                 data = data.map((item: any) => {
                     return new City(item.id, item.name, item.country);
                 });
-                dispatch({ type: 'RECEIVE_WHERE_ACTION', list: data, started: true });
+                dispatch({ type: 'RECEIVE_WHERE_ACTION', list: data });
             });
 
         addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
@@ -227,7 +215,7 @@ export const actionCreators = {
     selectWhenEnd: (date: moment.Moment): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const state = getState().search;
         const start = state.when.value.startDate;
-        dispatch({ type: 'SELECT_WHEN_ACTION', next: state.tab === Tab.Smart ? Option.Guests : Option.People, start: (start || moment()), end: date });
+        dispatch({ type: 'SELECT_WHEN_ACTION', next: Tab.Smart === Tab.Smart ? Option.Guests : Option.People, start: (start || moment()), end: date });
     },
 
     updateGuestsAdults: (value: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -257,10 +245,6 @@ export const actionCreators = {
 
     updatePeople: (value: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'SELECT_PEOPLE_ACTION', total: value || 0 });
-    },
-
-    switchTab: (tab: Tab): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        dispatch({ type: 'SWITCH_TAB_ACTION', tab: tab });
     }
 };
 
@@ -270,29 +254,27 @@ export const actionCreators = {
 export const reducer: Reducer<SearchState> = (state: SearchState, action: KnownAction) => {
     switch (action.type) {
         case 'INIT_ACTION': 
-            return { ...state, shouldRender: true, when: { ...state.when, value: new Dates(moment().add(7, 'days'), moment().add(8, 'days') ) } };
+            return { ...state, shouldRender: true };
         case 'REQUEST_WHERE_ACTION':
             return { ...state, isLoading: true };
         case 'RECEIVE_WHERE_ACTION':
-            return { ...state, started: action.started, isLoading: false, where: { ...state.where, list: action.list } };
+            return { ...state, isLoading: false, where: { ...state.where, list: action.list } };
         case 'SELECT_WHERE_ACTION':
-            return { ...state, selected: Option.When, where: { ...state.where, value: action.city } };
+            return { ...state, where: { ...state.where, value: action.city } };
         case 'RESET_WHERE_ACTION':
-            return { ...state, started: false, selected: Option.Where, where: { ...state.where, value: new City(), list: [] } };
+            return { ...state, where: { ...state.where, value: new City(), list: [] } };
         case 'SELECT_WHEN_ACTION':
-            return { ...state, selected: action.next, when: { ...state.when, value: new Dates(action.start, action.end, true) } };
+            return { ...state, when: { ...state.when, value: new Dates(action.start, action.end) } };
         case 'RESET_WHEN_ACTION':
-            return { ...state, selected: Option.When, when: { ...state.when, value: new Dates(moment().add(7, 'days'), moment().add(8, 'days'), false)} };
+            return { ...state, when: { ...state.when, value: new Dates(moment().add(7, 'days'), moment().add(8, 'days'))} };
         case 'SELECT_GUESTS_ACTION':
-            return { ...state, guests: { ...state.guests, value: new Guests(action.adults, action.kids, action.baby, action.rooms, action.work, true) } };
+            return { ...state, guests: { ...state.guests, value: new Guests(action.adults, action.kids, action.baby, action.rooms, action.work) } };
         case 'RESET_GUESTS_ACTION':
-            return { ...state, selected: Option.Guests, guests: { ...state.guests, value: new Guests(1, 0, 0, 1, false, false) } };
+            return { ...state, guests: { ...state.guests, value: new Guests(1, 0, 0, 1, false) } };
         case 'RESET_PEOPLE_ACTION':
-            return { ...state, selected: Option.Guests, people: { ...state.people, value: new People(1) } };
+            return { ...state, people: { ...state.people, value: new People(1) } };
         case 'SELECT_PEOPLE_ACTION':
             return { ...state, people: { ...state.people, value: new People(action.total) } };
-        case 'SWITCH_TAB_ACTION':
-            return { ...state, tab: action.tab, selected: checkNextTabOnSwitch(action.tab, state.selected) };
         default:
             // the following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

@@ -13,7 +13,29 @@ type SearchProps =
     SearchStore.SearchState
     & typeof SearchStore.actionCreators;
 
-class Search extends React.Component<SearchProps, {}> {
+interface LocalState {
+    tab: SearchStore.Tab;
+    selected: SearchStore.Option;
+    started: boolean;
+    whereFilled: boolean;
+    whenFilled: boolean;
+    guestsFilled: boolean;
+    peopleFilled: boolean;
+}
+
+class Search extends React.Component<SearchProps, LocalState> {
+
+    public componentWillMount() {
+        this.state = {
+            tab: SearchStore.Tab.Smart,
+            selected: SearchStore.Option.Where,
+            started: false,
+            whereFilled: false,
+            whenFilled: false,
+            guestsFilled: false,
+            peopleFilled: false
+        };
+    }
 
     public componentWillUpdate(nextProps: SearchProps): void {
         if (nextProps.guests.value.rooms !== this.props.guests.value.rooms) {
@@ -46,11 +68,12 @@ class Search extends React.Component<SearchProps, {}> {
 
 
     private onClickTab = (tab: SearchStore.Tab) => {
-        this.props.switchTab(tab);
+        this.setState(prev => ({...prev, tab: tab}));
     }
 
     private onChangeWhere = (e: React.KeyboardEvent<HTMLInputElement>) => {
         this.props.searchWhere(e.currentTarget.value);
+        this.setState(prev => ({...prev, started: true}));
     }
 
     private onClickWhere = () => {
@@ -61,44 +84,46 @@ class Search extends React.Component<SearchProps, {}> {
         let input: any = this.refs.whereinput;
         input.value = '';
         setTimeout(() => input.focus(), 10);
+        this.setState(prev => ({ ...prev, selected: SearchStore.Option.Where, whereFilled: false, started: false}));
     }
 
     private onSelectWhere = (city: SearchStore.City) => {
         this.props.selectWhere(city)
         this.props.selectWhenStart(moment(this.props.when.value.startDate));
+        this.setState(prev => ({ ...prev, selected: SearchStore.Option.When, whereFilled: true}));
     }
 
     private renderOptionWhere(): JSX.Element {
         return (<ul>
             {this.props.where.list.map((city: SearchStore.City, key: number) =>
                 <div className='sh-search-option' key={key} onClick={() => this.onSelectWhere(city)}>
-                    {city.full}
+                    {SearchStore.getFullCity(city)}
                 </div>
             )}
         </ul>);
     }
 
     private renderGuestsOrPeople() {
-        if (this.props.tab === SearchStore.Tab.Smart) {
-            return (<li className={'sh-search-group ' + (this.props.selected === SearchStore.Option.Guests ? 'is-active' : '')}>
-                <div className={'sh-search-value ' + (this.props.guests.value.isFilled ? 'is-filled' : '')}
+        if (this.state.tab === SearchStore.Tab.Smart) {
+            return (<li className={'sh-search-group ' + (this.state.selected === SearchStore.Option.Guests ? 'is-active' : '')}>
+                <div className={'sh-search-value ' + (this.state.guestsFilled ? 'is-filled' : '')}
                     onClick={this.onClickGuests}>
-                    {this.props.guests.value.full}
+                    {SearchStore.getFullRoomsGuests(this.props.guests.value)}
                 </div>
-                <span className={'sh-search-input ' + (!this.props.guests.value.isFilled ? '' : 'is-hidden ') + (this.props.selected === SearchStore.Option.Guests ? 'is-active' : '')}
+                <span className={'sh-search-input ' + (!this.state.guestsFilled ? '' : 'is-hidden ') + (this.state.selected === SearchStore.Option.Guests ? 'is-active' : '')}
                     onClick={this.onClickGuests}>
                         Guests
                 </span>
             </li>);
         }
 
-        if (this.props.tab === SearchStore.Tab.Conference) {
-            return (<li className={'sh-search-group ' + (this.props.selected === SearchStore.Option.People ? 'is-active' : '')}>
-                <div className={'sh-search-value ' + (this.props.people.value.full ? 'is-filled' : '')}
+        if (this.state.tab === SearchStore.Tab.Conference) {
+            return (<li className={'sh-search-group ' + (this.state.selected === SearchStore.Option.People ? 'is-active' : '')}>
+                <div className={'sh-search-value ' + (this.state.peopleFilled ? 'is-filled' : '')}
                     onClick={this.onClickGuests}>
-                    {this.props.people.value.full}
+                    {SearchStore.getFullPeople(this.props.people.value)}
                 </div>
-                <span className={'sh-search-input ' + (!this.props.people.value.full ? '' : 'is-hidden ') + (this.props.selected === SearchStore.Option.Guests ? 'is-active' : '')}
+                <span className={'sh-search-input ' + (!this.state.peopleFilled ? '' : 'is-hidden ') + (this.state.selected === SearchStore.Option.Guests ? 'is-active' : '')}
                     onClick={this.onClickGuests}>
                     People
                 </span>
@@ -107,7 +132,7 @@ class Search extends React.Component<SearchProps, {}> {
     }
 
     private onClickWhen = () => {
-        if (this.props.selected === SearchStore.Option.Where) {
+        if (this.state.selected === SearchStore.Option.Where) {
             let input: any = this.refs.whereinput;
             setTimeout(() => input.focus(), 10);
             return;
@@ -120,6 +145,8 @@ class Search extends React.Component<SearchProps, {}> {
 
         this.props.selectWhenEnd(moment(this.props.when.value.endDate));
         this.props.selectWhenStart(moment(this.props.when.value.startDate));
+
+        this.setState(prev => ({ ...prev, selected: SearchStore.Option.When, whenFilled: false}));
     }
 
     private onChangeWhenStart = (date: moment.Moment) => {
@@ -129,6 +156,7 @@ class Search extends React.Component<SearchProps, {}> {
     private onChangeWhenEnd = (date: moment.Moment) => {
         this.props.selectWhenEnd(date);
         this.props.updateGuestsAdults(this.props.guests.value.adults);
+        this.setState(prev => ({ ...prev, selected: SearchStore.Option.Guests, whenFilled: true}));
     }
 
     private renderOptionWhen(): JSX.Element {
@@ -156,13 +184,13 @@ class Search extends React.Component<SearchProps, {}> {
     }
 
     private onClickGuests = () => {
-        if (this.props.selected === SearchStore.Option.Where) {
+        if (this.state.selected === SearchStore.Option.Where) {
             let input: any = this.refs.whereinput;
             setTimeout(() => input.focus(), 10);
             return;
         }
 
-        if (this.props.selected === SearchStore.Option.When) {
+        if (this.state.selected === SearchStore.Option.When) {
             return;
         }
 
@@ -171,6 +199,8 @@ class Search extends React.Component<SearchProps, {}> {
         this.props.updateGuestsBaby(0);
         this.props.updateGuestsKids(0);
         this.props.updateGuestsRooms(1);
+
+        this.setState(prev => ({ ...prev, selected: SearchStore.Option.Guests, guestsFilled: true, peopleFilled: true}));
     }
 
     private checkNumber(n: string): boolean {
@@ -397,7 +427,7 @@ class Search extends React.Component<SearchProps, {}> {
     }
 
     private renderCurrentOption(): JSX.Element {
-        switch (this.props.selected) {
+        switch (this.state.selected) {
             case SearchStore.Option.Where:
                 return this.renderOptionWhere();
             case SearchStore.Option.When:
@@ -417,21 +447,21 @@ class Search extends React.Component<SearchProps, {}> {
         return <div className='sh-search'>
             <div className='sh-search-wrapper'>
                 <ul className='sh-search-tabs'>
-                    <li className={'sh-search-tab ' + (this.props.tab === SearchStore.Tab.Smart ? 'is-active' : '')}
+                    <li className={'sh-search-tab ' + (this.state.tab === SearchStore.Tab.Smart ? 'is-active' : '')}
                         onClick={() => this.onClickTab(SearchStore.Tab.Smart)}>
                         Smart Room
                     </li>
-                    <li className={'sh-search-tab ' + (this.props.tab === SearchStore.Tab.Conference ? 'is-active' : '')}>
+                    <li className={'sh-search-tab ' + (this.state.tab === SearchStore.Tab.Conference ? 'is-active' : '')}>
                         Conference Room
                    </li>
                 </ul>
                 <ul className='sh-search-inputs'>
-                    <li className={'sh-search-group ' + (this.props.selected === SearchStore.Option.Where ? 'is-active' : '')}>
-                        <div className={'sh-search-value ' + (this.props.where.value.full ? 'is-filled' : '')}
+                    <li className={'sh-search-group ' + (this.state.selected === SearchStore.Option.Where ? 'is-active' : '')}>
+                        <div className={'sh-search-value ' + (this.state.whereFilled ? 'is-filled' : '')}
                             onClick={this.onClickWhere}>
-                            {this.props.where.value.full}
+                            {SearchStore.getFullCity(this.props.where.value)}
                         </div>
-                        <input className={'sh-search-input ' + (!this.props.where.value.full ? '' : 'is-hidden')}
+                        <input className={'sh-search-input ' + (!this.state.whereFilled ? '' : 'is-hidden')}
                             type='text'
                             ref='whereinput'
                             placeholder='Where'
@@ -439,12 +469,12 @@ class Search extends React.Component<SearchProps, {}> {
                             onClick={this.onClickWhere} />
                     </li>
 
-                    <li className={'sh-search-group ' + (this.props.selected === SearchStore.Option.When ? 'is-active' : '')}>
-                        <div className={'sh-search-value ' + (this.props.when.value.isFilled ? 'is-filled' : '')}
+                    <li className={'sh-search-group ' + (this.state.selected === SearchStore.Option.When ? 'is-active' : '')}>
+                        <div className={'sh-search-value ' + (this.state.whenFilled ? 'is-filled' : '')}
                             onClick={this.onClickWhen}>
-                            {this.props.when.value.full}
+                            {SearchStore.getShortDates(this.props.when.value.startDate, this.props.when.value.endDate)}
                         </div>
-                        <span className={'sh-search-input ' + (!this.props.when.value.isFilled ? '' : 'is-hidden ') + (this.props.selected === SearchStore.Option.When ? 'is-active' : '')}
+                        <span className={'sh-search-input ' + (!this.state.whenFilled ? '' : 'is-hidden ') + (this.state.selected === SearchStore.Option.When ? 'is-active' : '')}
                             onClick={this.onClickWhen}> 
                                 When
                         </span>
@@ -453,13 +483,13 @@ class Search extends React.Component<SearchProps, {}> {
                     {this.renderGuestsOrPeople()}
 
                     <li className='sh-search-group'>
-                        <Link to={'/SearchRooms'} className={'sh-search-button btn ' + (this.props.where.value.full && this.props.when.value.isFilled ? '' : 'is-disabled')}>
-                            {this.props.tab === SearchStore.Tab.Smart ? 'Find a Room' : 'Find a Conference Room'}
+                        <Link to={'/SearchRooms'} className={'sh-search-button btn ' + (SearchStore.getFullCity(this.props.where.value) && this.state.whenFilled ? '' : 'is-disabled')}>
+                            {this.state.tab === SearchStore.Tab.Smart ? 'Find a Room' : 'Find a Conference Room'}
                         </Link>
                     </li>
 
                 </ul>
-                <section className={'sh-search-options ' + (this.props.started ? '' : 'is-hidden')}>
+                <section className={'sh-search-options ' + (this.state.started ? '' : 'is-hidden')}>
                     {this.props.isLoading ? <Loading /> : this.renderCurrentOption()}
                 </section>
             </div>

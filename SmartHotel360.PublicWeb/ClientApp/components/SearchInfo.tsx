@@ -8,20 +8,28 @@ type SearchInfoProps =
     SearchStore.SearchState
     & typeof SearchStore.actionCreators;
 
-class SearchInfo extends React.Component<SearchInfoProps, {}> {
-    public didComponentMount() {
+interface LocalState {
+    tab: SearchStore.Tab
+}
+
+class SearchInfo extends React.Component<SearchInfoProps, LocalState> {
+
+    public componentWillMount() {
+        this.state = {
+            tab: SearchStore.Tab.Smart
+        };
     }
 
     private renderGuestsOrPeople() {
-        if (this.props.tab === SearchStore.Tab.Smart) {
+        if (this.state.tab === SearchStore.Tab.Smart) {
             return (<li className='sh-search-group'>
-                {this.props.guests.value.full}
+                {SearchStore.getFullRoomsGuests(this.props.guests.value)}
             </li>);
         }
 
-        if (this.props.tab === SearchStore.Tab.Conference) {
+        if (this.state.tab === SearchStore.Tab.Conference) {
             return (<li className='sh-search-group'>
-                {this.props.guests.value.full}
+                {SearchStore.getFullPeople(this.props.people.value)}
             </li>);
         }
     }
@@ -31,11 +39,11 @@ class SearchInfo extends React.Component<SearchInfoProps, {}> {
             <div className='sh-search-wrapper'>
                 <ul className='sh-search-inputs'>
                     <li className='sh-search-group'>
-                        {this.props.where.value.full}
+                        {SearchStore.getFullCity(this.props.where.value)}
                     </li>
 
                     <li className='sh-search-group'>
-                        {this.props.when.value.full}
+                        {SearchStore.getShortDates(this.props.when.value.startDate, this.props.when.value.endDate)}
                     </li>
 
                     {this.renderGuestsOrPeople()}
