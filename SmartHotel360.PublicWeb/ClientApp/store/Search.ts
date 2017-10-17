@@ -71,7 +71,6 @@ export class Dates {
 
 export interface SearchState {
     isLoading: boolean;
-    shouldRender: boolean;
     minLength: number;
     where: Input<City>;
     when: Input<Dates>;
@@ -80,7 +79,6 @@ export interface SearchState {
 }
 
 const initialState: SearchState = {
-    shouldRender: false,
     minLength: 3,
     isLoading: false,
     where: {
@@ -254,7 +252,7 @@ export const actionCreators = {
 export const reducer: Reducer<SearchState> = (state: SearchState, action: KnownAction) => {
     switch (action.type) {
         case 'INIT_ACTION': 
-            return { ...state, shouldRender: true };
+            return { ...state };
         case 'REQUEST_WHERE_ACTION':
             return { ...state, isLoading: true };
         case 'RECEIVE_WHERE_ACTION':
@@ -266,7 +264,7 @@ export const reducer: Reducer<SearchState> = (state: SearchState, action: KnownA
         case 'SELECT_WHEN_ACTION':
             return { ...state, when: { ...state.when, value: new Dates(action.start, action.end) } };
         case 'RESET_WHEN_ACTION':
-            return { ...state, when: { ...state.when, value: new Dates(moment().add(7, 'days'), moment().add(8, 'days'))} };
+            return { ...state, when: { ...state.when, value: new Dates(moment().add(7, 'days'), moment().add(7, 'days'))} };
         case 'SELECT_GUESTS_ACTION':
             return { ...state, guests: { ...state.guests, value: new Guests(action.adults, action.kids, action.baby, action.rooms, action.work) } };
         case 'RESET_GUESTS_ACTION':

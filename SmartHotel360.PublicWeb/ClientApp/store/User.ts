@@ -113,6 +113,7 @@ export const actionCreators = {
     },
     logout: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'LOGOUT_ACTION' });
+        localStorage.clear();
         userManager.logout();
     }
 };

@@ -21,6 +21,7 @@ interface LocalState {
     whenFilled: boolean;
     guestsFilled: boolean;
     peopleFilled: boolean;
+    shouldRender: boolean;
 }
 
 class Search extends React.Component<SearchProps, LocalState> {
@@ -33,7 +34,8 @@ class Search extends React.Component<SearchProps, LocalState> {
             whereFilled: false,
             whenFilled: false,
             guestsFilled: false,
-            peopleFilled: false
+            peopleFilled: false,
+            shouldRender: true
         };
     }
 
@@ -60,13 +62,7 @@ class Search extends React.Component<SearchProps, LocalState> {
             $moreRoomBox.addClass('is-active');
         }
     }
-
-    public didComponentMount() {
-        // Because this plugin doesn't accept SSR
-        this.props.init();
-    }
-
-
+    
     private onClickTab = (tab: SearchStore.Tab) => {
         this.setState(prev => ({...prev, tab: tab}));
     }
@@ -163,23 +159,28 @@ class Search extends React.Component<SearchProps, LocalState> {
         // SSR not supported
         const DatePicker: any = (require('react-datepicker') as any).default;
         return (<div className='sh-search-when'>
-            <DatePicker
-                selected={this.props.when.value.startDate}
-                selectsStart
-                inline
-                startDate={this.props.when.value.startDate}
-                endDate={this.props.when.value.endDate}
-                onChange={this.onChangeWhenStart}
-            />
-
-            <DatePicker
-                selected={this.props.when.value.endDate}
-                selectsEnd
-                inline
-                startDate={this.props.when.value.startDate}
-                endDate={this.props.when.value.endDate}
-                onChange={this.onChangeWhenEnd}
-            />
+            <div>
+                <label className='sh-search-calendar_label'>Start Date</label>
+                <DatePicker
+                    selected={this.props.when.value.startDate}
+                    selectsStart
+                    inline
+                    startDate={this.props.when.value.startDate}
+                    endDate={this.props.when.value.endDate}
+                    onChange={this.onChangeWhenStart}
+                />
+            </div>
+            <div>
+                <label className='sh-search-calendar_label'>End Date</label>
+                <DatePicker
+                    selected={this.props.when.value.endDate}
+                    selectsEnd
+                    inline
+                    startDate={this.props.when.value.startDate}
+                    endDate={this.props.when.value.endDate}
+                    onChange={this.onChangeWhenEnd}
+                />
+            </div>
         </div>);
     }
 
@@ -431,7 +432,7 @@ class Search extends React.Component<SearchProps, LocalState> {
             case SearchStore.Option.Where:
                 return this.renderOptionWhere();
             case SearchStore.Option.When:
-                if (this.props.shouldRender) {
+                if (this.state.shouldRender) {
                     return this.renderOptionWhen();
                 }
             case SearchStore.Option.Guests:
@@ -482,7 +483,7 @@ class Search extends React.Component<SearchProps, LocalState> {
 
                     {this.renderGuestsOrPeople()}
 
-                    <li className='sh-search-group'>
+                    <li className='sh-search-group--button'>
                         <Link to={'/SearchRooms'} className={'sh-search-button btn ' + (SearchStore.getFullCity(this.props.where.value) && this.state.whenFilled ? '' : 'is-disabled')}>
                             {this.state.tab === SearchStore.Tab.Smart ? 'Find a Room' : 'Find a Conference Room'}
                         </Link>

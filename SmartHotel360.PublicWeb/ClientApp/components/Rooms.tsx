@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 type RoomsProps =
     {
         component: any,
+        isLinked: boolean | false,
         source?: any,
         title?: string,
         modifier?: string
@@ -27,6 +28,18 @@ class Rooms extends React.Component<RoomsProps, {}> {
         this.props.requestFiltered()
     }
 
+    public renderItem = (key: number, room: RoomsStore.Room) => {
+        if (this.props.isLinked) {
+            return (<Link className='sh-rooms-item' key={key} to={`/RoomDetail/${room.id}`}>
+                {React.createElement(this.props.component, Object.assign({}, this.props, { ...room }))}
+            </Link>)
+        } else {
+            return (<div className='sh-rooms-item' key={key}>
+                {React.createElement(this.props.component, Object.assign({}, this.props, { ...room }))}
+            </div>)
+        }
+    }
+
     public render() {        
         return <div className={'sh-rooms ' + (this.props.modifier ? `sh-rooms--${this.props.modifier}` : '')}>
             <span className='sh-rooms-title'>{this.props.title}</span>
@@ -34,9 +47,7 @@ class Rooms extends React.Component<RoomsProps, {}> {
                 ? <Loading />
                 :
                 this.props.list.map((room: RoomsStore.Room, key: number) =>
-                    <Link className='sh-rooms-item' key={key} to={`/RoomDetail/${room.id}`}>
-                        {React.createElement(this.props.component, Object.assign({}, this.props, {...room }))}
-                    </Link>
+                    this.renderItem(key, room)
                 )
             }
         </div>;

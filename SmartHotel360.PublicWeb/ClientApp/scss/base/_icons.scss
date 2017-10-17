@@ -18,7 +18,23 @@ $icons: (
     sh-key: 'e908',
     sh-keys: 'e910',
     sh-tick: 'e911',
-    sh-map: 'e912'
+    sh-map: 'e912',
+    sh-board: 'e913',
+    sh-projector: 'e914',
+    sh-tv: 'e916',
+    sh-water: 'e917',
+    sh-dinner: 'e919',
+    sh-lunch: 'e920',
+    sh-wheelchair-accessible: 'e915',
+    sh-table: 'e91a',
+    sh-parking: 'e91a',
+    sh-indoor-fireplace: 'e91b',
+    sh-hot-tub: 'e91c',
+    sh-green: 'e91d',
+    sh-fitness-centre: 'e91e',
+    sh-dryer: 'e91f',
+    sh-bath: 'e921',
+    sh-airport-shutle: 'e922'
 );
 
 @include icomoon-generate($icons);

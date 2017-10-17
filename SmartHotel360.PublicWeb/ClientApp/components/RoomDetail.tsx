@@ -43,7 +43,6 @@ class RoomDetail extends React.Component<any, LocalState> {
     }
 
     private onClickTab = (tab: RoomDetailStore.Tabs) => {
-        //this.props.switchTab(tab);
         this.setState(prev => ({ ...prev, tab: tab }));
     }
 
@@ -56,7 +55,7 @@ class RoomDetail extends React.Component<any, LocalState> {
             this.props.search.guests.value.adults,
             this.props.search.guests.value.kids,
             this.props.search.guests.value.baby,
-            [new RoomDetailStore.Room(0, this.props.search.guests.value.rooms)],
+            0,
             this.calculateTotal()
             )
             this.props.book(booking, this.props.user.token);
@@ -71,6 +70,10 @@ class RoomDetail extends React.Component<any, LocalState> {
         let end = moment(SearchStore.getLongDate(this.props.search.when.value.endDate));
         let nights = Math.abs(start.diff(end, 'days'));
         return this.props.room.pricePerNight * nights;
+    }
+
+    private formatHours = (hour: string) => {
+        return moment(hour, ['h:mm A']).format('hh:mm A');
     }
 
     private getServicesIcon = (key: number) => {
@@ -101,7 +104,7 @@ class RoomDetail extends React.Component<any, LocalState> {
 
                 <div className='sh-room_detail-extra'>
                     <h4 className='sh-room_detail-smalltitle'>Check-In/Out</h4>
-                    <p className='sh-room_detail-text'>{this.props.room.checkInTime} / {this.props.room.checkOutTime}</p>
+                    <p className='sh-room_detail-text'>{this.formatHours(this.props.room.checkInTime)} / {this.formatHours(this.props.room.checkOutTime)}</p>
                 </div>
 
                 <div className='sh-room_detail-extra'>
@@ -137,6 +140,11 @@ class RoomDetail extends React.Component<any, LocalState> {
         return stars;
     }
 
+    private formatDate = (date: moment.Moment) => {
+        date = moment(date);
+        return date ? `${date.format('D MMM YYYY')}` : '';
+    }
+
     private renderReviews() {
         let reviews = [
             {
@@ -147,17 +155,17 @@ class RoomDetail extends React.Component<any, LocalState> {
                 'rating': 4
             },
             {
-                'user': 'Sophia Campbell',
-                'room': 'Double room',
-                'message': 'From the moment you step in, you can perfectly understand why this hotel has been short listed for the annual World Architecture Festival Awards...',
-                'date': '2010-06-13T00:00:00',
-                'rating': 3
-            },
-            {
                 'user': 'Timothy Lucas',
                 'room': 'Single room',
                 'message': 'Hotel located just behind the Tate, with great breakfast spots and Borough Market nearby. Two people stay for the same price as one, so bring a friend. Whom you would share a double bed with.',
                 'date': '2010-12-14T00:00:00',
+                'rating': 3
+            },
+            {
+                'user': 'Sophia Campbell',
+                'room': 'Double room',
+                'message': 'From the moment you step in, you can perfectly understand why this hotel has been short listed for the annual World Architecture Festival Awards...',
+                'date': '2010-06-13T00:00:00',
                 'rating': 3
             }
         ];
@@ -171,7 +179,7 @@ class RoomDetail extends React.Component<any, LocalState> {
                                 <div>
                                     <span className='sh-room_detail-subtitle u-pr-2'>{review.user}</span>
                                     <span className='sh-room_detail-smalltitle u-pr-2'>{review.room}</span>
-                                    <span>{review.date}</span>
+                                    <span>{this.formatDate(review.date)}</span>
                                 </div>
                                 <div>
                                     {this.drawStars(review.rating)}
@@ -205,7 +213,7 @@ class RoomDetail extends React.Component<any, LocalState> {
     private renderAsideBooking = () => {
         return <aside className='sh-room_detail-filters'>
             <header className='sh-room_detail-filter_header'>
-                <span className='sh-room_detail-filter_title'>{this.calculateTotal()}</span>
+                <span className='sh-room_detail-filter_title'>{`$${this.calculateTotal()}`}</span>
                 <span>Total</span>
             </header>
             <section className='sh-room_detail-info'>
@@ -234,13 +242,13 @@ class RoomDetail extends React.Component<any, LocalState> {
                     </div>
                     <div className='col-xs-4'>
                         <span className='sh-room_detail-small'>Rate</span>
-                        <span className='sh-room_detail-smalltitle'>{this.props.room.price}</span>
+                        <span className='sh-room_detail-smalltitle'>{`$${this.calculateTotal()}`}</span>
                     </div>
                 </div>
 
                 <div className={'sh-room_detail-extra sh-room_detail-extra--double row ' + (this.props.booked ? '' : 'is-invisible')}>
                     <div className='col-xs-12'>
-                        <span className='sh-room_detail-smalltitle'>Thanks USERNAME,</span>
+                        <span className='sh-room_detail-smalltitle'>Thanks {this.props.user.name},</span>
                         <span className='sh-room_detail-small'>Your booking at {this.props.room.name} is confirmed.</span>
                     </div>
                 </div>

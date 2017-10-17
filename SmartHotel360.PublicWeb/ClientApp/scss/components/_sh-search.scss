@@ -25,6 +25,17 @@
             width: $size;
         }
 
+        &--button {
+            margin: 1rem auto;
+            position: relative;
+            width: 90%;
+
+            @media screen and (min-width: $media-screen-m) {
+                margin: 0 $separation;
+                width: 20%;
+            }
+        }
+
         @media screen and (min-width: $media-screen-m) {
             margin: 0 $separation;
             width: 33%;
@@ -228,5 +239,12 @@
             background-color: $color-background-bright;
             pointer-events: none;
         }
+    }
+
+    &-calendar_label {
+        color: $color-brand;
+        display: block;
+        text-align: center;
+        margin: 0 1rem;
     }
 }

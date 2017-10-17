@@ -15,10 +15,6 @@ interface IServicesDicionary {
     key: number
 }
 
-export class Room {
-    constructor(public roomType: number | 0, public quantity: number | 0) { }
-}
-
 export class Booking {
     constructor(public hotelId: number,
         public userId: string,
@@ -27,27 +23,27 @@ export class Booking {
         public adults: number | 0,
         public kids: number | 0,
         public babies: number | 0,
-        public rooms: Room[],
+        public roomType: number | 0,
         public price: number | 0) { }
 }
 
 export const ServicesDictionary: { [index: number]: string } = {
     1: 'sh-wifi',
-    2: '',
-    3: '',
+    2: 'sh-parking',
+    3: 'sh-tv',
     4: 'sh-air-conditioning',
-    5: '',
-    6: '',
-    7: '',
+    5: 'sh-dryer',
+    6: 'sh-indoor-fireplace',
+    7: 'sh-table',
     8: 'sh-breakfast',
     9: '',
-    10: '',
+    10: 'sh-airport-shutle',
     11: 'sh-pool',
-    12: '',
+    12: 'sh-fitness-centre',
     13: 'sh-gym',
-    14: '',
+    14: 'sh-hot-tub',
     15: '',
-    16: '',
+    16: 'sh-wheelchair-accessible',
     17: 'sh-elevator'
 };
 
