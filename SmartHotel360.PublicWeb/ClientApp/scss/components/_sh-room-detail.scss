@@ -67,7 +67,7 @@
         background: $color-background-brighter;
         bottom: 0;
         box-shadow: 0 0 21px 2px rgba($color-background-darker, .08);
-        height: 23rem;
+        height: 28rem;
         left: 0;
         margin: 0 auto;
         position: absolute;
@@ -99,12 +99,16 @@
         left: 2rem;
         padding: 0 1rem;
         position: absolute;
-        top: .5rem;
+        top: 1.5rem;
 
         &:hover {
             color: $color-background-dark;
             text-decoration: none;
             transition: color $animation-speed-default;
+        }
+
+        @media screen and (min-width: $media-screen-m) {
+            top: .5rem;
         }
     }
 
@@ -272,6 +276,9 @@
         font-size: 3rem;
     }
 
+    &-reviews {
+        padding: 0;
+    }
 
     &-review {
         display: block;

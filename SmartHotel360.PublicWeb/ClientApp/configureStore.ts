@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose, combineReducers, GenericStoreEnhancer, Store, StoreEnhancerStoreCreator, ReducersMapObject } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
-import persistState from 'redux-localstorage'
+import persistState  from 'redux-localstorage';
 import * as StoreModule from './store';
 import { ApplicationState, reducers } from './store';
 import { History } from 'history';
@@ -16,7 +16,7 @@ export default function configureStore(history: History, initialState?: Applicat
         devToolsExtension ? devToolsExtension() : <S>(next: StoreEnhancerStoreCreator<S>) => next,
         persistState()
     )(createStore);
-
+    
     // Combine all reducers and instantiate the app-wide store instance
     const allReducers = buildRootReducer(reducers);
     const store = createStoreWithMiddleware(allReducers, initialState) as Store<ApplicationState>;

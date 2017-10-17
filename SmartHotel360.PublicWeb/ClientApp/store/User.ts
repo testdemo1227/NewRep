@@ -14,6 +14,12 @@ const authority = `https://login.microsoftonline.com/tfp/${tenant}/${policy}`;
 
 let userManager: Msal.UserAgentApplication;
 
+
+interface User {
+    user: Msal.User,
+    email: string
+}
+
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 export interface UserState {
@@ -21,6 +27,7 @@ export interface UserState {
     name: string | null;
     email: string;
     gravatar: string;
+    token: string;
     error: boolean;
     isLoading: boolean;
 }
@@ -30,6 +37,7 @@ const initialState: UserState = {
     name: null,
     email: '',
     gravatar: '',
+    token: '',
     error: false,
     isLoading: false
 };
@@ -39,11 +47,28 @@ const initialState: UserState = {
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 // Use @typeName and isActionType for type detection that works even after serialization/deserialization.
 
-interface InitAction { type: 'INIT_ACTION', id: string | null, name: string | null, email: string, gravatar: string }
+interface InitAction { type: 'INIT_ACTION', id: string | null, name: string | null, email: string, gravatar: string, token: string }
 interface LoginAction { type: 'LOGIN_ACTION', error: boolean }
 interface LogoutAction { type: 'LOGOUT_ACTION' }
 
 type KnownAction = InitAction | LoginAction | LogoutAction;
+
+let getUserData = (accessToken: string): User => {
+    const user = userManager.getUser();
+    // get email
+    const jwt = Msal.Utils.decodeJwt(accessToken);
+    let email = user.name;
+    if (jwt && jwt.JWSPayload) {
+        const decoded = JSON.parse(atob(jwt.JWSPayload));
+        if (decoded && decoded.emails && decoded.emails[0]) {
+            email = decoded.emails[0];
+        }
+    }
+    return {
+        user: user,
+        email: email
+    };
+};
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -52,31 +77,29 @@ export const actionCreators = {
     init: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         userManager = new Msal.UserAgentApplication(client, authority,
             (errorDesc: any, token: any, error: any, tokenType: any) => {
-                console.log('after loginredirect or acquireTokenPopup');
+                if (token) {
+                    userManager.acquireTokenSilent(scopes).then(accessToken => {
+                        const userData = getUserData(accessToken);
+                        dispatch({
+                            type: 'INIT_ACTION', id: userData.user.userIdentifier, name: userData.user.name, email: userData.email, gravatar: 'https://www.gravatar.com/avatar/' + Md5.hashStr(userData.email.toLowerCase()).toString(), token: accessToken
+                        });
+                    }, error => {
+
+                        userManager.acquireTokenPopup(scopes).then(function (accessToken) {
+                            const userData = getUserData(accessToken);
+                            dispatch({
+                                type: 'INIT_ACTION', id: userData.user.userIdentifier, name: userData.user.name, email: userData.email, gravatar: 'https://www.gravatar.com/avatar/' + Md5.hashStr(userData.email.toLowerCase()).toString(), token: accessToken
+                            });
+                        }, function (error) {
+                            dispatch({ type: 'INIT_ACTION', id: null, name: null, email: '', gravatar: '', token: '' });
+                        });
+                    });
+
+                } else {
+                    dispatch({ type: 'INIT_ACTION', id: null, name: null, email: '', gravatar: '', token: '' });
+                }
+
             });
-
-        setTimeout(() => {
-            userManager.acquireTokenSilent(scopes)
-                .then((accessToken: any) => {
-                    const user = userManager.getUser();
-
-                    // get email
-                    const jwt = Msal.Utils.decodeJwt(accessToken);
-                    let email = user.name;
-                    if (jwt && jwt.JWSPayload) {
-                        const decoded = JSON.parse(atob(jwt.JWSPayload));
-                        if (decoded && decoded.emails && decoded.emails[0]) {
-                            email = decoded.emails[0];
-                        }
-                    }
-       
-
-                    dispatch({
-                        type: 'INIT_ACTION', id: user.userIdentifier, name: user.name, email: email, gravatar: 'https://www.gravatar.com/avatar/' + Md5.hashStr(email.toLowerCase()).toString() });
-                }, (error: any) => {
-                    dispatch({ type: 'INIT_ACTION', id: null, name: null, email: '', gravatar: '' });
-                });
-        }, 10);
     },
 
     login: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -99,11 +122,11 @@ export const actionCreators = {
 export const reducer: Reducer<UserState> = (state: UserState, action: KnownAction) => {
     switch (action.type) {
         case 'INIT_ACTION':
-            return { ...state, error: false, id: action.id, name: action.name, email: action.email, gravatar: action.gravatar, isLoading: false };
+            return { ...state, error: false, id: action.id, name: action.name, email: action.email, gravatar: action.gravatar, token: action.token, isLoading: false };
         case 'LOGIN_ACTION':
             return { ...state, error: action.error, isLoading: true };
         case 'LOGOUT_ACTION':
-            return { ...state, error: false, isLoading: true };
+            return { ...state, error: false };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

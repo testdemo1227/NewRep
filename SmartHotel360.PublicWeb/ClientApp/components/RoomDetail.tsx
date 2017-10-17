@@ -19,6 +19,7 @@ type RoomDetailProps =
 interface LocalState {
     bookingText: string;
     canBook: boolean;
+    tab: RoomDetailStore.Tabs;
 }
 
 // TODO Remove any
@@ -27,7 +28,8 @@ class RoomDetail extends React.Component<any, LocalState> {
     public componentWillMount() {
         this.state = {
             bookingText: 'Login to book',
-            canBook: false
+            canBook: false,
+            tab: RoomDetailStore.Tabs.Hotel
         };
 
         if (this.props.user.id) {
@@ -41,12 +43,23 @@ class RoomDetail extends React.Component<any, LocalState> {
     }
 
     private onClickTab = (tab: RoomDetailStore.Tabs) => {
-        this.props.switchTab(tab);
+        //this.props.switchTab(tab);
+        this.setState(prev => ({ ...prev, tab: tab }));
     }
 
     private onClickBook = () => {
         if (this.props.user.id) {
-            this.props.book();
+            let booking = new RoomDetailStore.Booking(this.props.match.params.hotelId,
+            this.props.user.email,
+            this.props.search.when.value.endDate,
+            this.props.search.when.value.startDate,
+            this.props.search.guests.value.adults,
+            this.props.search.guests.value.kids,
+            this.props.search.guests.value.baby,
+            [new RoomDetailStore.Room(0, this.props.search.guests.value.rooms)],
+            this.calculateTotal()
+            )
+            this.props.book(booking, this.props.user.token);
             return;
         }
         
@@ -175,7 +188,7 @@ class RoomDetail extends React.Component<any, LocalState> {
     }
 
     private renderCurrentOption(): any {
-        switch (this.props.tab) {
+        switch (this.state.tab) {
             case RoomDetailStore.Tabs.Hotel:
                 return this.renderDescription();
             case RoomDetailStore.Tabs.Reviews:
@@ -255,11 +268,11 @@ class RoomDetail extends React.Component<any, LocalState> {
             <section className='sh-room_detail-wrapper'>
                 <div className='sh-room_detail-column sh-room_detail-column--left'>
                     <ul className='sh-room_detail-tabs'>
-                        <li className={'sh-room_detail-tab ' + (this.props.tab === RoomDetailStore.Tabs.Hotel ? 'is-active' : '')}
+                        <li className={'sh-room_detail-tab ' + (this.state.tab === RoomDetailStore.Tabs.Hotel ? 'is-active' : '')}
                             onClick={() => this.onClickTab(RoomDetailStore.Tabs.Hotel)}>
                             The Hotel
                         </li>
-                        <li className={'sh-room_detail-tab ' + (this.props.tab === RoomDetailStore.Tabs.Reviews ? 'is-active' : '')}
+                        <li className={'sh-room_detail-tab ' + (this.state.tab === RoomDetailStore.Tabs.Reviews ? 'is-active' : '')}
                             onClick={() => this.onClickTab(RoomDetailStore.Tabs.Reviews)}>
                             Reviews
                         </li>

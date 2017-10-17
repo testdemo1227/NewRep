@@ -15,6 +15,22 @@ interface IServicesDicionary {
     key: number
 }
 
+export class Room {
+    constructor(public roomType: number | 0, public quantity: number | 0) { }
+}
+
+export class Booking {
+    constructor(public hotelId: number,
+        public userId: string,
+        public from: string,
+        public to: string,
+        public adults: number | 0,
+        public kids: number | 0,
+        public babies: number | 0,
+        public rooms: Room[],
+        public price: number | 0) { }
+}
+
 export const ServicesDictionary: { [index: number]: string } = {
     1: 'sh-wifi',
     2: '',
@@ -63,15 +79,13 @@ export enum Option {
 }
 
 export interface RoomDetailState {
-    tab: Tabs;
     room: RoomDetail;
-    isBooking: boolean;
-    booked: boolean;
     isLoading: boolean;
+    isBooking: boolean;
+    booked: boolean
 }
 
 const initialState: RoomDetailState = {
-    tab: Tabs.Hotel,
     room: {
         defaultPicture: '',
         pictures: [''],
@@ -88,9 +102,9 @@ const initialState: RoomDetailState = {
         phone: '',
         services: []
     },
+    isLoading: false,
     isBooking: false,
-    booked: false,
-    isLoading: false
+    booked: false
 };
 // -----------------
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
@@ -99,19 +113,17 @@ const initialState: RoomDetailState = {
 
 interface RequestRoomAction { type: 'REQUEST_ROOM_ACTION' }
 interface ReceiveRoomAction { type: 'RECEIVE_ROOM_ACTION', room: RoomDetail }
-interface SwitchTabAction { type: 'SWITCH_TAB_ACTION', tab: Tabs }
 interface InitRoomDetailAction { type: 'INIT_ROOM_DETAIL_ACTION' }
-interface BookRoomAction { type: 'BOOK_ROOM_ACTION' }
+interface BookRoomAction { type: 'BOOK_ROOM_ACTION', booked: boolean }
 interface BookingRoomAction { type: 'BOOKING_ROOM_ACTION' }
 
-type KnownAction = RequestRoomAction | ReceiveRoomAction | SwitchTabAction | InitRoomDetailAction | BookRoomAction | BookingRoomAction;
+type KnownAction = RequestRoomAction | ReceiveRoomAction | InitRoomDetailAction | BookRoomAction | BookingRoomAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 export const actionCreators = {
     init: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        //TODO: get initial data
         dispatch({ type: 'INIT_ROOM_DETAIL_ACTION' });
     },
 
@@ -126,32 +138,42 @@ export const actionCreators = {
         dispatch({ type: 'REQUEST_ROOM_ACTION' });
     },
 
-    switchTab: (tab: Tabs): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        dispatch({ type: 'SWITCH_TAB_ACTION', tab: tab });
-    },
+    book: (booking: Booking, token: string): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+                
+        let fetchTask = fetch(`${settings.urls.bookings}Bookings`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+        .then(response => {
+            dispatch({ type: 'BOOK_ROOM_ACTION', booked: true });
+        }, (e) => {
+            dispatch({ type: 'BOOK_ROOM_ACTION', booked: false });
+        });
 
-    book: (tab: Tabs): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'BOOKING_ROOM_ACTION' });
-        setTimeout(() => dispatch({ type: 'BOOK_ROOM_ACTION' }), 2000);
     }
 }
 
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 export const reducer: Reducer<RoomDetailState> = (state: RoomDetailState, action: KnownAction) => {
-    switch (action.type) {        
+    switch (action.type) {
         case 'INIT_ROOM_DETAIL_ACTION':
-                return {...state };
+            return { ...state, isBooking: false, booked: false };
         case 'REQUEST_ROOM_ACTION':
-                return { ...state, isLoading: true };
+            return { ...state, isLoading: true };
         case 'RECEIVE_ROOM_ACTION':
-                return { ...state, isLoading: false, room: action.room };
-        case 'SWITCH_TAB_ACTION':
-            return { ...state, tab: action.tab };
+            return { ...state, isLoading: false, room: action.room };
         case 'BOOKING_ROOM_ACTION':
             return { ...state, isBooking: true, booked: false };
         case 'BOOK_ROOM_ACTION':
-            return { ...state, isBooking: false, booked: true };
+            return { ...state, isBooking: false, booked: action.booked };
         default:
             // the following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;
