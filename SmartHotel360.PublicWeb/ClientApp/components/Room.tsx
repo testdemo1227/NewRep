@@ -1,14 +1,11 @@
 ﻿import * as React from 'react';
 import * as RoomsStore from '../store/Rooms';
+import { settings } from '../Settings';
 
 export default class Room extends React.Component<RoomsStore.Room, {}> {
     private setBackgroundImage(image: string): { [key: string]: string } {        
-        //TODO: use one url image
-        //return {
-        //    backgroundImage: `url('assets/images/conference_room_1.png'), url(${image})`
-        //};
         return {
-            backgroundImage: `url('assets/images/placeholder.png')`
+            backgroundImage: `url(${settings.urls.images_Base}${image}), url('assets/images/placeholder.png')`
         };
     }
 

@@ -6,5 +6,6 @@
         public string Bookings { get; set; }
         public string Suggestions { get; set; }
         public string Tasks { get; set; }
+        public string Images_Base { get; set; }
     }
 }

@@ -8,6 +8,7 @@ import * as SearchStore from '../store/Search';
 import * as UserStore from '../store/User';
 import Loading from './Loading';
 import * as moment from 'moment';
+import { settings } from '../Settings';
 
 type RoomDetailProps =
     RoomDetailStore.RoomDetailState
@@ -120,10 +121,9 @@ class RoomDetail extends React.Component<any, LocalState> {
             </div>
             <div className='sh-room_detail-extra'>
                 <ul className='sh-room_detail-gallery'>
-                    <li className='sh-room_detail-picture'></li>
-                    <li className='sh-room_detail-picture'></li>
-                    <li className='sh-room_detail-picture'></li>
-                    <li className='sh-room_detail-picture'></li>
+                    {this.props.room.pictures.map((picture: string, key: number) => 
+                        <li className='sh-room_detail-picture' key={key} style={this.setBackgroundImage(picture)}></li>
+                    )}
                 </ul>
             </div>
         </div>);
@@ -206,7 +206,7 @@ class RoomDetail extends React.Component<any, LocalState> {
 
     private setBackgroundImage(image: string): { [key: string]: string } {
         return {
-            backgroundImage: `url(${image})`
+            backgroundImage: `url(${settings.urls.images_Base}${image})`
         };
     }
 

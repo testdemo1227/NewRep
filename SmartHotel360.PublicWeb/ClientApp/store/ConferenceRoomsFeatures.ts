@@ -72,17 +72,17 @@ export const actionCreators = {
             {
                 title: 'Book a smart conference room',
                 imageUrl: '/assets/images/conference_room_1.png',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tortor libero, varius ac.'
+                description: 'Find the perfect place to hold that big meeting. Sign-in, customize and reserve a room now. SmartHotel360 Tools will help you find just what you need.'
             },
             {
-                title: 'Smart room automatic adaptation',
+                title: 'Smart room automatic adaptations',
                 imageUrl: '/assets/images/conference_room_2.png',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tortor libero, varius ac.'
+                description: 'Stay focused and on topic while in our SmartHotel360 conference room. Using sensors, the room can help dim the shades if it is a sunny day, or order catering services or refreshments. The rooms can help take an ordinary experience to the extraordinary.'
             },
             {
                 title: 'Person recognition',
                 imageUrl: '/assets/images/conference_room_3.png',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tortor libero, varius ac.'
+                description: 'Our SmartHotel360 facial recognition technology will provide great insight into your audience. Identify the people in the conference room by name, and gain insight into engagement and efficiency of your presentation.'
             },
             {
                 title: 'Personalize room',

@@ -4,7 +4,8 @@
         hotels: '',
         bookings: '',
         suggestions: '',
-        tasks: ''
+        tasks: '',
+        images_Base: ''
     };
     public tokens = {
         bingmaps: ''

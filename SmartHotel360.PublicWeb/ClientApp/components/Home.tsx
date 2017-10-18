@@ -39,7 +39,7 @@ export default class Home extends React.Component<HomeProps, {}> {
                         <div className='sh-infogrid-description'>
                             <p className='sh-infogrid-subtitle'>Check in from your phone</p>
                             <span className='sh-infogrid-text'>
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
+                                Use your personal device and the SmartHotel360 app to accelerate your check-in experience. Using secure technology, we can skip that reception desk and use our phone and app as our room key. Letting you relax as soon as you arrive.
                             </span>
                         </div>
                     </div>
@@ -51,7 +51,7 @@ export default class Home extends React.Component<HomeProps, {}> {
                         <div className='sh-infogrid-description'>
                             <p className='sh-infogrid-subtitle'>Find and access your room</p>
                             <span className='sh-infogrid-text'>
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
+                                Use the SmartHotel360 app, to quickly find and share your room locations with your friends and colleges.
                             </span>
                         </div>
                     </div>
@@ -59,11 +59,11 @@ export default class Home extends React.Component<HomeProps, {}> {
 
                 <article className='sh-infogrid-row'>
                     <div className='sh-infogrid-column'>
-                        <i className='sh-infogrid-icon icon-sh-smart-person'></i>
+                        <i className='sh-infogrid-icon icon-sh-smart-perso'></i>
                         <div className='sh-infogrid-description'>
                             <p className='sh-infogrid-subtitle'>Personalize your experience</p>
                             <span className='sh-infogrid-text'>
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
+                                Use the SmartHotel360 app to configure your home away from home. Set room temperatures, or reserve accommodations. Review our personalization settings by using the SmartHotel360 app.
                             </span>
                         </div>
                     </div>
@@ -74,9 +74,9 @@ export default class Home extends React.Component<HomeProps, {}> {
                     <div className='sh-infogrid-column'>
                         <i className='sh-infogrid-icon icon-sh-smart-green'></i>
                         <div className='sh-infogrid-description'>
-                            <p className='sh-infogrid-subtitle'>Be green</p>
+                            <p className='sh-infogrid-subtitle'>Go green</p>
                             <span className='sh-infogrid-text'>
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
+                                One of SmartHotel360 goals is to minimization our carbon footprint. From sensors managing our Hotels energy usage to Apps that reduce required work hours, we are constantly seeking new ways to improve our surroundings.
                             </span>
                         </div>
                     </div>
@@ -84,18 +84,17 @@ export default class Home extends React.Component<HomeProps, {}> {
             </section>
 
             <span className='sh-home-label'>For Business travelers</span>
-            <span className='sh-home-title'>Smart conference rooms</span>
+            <span className='sh-home-title'>Smart Conference Room</span>
             <ConferenceRoomsFeatures />
             
             <section className='sh-smartphone'>
                 <div className='sh-smartphone-wrapper'>
                     <h2 className='sh-smartphone-title'>Discover the full smart experience with your smartphone</h2>
-                    <p className='sh-smartphone-description'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar orci nibh, et finibus ipsum efficitur id. Suspendisse ac mauris blandit, dictum orci eget, ornare dui. Pellentesque at ligula imperdiet, consectetur velit non, malesuada metus. Integer id metus vitae est interdum tincidunt sed sit amet nulla.</p>
+                    <p className='sh-smartphone-description'>Explore our digital presence. Take a tour of our hotels, explore and plan your next get away. Get tips and recommendation on how to expand your experience with SmartHotel360.</p>
                     <img className='sh-smartphone-image' src=' /assets/images/smartphone.png' />
                 </div>
                 <div className='sh-smartphone-quote'>
-                    <p className='sh-smartphone-quote_text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar orci nibh, et finibus ipsum efficitur id. Suspendisse ac mauris blandit, dictum orci eget, ornare dui. Pellentesque at ligula imperdiet, consectetur velit non, malesuada metus. Integer id metus vitae est interdum tincidunt sed sit amet nulla.</p>
-                    <p className='sh-smartphone-quote_author'>Lorem Ipsum</p>
+                    <p className='sh-smartphone-quote_text'>"The hospitality and convenience of the SmartHotel360, makes my professional business travel so efficient. I can view and reserve everything I need to be a productive professional, before I even step foot in the city I am visiting. Giving me, much needed peace of mind leading up to my presentations."</p>
                 </div>
             </section>
 
