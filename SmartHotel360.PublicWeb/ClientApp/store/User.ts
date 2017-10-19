@@ -47,11 +47,12 @@ const initialState: UserState = {
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 // Use @typeName and isActionType for type detection that works even after serialization/deserialization.
 
-interface InitAction { type: 'INIT_ACTION', id: string | null, name: string | null, email: string, gravatar: string, token: string }
+interface InitAction { type: 'INIT_ACTION' }
+interface SetUserAction { type: 'SET_USER_ACTION', id: string | null, name: string | null, email: string, gravatar: string, token: string }
 interface LoginAction { type: 'LOGIN_ACTION', error: boolean }
 interface LogoutAction { type: 'LOGOUT_ACTION' }
 
-type KnownAction = InitAction | LoginAction | LogoutAction;
+type KnownAction = InitAction | LoginAction | LogoutAction | SetUserAction;
 
 let getUserData = (accessToken: string): User => {
     const user = userManager.getUser();
@@ -81,17 +82,17 @@ export const actionCreators = {
                     userManager.acquireTokenSilent(scopes).then(accessToken => {
                         const userData = getUserData(accessToken);
                         dispatch({
-                            type: 'INIT_ACTION', id: userData.user.userIdentifier, name: userData.user.name, email: userData.email, gravatar: 'https://www.gravatar.com/avatar/' + Md5.hashStr(userData.email.toLowerCase()).toString(), token: accessToken
+                            type: 'SET_USER_ACTION', id: userData.user.userIdentifier, name: userData.user.name, email: userData.email, gravatar: 'https://www.gravatar.com/avatar/' + Md5.hashStr(userData.email.toLowerCase()).toString(), token: accessToken
                         });
                     }, error => {
 
                         userManager.acquireTokenPopup(scopes).then(function (accessToken) {
                             const userData = getUserData(accessToken);
                             dispatch({
-                                type: 'INIT_ACTION', id: userData.user.userIdentifier, name: userData.user.name, email: userData.email, gravatar: 'https://www.gravatar.com/avatar/' + Md5.hashStr(userData.email.toLowerCase()).toString(), token: accessToken
+                                type: 'SET_USER_ACTION', id: userData.user.userIdentifier, name: userData.user.name, email: userData.email, gravatar: 'https://www.gravatar.com/avatar/' + Md5.hashStr(userData.email.toLowerCase()).toString(), token: accessToken
                             });
                         }, function (error) {
-                            dispatch({ type: 'INIT_ACTION', id: null, name: null, email: '', gravatar: '', token: '' });
+                            dispatch({ type: 'SET_USER_ACTION', id: null, name: null, email: '', gravatar: '', token: '' });
                         });
                     });
 
@@ -100,6 +101,7 @@ export const actionCreators = {
                 }
 
             });
+        dispatch({ type: 'INIT_ACTION' });
     },
 
     login: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -123,6 +125,8 @@ export const actionCreators = {
 export const reducer: Reducer<UserState> = (state: UserState, action: KnownAction) => {
     switch (action.type) {
         case 'INIT_ACTION':
+            return { ...state, isLoading: false };
+        case 'SET_USER_ACTION':
             return { ...state, error: false, id: action.id, name: action.name, email: action.email, gravatar: action.gravatar, token: action.token, isLoading: false };
         case 'LOGIN_ACTION':
             return { ...state, error: action.error, isLoading: true };

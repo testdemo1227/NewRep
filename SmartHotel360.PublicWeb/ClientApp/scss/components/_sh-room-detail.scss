@@ -10,9 +10,13 @@
         background-position-y: 0;
         background-repeat: no-repeat;
         background-size: cover;
-        height: 42rem;
+        height: 24rem;
         position: relative;
         width: 100%;
+
+        @media screen and (min-width: $media-screen-l) {
+            height: 42rem;
+        }
     }
 
     &-wrapper {
@@ -20,7 +24,11 @@
         display: flex;
         flex-direction: row;
         margin-bottom: 4rem;
-        margin-top: 3rem;
+        margin-top: 24rem;
+
+        @media screen and (min-width: $media-screen-l) {
+            margin-top: 3rem;
+        }
     }
 
     &-column {
@@ -65,13 +73,13 @@
 
     &-filters {
         background: $color-background-brighter;
-        bottom: 0;
         box-shadow: 0 0 21px 2px rgba($color-background-darker, .08);
         height: 28rem;
         left: 0;
         margin: 0 auto;
         position: absolute;
         right: 0;
+        top: 19rem;
         width: 90%;
 
         @media screen and (min-width: $media-screen-l) {
