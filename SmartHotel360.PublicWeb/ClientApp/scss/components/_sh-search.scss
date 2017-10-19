@@ -151,6 +151,10 @@
             outline: 0;
         }
 
+        &:focus::placeholder {
+            color: $color-foreground-brighter;
+        }
+
         &::placeholder,
         &.is-active {
             color: $color-brand;

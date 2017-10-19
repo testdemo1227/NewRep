@@ -12,8 +12,8 @@ import { settings } from '../Settings';
 
 type RoomDetailProps =
     RoomDetailStore.RoomDetailState
-    & {search: SearchStore.SearchState}
-    & {user: UserStore.UserState}
+    & { search: SearchStore.SearchState }
+    & { user: UserStore.UserState }
     & typeof RoomDetailStore.actionCreators
     & RouteComponentProps<{}>
 
@@ -34,7 +34,7 @@ class RoomDetail extends React.Component<any, LocalState> {
         };
 
         if (this.props.user.id) {
-            this.setState(prev => ({...prev, bookingText: 'Book now', canBook: true}));
+            this.setState(prev => ({ ...prev, bookingText: 'Book now', canBook: true }));
         }
     }
 
@@ -50,20 +50,20 @@ class RoomDetail extends React.Component<any, LocalState> {
     private onClickBook = () => {
         if (this.props.user.id) {
             let booking = new RoomDetailStore.Booking(this.props.match.params.hotelId,
-            this.props.user.email,
-            this.props.search.when.value.endDate,
-            this.props.search.when.value.startDate,
-            this.props.search.guests.value.adults,
-            this.props.search.guests.value.kids,
-            this.props.search.guests.value.baby,
-            0,
-            this.calculateTotal()
+                this.props.user.email,
+                this.props.search.when.value.endDate,
+                this.props.search.when.value.startDate,
+                this.props.search.guests.value.adults,
+                this.props.search.guests.value.kids,
+                this.props.search.guests.value.baby,
+                0,
+                this.calculateTotal()
             )
             this.props.book(booking, this.props.user.token);
             return;
         }
-        
-        this.setState(prev => ({...prev, bookingText: 'Login to book'}));
+
+        this.setState(prev => ({ ...prev, bookingText: 'Login to book' }));
     }
 
     private calculateTotal = () => {
@@ -121,7 +121,7 @@ class RoomDetail extends React.Component<any, LocalState> {
             </div>
             <div className='sh-room_detail-extra'>
                 <ul className='sh-room_detail-gallery'>
-                    {this.props.room.pictures.map((picture: string, key: number) => 
+                    {this.props.room.pictures.map((picture: string, key: number) =>
                         <li className='sh-room_detail-picture' key={key} style={this.setBackgroundImage(picture)}></li>
                     )}
                 </ul>
@@ -179,7 +179,7 @@ class RoomDetail extends React.Component<any, LocalState> {
                                 <div>
                                     <span className='sh-room_detail-subtitle u-pr-2'>{review.user}</span>
                                     <span className='sh-room_detail-smalltitle u-pr-2'>{review.room}</span>
-                                    <span>{this.formatDate(review.date)}</span>
+                                    <span className='sh-room_detail-date'>{this.formatDate(review.date)}</span>
                                 </div>
                                 <div>
                                     {this.drawStars(review.rating)}
@@ -217,7 +217,7 @@ class RoomDetail extends React.Component<any, LocalState> {
                 <span>Total</span>
             </header>
             <section className='sh-room_detail-info'>
-                <span className='sh-room_detail-title'>{this.props.room.name}</span>
+                <div className='sh-room_detail-title'>{this.props.room.name}</div>
                 <span className='sh-room_detail-location u-display-block'>{this.props.room.location}</span>
                 <span className='sh-room_detail-phone u-display-block'>{this.props.room.phone}</span>
 
@@ -268,7 +268,7 @@ class RoomDetail extends React.Component<any, LocalState> {
             <div className='sh-room_detail-search'>
                 <SearchInfo />
             </div>
-            
+
             <Link className='sh-room_detail-back' to={`/SearchRooms`}><i className='sh-room_detail-arrow icon-sh-chevron'></i>Back to hotels</Link>
             {this.props.isLoading ? <Loading /> : <header className='sh-room_detail-background' style={this.setBackgroundImage(this.props.room.defaultPicture)}>
                 <div className='sh-room_detail-show_small'> {this.renderAsideBooking()}</div>
@@ -287,8 +287,10 @@ class RoomDetail extends React.Component<any, LocalState> {
                     </ul>
                     <div className='sh-room_detail-content'>
                         <header className='sh-room_detail-header'>
-                            <span className='sh-room_detail-title'>{this.props.room.name}</span>
-                            <div className='sh-room_detail-stars'>{this.drawStars(this.props.room.rating)}</div>
+                            <div className='sh-room_detail-group'>
+                                <span className='sh-room_detail-title'>{this.props.room.name}</span>
+                                <div className='sh-room_detail-stars'>{this.drawStars(this.props.room.rating)}</div>
+                            </div>
                             <span className='sh-room_detail-location'>{this.props.room.city}</span>
                         </header>
                         {this.renderCurrentOption()}

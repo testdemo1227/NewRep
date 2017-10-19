@@ -136,12 +136,12 @@
     }
 
     &-title {
-        font-size: $font-size-xxl;
+        font-size: $font-size-xl;
         font-weight: $font-weight-regular;
     }
 
     &-subtitle {
-        font-size: $font-size-xl;
+        font-size: $font-size-l;
         font-weight: $font-weight-regular;
     }
 
@@ -151,6 +151,7 @@
     }
 
     &-text {
+        font-family: FiraSans;
         font-size: $font-size-m;
         margin: .5rem 0;
     }
@@ -264,6 +265,8 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        font-family: FiraSans;
+        font-size: $font-size-s;
         list-style: none;
         margin: 0;
         padding: 0;
@@ -274,6 +277,7 @@
         color: $color-brand;
         display: flex;
         flex-direction: column;
+        font-family: FiraSans;
         justify-content: space-between;
         margin: .5rem .5rem;
         text-align: center;
@@ -298,6 +302,10 @@
         justify-content: space-between;
     }
 
+    &-stars {
+        margin: 0 1rem;
+    }
+
     &-star {
         color: $color-foreground-bright;
         font-size: $font-size-s;
@@ -314,5 +322,13 @@
 
     &-search {
         margin-left: 16rem;
+    }
+
+    &-group {
+        display: flex;
+    }
+
+    &-date {
+        color: rgba($color-background-dark, .5);
     }
 }

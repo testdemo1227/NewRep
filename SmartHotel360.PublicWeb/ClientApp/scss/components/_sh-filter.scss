@@ -2,7 +2,7 @@
 
 .sh-filter {
     flex: 0 0 auto;
-    padding: 0 1rem;
+    padding: 0 .2rem;
     z-index: 100;
 
     &.active {
@@ -65,7 +65,7 @@
 
     &-arrow &-icon {
         margin-bottom: .2rem;
-        padding: 0 1rem;
+        padding: 0 .4rem;
         transform: rotate(-180deg);
     }
 

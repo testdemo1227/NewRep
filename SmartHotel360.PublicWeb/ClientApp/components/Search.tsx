@@ -353,7 +353,7 @@ class Search extends React.Component<SearchProps, LocalState> {
             </section>
             <section className='sh-guests-extra'>
                 Are you traveling for work?
-                <button className={'sh-guests-extra_button btn ' + (!this.props.guests.value.work ? 'is-active' : '')} onClick={() => this.onChangeGuestsWork(false)}>NO</button>
+                <button className={'sh-guests-extra_button btn ' + (!this.props.guests.value.work ? 'is-active' : '')} onClick={() => this.onChangeGuestsWork(false)}>No</button>
                 <button className={'sh-guests-extra_button btn ' + (this.props.guests.value.work ? 'is-active' : '')} onClick={() => this.onChangeGuestsWork(true)}>Yes</button>
             </section>
         </div>);
